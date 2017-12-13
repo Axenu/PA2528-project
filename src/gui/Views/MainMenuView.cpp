@@ -55,36 +55,36 @@ namespace gui
         l->setPosition(0.0f - l->getSize().x * 0.5f, 0.8f-l->getSize().y/2.0f);
         addChild(l);
 
-        _startButton = new gui::Button(1.5f, 0.4f);
-        _startButton->addStringComponent(new StringComponentString("Start game"));
-    	_startButton->setPosition(-_startButton->getSize().x*0.25f, 0.3f);
-        _startButton->setPrimaryColor(PALLETPRIMARY);
-        _startButton->setSecondaryColor(PALLETHIGHLIGHT);
-        _startButton->listen(this, &MainMenuView::StartGame);
-        _startButton->setScale(0.5,0.5);
-        addChild(_startButton);
-
-        _settingsButton = new gui::Button(1.5f, 0.4f);
-        _settingsButton->addStringComponent(new StringComponentString("Settings"));
-    	_settingsButton->setPosition(-_startButton->getSize().x*0.25f, 0.1f);
-        _settingsButton->setPrimaryColor(PALLETPRIMARY);
-        _settingsButton->setSecondaryColor(PALLETHIGHLIGHT);
-        _settingsButton->listen(this, &MainMenuView::Settings);
-        _settingsButton->setScale(0.5,0.5);
-        addChild(_settingsButton);
-
-        _creditsButton = new gui::Button(1.5f, 0.4f);
-        _creditsButton->addStringComponent(new StringComponentString("Credits"));
-    	_creditsButton->setPosition(-_startButton->getSize().x*0.25f, -0.1f);
-        _creditsButton->setPrimaryColor(PALLETPRIMARY);
-        _creditsButton->setSecondaryColor(PALLETHIGHLIGHT);
-        _creditsButton->listen(this, &MainMenuView::Credits);
-        _creditsButton->setScale(0.5,0.5);
-        addChild(_creditsButton);
+        // _startButton = new gui::Button(1.5f, 0.4f);
+        // _startButton->addStringComponent(new StringComponentString("Start game"));
+    	// _startButton->setPosition(-_startButton->getSize().x*0.25f, 0.3f);
+        // _startButton->setPrimaryColor(PALLETPRIMARY);
+        // _startButton->setSecondaryColor(PALLETHIGHLIGHT);
+        // _startButton->listen(this, &MainMenuView::StartGame);
+        // _startButton->setScale(0.5,0.5);
+        // addChild(_startButton);
+        //
+        // _settingsButton = new gui::Button(1.5f, 0.4f);
+        // _settingsButton->addStringComponent(new StringComponentString("Settings"));
+    	// _settingsButton->setPosition(-_startButton->getSize().x*0.25f, 0.1f);
+        // _settingsButton->setPrimaryColor(PALLETPRIMARY);
+        // _settingsButton->setSecondaryColor(PALLETHIGHLIGHT);
+        // _settingsButton->listen(this, &MainMenuView::Settings);
+        // _settingsButton->setScale(0.5,0.5);
+        // addChild(_settingsButton);
+        //
+        // _creditsButton = new gui::Button(1.5f, 0.4f);
+        // _creditsButton->addStringComponent(new StringComponentString("Credits"));
+    	// _creditsButton->setPosition(-_startButton->getSize().x*0.25f, -0.1f);
+        // _creditsButton->setPrimaryColor(PALLETPRIMARY);
+        // _creditsButton->setSecondaryColor(PALLETHIGHLIGHT);
+        // _creditsButton->listen(this, &MainMenuView::Credits);
+        // _creditsButton->setScale(0.5,0.5);
+        // addChild(_creditsButton);
 
         _quitButton = new gui::Button(1.5f, 0.4f);
         _quitButton->addStringComponent(new StringComponentString("Quit"));
-    	_quitButton->setPosition(-_quitButton->getSize().x*0.25f, -0.3f);
+    	_quitButton->setPosition(-_quitButton->getSize().x*0.25f, -0.7f);
         _quitButton->setPrimaryColor(PALLETPRIMARY);
         _quitButton->setSecondaryColor(PALLETHIGHLIGHT);
         _quitButton->listen(this, &MainMenuView::QuitGame);

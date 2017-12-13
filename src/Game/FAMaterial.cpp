@@ -1,4 +1,5 @@
 #include <Game/FAMaterial.h>
+#include "glm/gtx/string_cast.hpp"
 
 FAMaterial::FAMaterial() {
 
@@ -14,6 +15,8 @@ FAMaterial::FAMaterial() {
 
 	// this->modelMatrix = glm::mat4();
 	this->shader = new Shader("Basic");
+	MVPLocation = glGetUniformLocation(this->shader->_shaderProgram, "mvp");
+	// MLocation = glGetUniformLocation(this->shader->_shaderProgram, "MMatrix");
 	// buildShader();
 }
 
@@ -25,12 +28,13 @@ void FAMaterial::bind() {
 	glm::mat4 MVPMatrix = viewProjectionMatrix * modelMatrix;
 	glUseProgram(shader->_shaderProgram);
 	glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, &MVPMatrix[0][0]);
-	glUniformMatrix4fv(MLocation, 1, GL_FALSE, &modelMatrix[0][0]);
+	// glUniformMatrix4fv(MLocation, 1, GL_FALSE, &modelMatrix[0][0]);
 
 }
 
 void FAMaterial::setViewProjectionwMatrix(glm::mat4 &VPMatrix) {
 	this->viewProjectionMatrix = VPMatrix;
+	std::cout << glm::to_string(VPMatrix) << std::endl;
 }
 
 void FAMaterial::setModelMatrix(glm::mat4 &modelMatrix) {

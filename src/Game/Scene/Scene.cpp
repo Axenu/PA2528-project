@@ -4,6 +4,7 @@
 
 Scene::Scene() {
     _root = new FANode();
+    _cam = new Camera(70, 0.5, 0.1, 10);
 }
 Scene::~Scene() {
 
@@ -16,6 +17,7 @@ Camera& Scene::getCamera() {
     return *_cam;
 }
 void Scene::update(float dT) {
+    _cam->update(dT);
     _root->update(dT);
 }
 void Scene::render() {

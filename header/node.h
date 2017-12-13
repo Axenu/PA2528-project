@@ -43,7 +43,7 @@ public:
     void removeChild(FANode *node);
 
     virtual void update(float dt);
-    virtual void render(){}
+    virtual void render();
 	virtual void init();
 
 #pragma region Get/Set Orientation vars

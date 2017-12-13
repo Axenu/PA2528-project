@@ -91,6 +91,15 @@ void FANode::update(float dT) {
 	updateChildren(dT);
 }
 
+void FANode::render() {
+	if (!_isActive)
+		return;
+	onRender();
+	// calcModelMatrix();
+	for (FANode *node : _children)
+		node->render();
+}
+
 void FANode::updateChildren(float dT)
 {
 	for (FANode *node : _children)

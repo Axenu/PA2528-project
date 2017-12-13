@@ -5,8 +5,8 @@
 
 class ProjectScene : public Scene {
 public:
-    ProjectScene(){}
-    ~ProjectScene(){}
+    ProjectScene();
+    ~ProjectScene();
 };
 
 #endif

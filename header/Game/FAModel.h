@@ -12,6 +12,7 @@ class FAModel : public FANode {
 private:
 	FAMesh *mesh;
 	FAMaterial *material;
+    Camera *cam;
 public:
 	FAModel();
 	FAModel(FAMesh *mesh);
@@ -23,11 +24,14 @@ public:
 
 	// void addMaterialComponent(FAMaterialComponent *component);
 
+    void setCam(Camera *cam);
+
 	FAMaterial &getMaterial();
 	const FAMesh &getMesh() const;
 	glm::mat4 &getModelMatrix();
 
 	virtual void onUpdate(float dt);
+    virtual void onRender();
 
 	~FAModel();
 

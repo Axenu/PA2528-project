@@ -22,12 +22,13 @@ private:
 	*/
 	// std::vector<FANode*> _children;
 	/* Reference to the current sccene camera */
-	Camera* _cam;
+
     FANode *_root;
 	/* Culling tree for static objects */
 	// QuadTreeNode _quadTree;
 
 protected:
+    Camera* _cam;
 	// GameObject* _rootObject;
 	/* The scene tree root.
 	*/

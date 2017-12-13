@@ -39,7 +39,7 @@ private:
 	// FAArmature *armature;
 	// FAAABB boundingBox;
 
-	// void loadOBJModel(std::string path);
+	void loadOBJModel(std::string path);
 	// void loadFAModel(std::string path);
 	// void loadNewFAModel(std::string path);
 	// void adjustPositions(FABone *b, glm::vec3 diff);
@@ -50,7 +50,7 @@ private:
 
 public:
 	FAMesh();
-	// FAMesh(std::string path);
+	FAMesh(std::string path);
 	// FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor);
 	// FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor);
 
