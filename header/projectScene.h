@@ -9,10 +9,14 @@ public:
     ProjectScene(EventManager* manager);
     ~ProjectScene();
 
+	void update(float dT) override;
+
 private:
 	void keyCallback(const KeyboardEvent& event);
 
 	EventManager *_eventManager;
+	bool _isADown = false;
+	bool _isDDown = false;
 };
 
 #endif
