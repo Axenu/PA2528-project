@@ -26,6 +26,53 @@ FAMesh::FAMesh(std::string path) : FAMesh() {
     }
 }
 
+FAMesh::FAMesh(aiMesh &mesh) {
+
+	std::vector<GLfloat> vertices;
+
+	unsigned int *faceArray;
+	faceArray = (unsigned int *)malloc(sizeof(unsigned int) * mesh.mNumFaces * 3);
+	unsigned int faceIndex = 0;
+
+	for (unsigned int t = 0; t < mesh.mNumFaces; ++t) {
+		aiFace face = mesh.mFaces[t];
+
+		memcpy(&faceArray[faceIndex], face.mIndices, 3 * sizeof(unsigned int));
+		faceIndex += 3;
+	}
+
+	for (int i = 0; i < mesh.mNumVertices; i++) {
+		vertices.push_back(mesh.mVertices[i].x);
+		vertices.push_back(mesh.mVertices[i].y);
+		vertices.push_back(mesh.mVertices[i].z);
+		vertices.push_back(mesh.mTextureCoords[i]->x);
+		vertices.push_back(mesh.mTextureCoords[i]->y);
+	}
+
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), &vertices[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh.mNumFaces * 3, faceArray, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+}
+
 // FAMesh::FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor) : FAMesh() {
 
     // this->_hasColor = hasColor;

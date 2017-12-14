@@ -12,6 +12,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <time.h>
+#include <assimp/mesh.h>
 // #include "FAArmature.h"
 // #include "FAMAterialComponent.h"
 // #include "FAAABB.h"
@@ -50,6 +51,7 @@ private:
 public:
 	FAMesh();
 	FAMesh(std::string path);
+	FAMesh(aiMesh &aiMesh);
 	// FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor);
 	// FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor);
 
