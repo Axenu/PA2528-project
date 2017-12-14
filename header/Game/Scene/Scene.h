@@ -36,11 +36,11 @@ protected:
 public:
 	// Scene(std::unique_ptr<GameObject> &root, AABB sceneBounds);
     Scene();
-	~Scene();
+	virtual ~Scene();
 
 	void setCamera(Camera *cam);
 	Camera& getCamera();
-	void update(float dT);
+	virtual void update(float dT);
     void render();
 	void addNode(FANode *object);
 	void removeNode(FANode *object);
