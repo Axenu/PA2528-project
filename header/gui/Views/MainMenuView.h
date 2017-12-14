@@ -33,6 +33,7 @@ namespace gui
         gui::Button* _quitButton;
         //pointer to float not owned by this
         float* _fps;
+		ProgressBar *bar;
 
     public:
         MainMenuView(EventManager* manager, float* fps);

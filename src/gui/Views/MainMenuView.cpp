@@ -91,6 +91,12 @@ namespace gui
         _quitButton->setScale(0.5,0.5);
         addChild(_quitButton);
 
+		bar = new ProgressBar();
+		bar->setValue(0.5);
+		bar->setPrimaryColor(PALLETPRIMARY);
+		bar->setSecondaryColor(PALLETHIGHLIGHT);
+		addChild(bar);
+
     }
     MainMenuView::~MainMenuView()
     {
