@@ -5,6 +5,7 @@
 // #include"DrawFrame.h"
 #include"node.h"
 #include "Game/camera.h"
+#include "Render/FrameObject.h"
 // #include "Game/Scene/QuadTree.h"
 // #include "Game/Objects/PointLightObject.h"
 
@@ -24,6 +25,7 @@ private:
 	/* Reference to the current sccene camera */
 
     FANode *_root;
+	FrameObject *fObject;
 	/* Culling tree for static objects */
 	// QuadTreeNode _quadTree;
 
@@ -44,6 +46,7 @@ public:
     void render();
 	void addNode(FANode *object);
 	void removeNode(FANode *object);
+	virtual FrameObject *setUpFrameObject();
 	/* Populates the DrawFrame by fetching and culling the scene drawables
 	*/
 	// void fetchDrawables(DrawFrame &dF);

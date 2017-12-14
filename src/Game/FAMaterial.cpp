@@ -23,29 +23,20 @@ FAMaterial::FAMaterial() {
 	// buildShader();
 }
 
-void FAMaterial::bind() {
+void FAMaterial::bind(FrameData &fData) {
 	// if (!isBuilt) {
 	// 	buildShader();
 	// }
 
-	glm::mat4 MVPMatrix = viewProjectionMatrix * modelMatrix;
+	glm::mat4 MVPMatrix = fData.VPMatrix * modelMatrix;
 	glUseProgram(shader->_shaderProgram);
 	glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, &MVPMatrix[0][0]);
 	// glUniformMatrix4fv(MLocation, 1, GL_FALSE, &modelMatrix[0][0]);
 
 }
 
-void FAMaterial::setViewProjectionwMatrix(glm::mat4 &VPMatrix) {
-	this->viewProjectionMatrix = VPMatrix;
-	//std::cout << glm::to_string(VPMatrix) << std::endl;
-}
-
 void FAMaterial::setModelMatrix(glm::mat4 &modelMatrix) {
 	this->modelMatrix = modelMatrix;
-}
-
-void FAMaterial::setCamera(Camera *camera) {
-	this->camera = camera;
 }
 
 FAMaterial::~FAMaterial() {
