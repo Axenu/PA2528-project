@@ -16,6 +16,9 @@ FAMaterial::FAMaterial() {
 	// this->modelMatrix = glm::mat4();
 	this->shader = new Shader("Basic");
 	MVPLocation = glGetUniformLocation(this->shader->_shaderProgram, "mvp");
+	if (MVPLocation == -1) {
+		std::cout << "loadgin MVPLocation failed" << std::endl;
+	}
 	// MLocation = glGetUniformLocation(this->shader->_shaderProgram, "MMatrix");
 	// buildShader();
 }
@@ -34,7 +37,7 @@ void FAMaterial::bind() {
 
 void FAMaterial::setViewProjectionwMatrix(glm::mat4 &VPMatrix) {
 	this->viewProjectionMatrix = VPMatrix;
-	std::cout << glm::to_string(VPMatrix) << std::endl;
+	//std::cout << glm::to_string(VPMatrix) << std::endl;
 }
 
 void FAMaterial::setModelMatrix(glm::mat4 &modelMatrix) {

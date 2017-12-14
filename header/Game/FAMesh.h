@@ -1,9 +1,8 @@
 #ifndef __First__FAMesh__
 #define __First__FAMesh__
 
-#define GLFW_INCLUDE_GLCOREARB
+#include "gl_include.h"
 #define GLM_FORCE_RADIANS
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>

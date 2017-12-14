@@ -19,7 +19,7 @@ FAMesh::FAMesh(std::string path) : FAMesh() {
         if (filetype == "fa"){
             // loadNewFAModel("/Users/Axenu/Developer/FireArrow-2.0/resources/models/" + path);
 		} else if (filetype == "obj") {
-			loadOBJModel("/Users/Axenu/Developer/OpenGL playground/resources/models/" + path);
+			loadOBJModel("Resources/models/" + path);
 		}
     } else {
         // loadFAModel("/Users/Axenu/Developer/FireArrow-2.0/resources/models/" + path);

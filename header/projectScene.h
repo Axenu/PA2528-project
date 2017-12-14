@@ -2,11 +2,17 @@
 #define __First__ProjectScene__
 
 #include "Game/Scene/Scene.h"
+#include "Event/Input/InputManager.h"
 
 class ProjectScene : public Scene {
 public:
-    ProjectScene();
+    ProjectScene(EventManager* manager);
     ~ProjectScene();
+
+private:
+	void keyCallback(const KeyboardEvent& event);
+
+	EventManager *_eventManager;
 };
 
 #endif

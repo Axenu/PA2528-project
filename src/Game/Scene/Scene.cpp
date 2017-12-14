@@ -10,7 +10,7 @@ Scene::~Scene() {
 
 }
 
-Camera& Scene::setCamera(Camera *cam) {
+void Scene::setCamera(Camera *cam) {
     this->_cam = cam;
 }
 Camera& Scene::getCamera() {
@@ -26,7 +26,7 @@ void Scene::render() {
 void Scene::addNode(FANode *object) {
     _root->addChild(object);
 }
-FANode* Scene::removeNode(FANode *object) {
+void Scene::removeNode(FANode *object) {
     _root->removeChild(object);
 }
 

@@ -38,12 +38,12 @@ public:
     Scene();
 	~Scene();
 
-	Camera& setCamera(Camera *cam);
+	void setCamera(Camera *cam);
 	Camera& getCamera();
 	void update(float dT);
     void render();
 	void addNode(FANode *object);
-	FANode* removeNode(FANode *object);
+	void removeNode(FANode *object);
 	/* Populates the DrawFrame by fetching and culling the scene drawables
 	*/
 	// void fetchDrawables(DrawFrame &dF);

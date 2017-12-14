@@ -1,4 +1,4 @@
-#include "gl/glInclude.h"
+#include "gl_include.h"
 #include <iostream>
 #define GLM_FORCE_RADIANS
 #include <IL/il.h>
@@ -26,6 +26,7 @@ void setupWindow()
 	//Random seed
 	// seed(1000);
     // Init glfw
+	gl::CheckGLErrors("GLError before glfwinit");
 	if (!glfwInit())
 	{
 		std::cout << "GLFW init failed!" << std::endl;
@@ -43,6 +44,7 @@ void setupWindow()
         std::cout << "GLFW creation of window failed!" << std::endl;
     }
     glfwMakeContextCurrent(window);
+	gl::CheckGLErrors("GLError before glew");
 
 #ifndef __APPLE__
 	glewExperimental = true; // Needed in core profile
@@ -57,13 +59,14 @@ void setupWindow()
 	ilInit();
 
 	//Set GL vars
+	gl::CheckGLErrors("GLError before setting variables: Main");
 	glEnable(GL_DEPTH_TEST);//Enable depth testinz
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);//Enable face culling
 	glCullFace(GL_BACK);
 	glEnable(GL_BLEND); //Enable alpha on gui elements. Could be done every frame on render?
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	gl::CheckGLErrors("Init stage failed: State");
+	gl::CheckGLErrors("Init stage failed: Main");
 
 	EventManager eventManager;
 	InputManager iManager(window, &eventManager);
@@ -82,7 +85,7 @@ void setupWindow()
 	guiManager.setView(guiScene);
 
 	//setup our scene:
-	ProjectScene ps;
+	ProjectScene ps(&eventManager);
 
 
 /* Loop until the user closes the window */
@@ -124,6 +127,7 @@ void setupWindow()
 
 int main()
 {
+	gl::CheckGLErrors("GLError at start");
 
 	//load settings
 	// Config::loadConfig("resources/settings.conf");
@@ -134,7 +138,8 @@ int main()
 	//setup window and run game
 	setupWindow();
 
-	// getchar();
+	int i = 0;
+	std::cin >> i;
 
     return 0;
 }
