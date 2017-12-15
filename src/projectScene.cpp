@@ -5,8 +5,9 @@
 ProjectScene::ProjectScene(EventManager* manager) : Scene() {
     _cam->moveZ(-2);
 
-    FAMesh *mesh = new FAMesh("Chalice.obj");
+    FAMesh *mesh = new FAMesh();
     FAMaterial *material = new FAMaterial();
+    material->setTexture(FATexture::getDefaultTexture());
     FAModel *model = new FAModel(mesh, material);
     // model->setScale(0.1f);
     // model->moveZ(-3.f);

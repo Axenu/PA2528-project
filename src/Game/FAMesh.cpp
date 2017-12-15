@@ -4,16 +4,18 @@ FAMesh::FAMesh() {
     //generate a default simple mesh with texture
 
 	unsigned int indices[] = {
-		0,1,2
+		0,2,1,
+		2,3,1
 	};
-	this->numberOfVertices = 3;
+	this->numberOfVertices = 6;
 
 	GLfloat vertices[] = {
-		-0.5f, -0.5f, 0,
-		-0.5f, 0.5f, 0,
-		0.5f, -0.5, 0
+		-0.5f, -0.5f, 0, 0, 0,
+		-0.5f, 0.5f, 0, 0, 1,
+		0.5f, -0.5, 0, 1, 0,
+		0.5f, 0.5f, 0, 1, 1
 	};
-	
+
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -30,9 +32,9 @@ FAMesh::FAMesh() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid *)(0 * sizeof(GLfloat)));
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -70,7 +72,7 @@ FAMesh::FAMesh(aiMesh &mesh) {
 		faceIndex += 3;
 	}
 
-	for (int i = 0; i < mesh.mNumVertices; i++) {
+	for (unsigned int i = 0; i < mesh.mNumVertices; i++) {
 		vertices.push_back(mesh.mVertices[i].x);
 		vertices.push_back(mesh.mVertices[i].y);
 		vertices.push_back(mesh.mVertices[i].z);
@@ -173,7 +175,7 @@ void FAMesh::loadOBJModel(std::string path) {
 		}
 
 		//calculate vertices
-		for (int i = 0; i < indicesArray.size(); i+=3) {
+		for (int i = 0; i < (int)indicesArray.size(); i+=3) {
 
 			//calculate tangent
 			glm::vec3 index0 = indicesArray[i];

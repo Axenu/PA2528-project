@@ -3,6 +3,7 @@
 
 #include "Game/Scene/Scene.h"
 #include "Event/Input/InputManager.h"
+#include "Game/FATexture.h"
 
 #include <list>
 class FAModel;

@@ -15,13 +15,16 @@
 class FAMaterial {
 
 private:
-	// std::vector<FAMaterialComponent*> components;
+	bool _hasTexture;
 	Shader *shader;
 	glm::mat4 modelMatrix;
 
 
 	GLint MVPLocation;
 	GLint MLocation;
+	GLint _textureLocation;
+
+	GLint _texture;
 
 
 public:
@@ -30,6 +33,7 @@ public:
 
 	virtual void bind(FrameData &fData);
 	virtual void setModelMatrix(glm::mat4 &modelMatrix);
+	void setTexture(GLint texture);
 
 protected:
 	Camera *camera;

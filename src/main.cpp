@@ -26,7 +26,7 @@ void setupWindow()
 	//Random seed
 	// seed(1000);
     // Init glfw
-	gl::CheckGLErrors("GLError before glfwinit");
+	// gl::CheckGLErrors("GLError before glfwinit");
 	if (!glfwInit())
 	{
 		std::cout << "GLFW init failed!" << std::endl;
@@ -127,7 +127,7 @@ void setupWindow()
 
 int main()
 {
-	gl::CheckGLErrors("GLError at start");
+	// gl::CheckGLErrors("GLError at start");
 
 	//load settings
 	// Config::loadConfig("resources/settings.conf");
@@ -138,8 +138,10 @@ int main()
 	//setup window and run game
 	setupWindow();
 
+#ifndef __APPLE__
 	int i = 0;
 	std::cin >> i;
+#endif
 
     return 0;
 }

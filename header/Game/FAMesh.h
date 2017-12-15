@@ -23,7 +23,7 @@ private:
 
 	// bool _hasNormal;
 	// bool _hasColor;
-	bool _hasUV;
+	// bool _hasUV;
 	// bool _hasWeights;
 	// bool _hasArmature;
 

@@ -14,7 +14,7 @@ OBJ       := $(OBJ_files:.cpp=.o)
 # The executable file that will be created
 EXEC = main
 # The c++ flags to use for compilation
-CXXFLAGS = -Wall -Wextra -std=c++11 -Wdouble-promotion -Wno-sign-conversion -Wno-unused-parameter -Wno-reorder -Wno-unknown-pragmas -Wno-unused-variable -Wno-overloaded-virtual
+CXXFLAGS = -Wall -Wextra -std=c++11 -Wdouble-promotion -Wno-sign-conversion -Wno-unused-parameter -Wno-reorder -Wno-unknown-pragmas -Wno-unused-variable -Wno-overloaded-virtual -g
 # The c++ compiler to use for compilation
 CC = g++
 
@@ -27,7 +27,7 @@ FRAMEWORKS=-framework IOKit -framework Cocoa -framework OpenGL -framework CoreVi
 all: checkdirs buildAll
 
 buildAll: $(OBJ)
-	$(CC) -L $(lIBDIR) -o $(EXEC) $^ $(FRAMEWORKS) $(LIB)
+	$(CC) -g -L $(lIBDIR) -o $(EXEC) $^ $(FRAMEWORKS) $(LIB)
 
 $(ODIR)%.o: $(SRCDIR)%.cpp
 	$(CC) -I $(IDIR) -I$(HDIR) $(CXXFLAGS) -c -o $@ $<

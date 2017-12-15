@@ -4,7 +4,7 @@
 
 Scene::Scene() {
     _root = new FANode();
-    _cam = new Camera(70, 0.5, 0.1, 10);
+    _cam = new Camera(70, 1.5, 0.1, 10);
 }
 Scene::~Scene() {
 
@@ -45,4 +45,3 @@ void Scene::addNode(FANode *object) {
 void Scene::removeNode(FANode *object) {
     _root->removeChild(object);
 }
-
