@@ -4,6 +4,9 @@
 #include "Game/Scene/Scene.h"
 #include "Event/Input/InputManager.h"
 
+#include <list>
+class FAModel;
+
 class ProjectScene : public Scene {
 public:
     ProjectScene(EventManager* manager);
@@ -13,10 +16,14 @@ public:
 
 private:
 	void keyCallback(const KeyboardEvent& event);
+	void updateMeshesLeft();
+	void updateMeshesRight();
 
 	EventManager *_eventManager;
 	bool _isADown = false;
 	bool _isDDown = false;
+	float _xPos = 0.f;
+	std::list<FAModel*> _models;
 };
 
 #endif
