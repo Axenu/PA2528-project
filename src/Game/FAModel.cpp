@@ -48,18 +48,12 @@ glm::mat4 &FAModel::getModelMatrix() {
 
 void FAModel::onUpdate(float dt) {
 	this->material->setModelMatrix(this->_modelMatrix);
-
-	this->material->setViewProjectionwMatrix(this->cam->VPMatrix);
-	// this->mesh->update(dt);
 }
 
-void FAModel::setCam(Camera *cam) {
-	this->cam = cam;
-}
-
-void FAModel::onRender() {
+void FAModel::onRender(FrameData &fData) {
 	// this->material->setModelMatrix(this->_modelMatrix);
-	material->bind();
+	//this->material->setViewProjectionwMatrix(fData.VPMatrix);
+	material->bind(fData);
 	mesh->render();
 	// std::cout << "render" << std::endl;
 }

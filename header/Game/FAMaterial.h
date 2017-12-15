@@ -10,13 +10,13 @@
 #include <algorithm>
 #include "Camera.h"
 #include "Render/Shader.h"
+#include "Render/FrameData.h"
 
 class FAMaterial {
 
 private:
 	// std::vector<FAMaterialComponent*> components;
 	Shader *shader;
-	glm::mat4 viewProjectionMatrix;
 	glm::mat4 modelMatrix;
 
 
@@ -28,10 +28,7 @@ public:
 	FAMaterial();
 	~FAMaterial();
 
-	void setCamera(Camera *camera);
-
-	virtual void bind();
-	virtual void setViewProjectionwMatrix(glm::mat4 &VPMatrix);
+	virtual void bind(FrameData &fData);
 	virtual void setModelMatrix(glm::mat4 &modelMatrix);
 
 protected:

@@ -4,6 +4,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Render/FrameData.h"
 
 // #include <GLFW/glfw3.h>
 #include "gl/glInclude.h"
@@ -43,7 +44,7 @@ public:
     void removeChild(FANode *node);
 
     virtual void update(float dt);
-    virtual void render();
+    virtual void render(FrameData &fData);
 	virtual void init();
 
 #pragma region Get/Set Orientation vars
@@ -116,7 +117,7 @@ protected:
 	void calcModelMatrix();
 
     virtual void onUpdate(float dt){}
-    virtual void onRender(){}
+    virtual void onRender(FrameData &fData){}
 };
 
 

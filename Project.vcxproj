@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Render\FrameData.cpp" />
+    <ClCompile Include="src\Render\FrameObject.cpp" />
     <ClCompile Include="src\Event\EventManager.cpp" />
     <ClCompile Include="src\Event\Events.cpp" />
     <ClCompile Include="src\Event\Input\InputIncrementer.cpp" />
@@ -59,6 +61,8 @@
     <ClCompile Include="src\StaticVars.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header\Render\FrameData.h" />
+    <ClInclude Include="header\Render\FrameObject.h" />
     <ClInclude Include="header\Event\EventManager.h" />
     <ClInclude Include="header\Event\Events.h" />
     <ClInclude Include="header\Event\Input\InputIncrementer.h" />
