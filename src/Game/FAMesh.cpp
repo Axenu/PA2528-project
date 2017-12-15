@@ -1,14 +1,43 @@
 #include <Game/FAMesh.h>
 
 FAMesh::FAMesh() {
-    // this->_hasPosition = true;
-    // this->_hasNormal = false;
-    // this->_hasColor = false;
-    // this->_hasUV = false;
-    // this->_hasArmature = false;
-	// this->_hasWeights = false;
-	// this->armature = nullptr;
-    // this->animatedXForm = std::vector<glm::mat4>();
+    //generate a default simple mesh with texture
+
+	unsigned int indices[] = {
+		0,1,2
+	};
+	this->numberOfVertices = 3;
+
+	GLfloat vertices[] = {
+		-0.5f, -0.5f, 0,
+		-0.5f, 0.5f, 0,
+		0.5f, -0.5, 0
+	};
+	
+
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, numberOfVertices * 3 * sizeof(GLfloat), &vertices[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * numberOfVertices, indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid *)(0 * sizeof(GLfloat)));
+	//glEnableVertexAttribArray(1);
+	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+
 }
 
 FAMesh::FAMesh(std::string path) : FAMesh() {
@@ -48,6 +77,7 @@ FAMesh::FAMesh(aiMesh &mesh) {
 		vertices.push_back(mesh.mTextureCoords[i]->x);
 		vertices.push_back(mesh.mTextureCoords[i]->y);
 	}
+	this->numberOfVertices = mesh.mNumVertices;
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -72,63 +102,6 @@ FAMesh::FAMesh(aiMesh &mesh) {
 	glBindVertexArray(0);
 
 }
-
-// FAMesh::FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor) : FAMesh() {
-
-    // this->_hasColor = hasColor;
-    // this->_hasNormal = hasNormal;
-    //
-    // if (hasColor) {
-    //     avaliableVertexComponents.push_back(new FAVertexColorComponent());
-    // }
-    // if (hasNormal) {
-    //     avaliableVertexComponents.push_back(new FAVertexNormalComponent());
-    // }
-    // // this->_hasPosition = true;
-    //
-    // // load model to graphicscard
-    // this->numberOfVertices = (GLint) indices.size();
-    //
-    // //test
-    // // GLfloat vertA[] = {0,0,0, 1,0,0, 1,0,0, 1,0,0, 1,0,0, 1,0,0, 1,1,0, 1,0,0, 1,0,0, 0,1,0, 1,0,0, 1,0,0};
-    // // GLuint indA[] = {0,1,2,0,2,3};
-    // // _hasColor = true;
-    // // _hasNormal = true;
-    //
-    // glGenBuffers(1, &VBO);
-    // glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    // glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), &vertices[0], GL_STATIC_DRAW);
-    // glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //
-    // glGenBuffers(1, &EBO);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    // glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    //
-    // glGenVertexArrays(1, &VAO);
-    // glBindVertexArray(VAO);
-    // glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    //
-    // int attributes = 3;
-    // if (_hasNormal) attributes +=3;
-    // if (_hasColor) attributes +=3;
-    //
-    // glEnableVertexAttribArray(0);
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *) (0 * sizeof(GLfloat)));
-    // int offset = 3;
-    // if (_hasNormal) {
-    //     glEnableVertexAttribArray(1);
-    //     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *) (offset * sizeof(GLfloat)));
-    //     offset += 3;
-    // }
-    // if (_hasColor) {
-    //     glEnableVertexAttribArray(2);
-    //     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *) (offset * sizeof(GLfloat)));
-    // }
-    //
-    // glBindBuffer(GL_ARRAY_BUFFER, 0);
-    // glBindVertexArray(0);
-// }
 
 void FAMesh::loadOBJModel(std::string path) {
 	std::ifstream file (path);
@@ -272,7 +245,7 @@ void FAMesh::loadOBJModel(std::string path) {
 	}
 
 	this->numberOfVertices = count;
-    std::cout << count << std::endl;
+    //std::cout << count << std::endl;
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -288,17 +261,17 @@ void FAMesh::loadOBJModel(std::string path) {
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-	int attributes = 14 * sizeof(GLfloat);
+	int attributes = 3 * sizeof(GLfloat);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, attributes, (GLvoid *) 0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, attributes, (GLvoid *) (3 *sizeof(GLfloat)));
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, attributes, (GLvoid *) (5 *sizeof(GLfloat)));
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, attributes, (GLvoid *) (8 *sizeof(GLfloat)));
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, attributes, (GLvoid *) (11 *sizeof(GLfloat)));
+	//glEnableVertexAttribArray(1);
+	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, attributes, (GLvoid *) (3 *sizeof(GLfloat)));
+	//glEnableVertexAttribArray(2);
+	//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, attributes, (GLvoid *) (5 *sizeof(GLfloat)));
+	//glEnableVertexAttribArray(3);
+	//glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, attributes, (GLvoid *) (8 *sizeof(GLfloat)));
+	//glEnableVertexAttribArray(4);
+	//glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, attributes, (GLvoid *) (11 *sizeof(GLfloat)));
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
