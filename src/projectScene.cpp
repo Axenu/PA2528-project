@@ -7,9 +7,21 @@
 
 
 ProjectScene::ProjectScene(EventManager* manager) : Scene() {
+	srand(NULL);
 	PackageReader::setPackage("C:/Users/Vendrii/Documents/skolarbeten/BTH/spelmotorarkitekturer/ass3/PA2528-3/package tool/res");
 	ThreadPool::initialize();
 	ResourceManager::initialize();
+
+	Array<PackageReader::MetaData> metaDatas = PackageReader::getMetaData();
+	for (size_t i = 0; i < metaDatas.size; i++) {
+		const PackageReader::MetaData& d = metaDatas.data[i];
+		using T = PackageReader::MetaData::Type;
+		switch(d.type) {
+			case T::MESH: _meshGuis.push_back(d.gui); break;
+			case T::TEXTURE: _textureGuis.push_back(d.gui); break;
+			default: break;
+		}
+	}
 
 	//Promise<SharedPtr<Mesh>> mp5 = ResourceManager::aloadMesh(6722305721597800034);
 	//Mesh* m = mp5.get().get();
@@ -78,11 +90,59 @@ void ProjectScene::update(float dT) {
 		_cam->moveX(-distance);
 		updateMeshesRight();
 	}
+	handlePendingMeshLoads();
 	Scene::update(dT);
+}
+
+void ProjectScene::handlePendingMeshLoads() {
+	for (auto it = _pendingMeshLoads.begin(); it != _pendingMeshLoads.end();) {
+		if (it->mesh.isReady() && it->texture.isReady()) {
+			FAMesh *mesh = new FAMesh(it->mesh.get());
+			FATexture *texture = new FATexture(it->texture.get());
+			FAMaterial *material = new FAMaterial();
+			// TODO: material->setTexture(???);
+			FAModel *model = new FAModel(mesh, material);
+			
+			model->setPositionX(it->xPos);
+
+			if (it->isLeft) {
+				this->removeNode(_models.back());
+				_models.pop_back();
+				this->addNode(model);
+				_models.push_front(model);
+			}
+			else {
+				this->removeNode(_models.front());
+				_models.pop_front();
+				this->addNode(model);
+				_models.push_back(model);
+			}
+
+			_pendingMeshLoads.erase(it++);
+		}
+		else {
+
+			it++;
+		}
+
+	}
+}
+
+void ProjectScene::loadMesh(float x, bool isLeft) {
+	gui_t meshGui = _meshGuis[rand() % _meshGuis.size()];
+	gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
+	
+	MeshLoad load(ResourceManager::aloadMesh(meshGui), ResourceManager::aloadTexture(textureGui));
+	load.xPos = x;
+	load.isLeft = isLeft;
+	_pendingMeshLoads.push_back(load);
 }
 
 void ProjectScene::updateMeshesLeft() {
 	if (_models.front()->getX() - _xPos > 0.5f) {
+		// loadMesh(_xPos, true);
+
+
 		FAMesh *mesh = new FAMesh("Chalice.obj");
 		FAMaterial *material = new FAMaterial();
 		FAModel *model = new FAModel(mesh, material);
@@ -97,6 +157,8 @@ void ProjectScene::updateMeshesLeft() {
 
 void ProjectScene::updateMeshesRight() {
 	if (_xPos - _models.back()->getX() > 0.5f) {
+		// loadMesh(_xPos, false);
+
 		FAMesh *mesh = new FAMesh("Chalice.obj");
 		FAMaterial *material = new FAMaterial();
 		FAModel *model = new FAModel(mesh, material);
