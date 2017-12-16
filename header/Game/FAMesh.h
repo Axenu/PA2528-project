@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assimp/mesh.h>
+#include "PA2528-3/SharedPtr.hpp"
+#include "PA2528-3/Mesh.hpp"
 // #include "FAArmature.h"
 // #include "FAMAterialComponent.h"
 // #include "FAAABB.h"
@@ -51,6 +53,7 @@ private:
 public:
 	FAMesh();
 	FAMesh(std::string path);
+	FAMesh(SharedPtr<Mesh> mesh);
 	FAMesh(aiMesh &aiMesh);
 	// FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor);
 	// FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor);
@@ -74,6 +77,10 @@ public:
 	GLenum renderMode = GL_TRIANGLES;
 	// std::vector<glm::mat4> animatedXForm;
 	// std::vector<FABone *> bones;
+
+private:
+	void load(aiMesh &mesh);
+
 protected:
 	GLint numberOfVertices;
 
@@ -81,6 +88,7 @@ protected:
 	GLuint EBO;
 	GLuint VAO;
 
+	SharedPtr<Mesh> _mesh;
 
 };
 

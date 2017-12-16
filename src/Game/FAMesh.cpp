@@ -57,8 +57,11 @@ FAMesh::FAMesh(std::string path) : FAMesh() {
     }
 }
 
-FAMesh::FAMesh(aiMesh &mesh) {
+FAMesh::FAMesh(SharedPtr<Mesh> mesh) : _mesh(mesh) {
+	load(**mesh->aiMesh);
+}
 
+void FAMesh::load(aiMesh &mesh) {
 	std::vector<GLfloat> vertices;
 
 	unsigned int *faceArray;
@@ -102,7 +105,10 @@ FAMesh::FAMesh(aiMesh &mesh) {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+}
 
+FAMesh::FAMesh(aiMesh &mesh) {
+	load(mesh);
 }
 
 void FAMesh::loadOBJModel(std::string path) {
