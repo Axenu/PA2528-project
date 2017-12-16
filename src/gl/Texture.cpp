@@ -1,23 +1,23 @@
 #include "gl/Texture.h"
 
-Texture::Texture()
+gl_Texture::gl_Texture()
 {
 
 }
-Texture::Texture(std::string path)
+gl_Texture::gl_Texture(std::string path)
 {
     _texture = createTexture(path);
 }
-Texture::~Texture()
+gl_Texture::~gl_Texture()
 {
 
 }
-void Texture::bindTexture(int index)
+void gl_Texture::bindTexture(int index)
 {
     glActiveTexture(GL_TEXTURE0 + index);
     glBindTexture(GL_TEXTURE_2D, _texture);
 }
-GLuint Texture::createTexture(std::string path)
+GLuint gl_Texture::createTexture(std::string path)
 {
     ILuint image;
     ilGenImages(1, &image);

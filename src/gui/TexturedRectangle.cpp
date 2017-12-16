@@ -14,7 +14,7 @@ namespace gui
         _positionZUniform = _shader->getUniform("positionZ");
         _modelMatrixUniform = _shader->getUniform("modelMatrix");
         _textureUniform = _shader->getUniform("_texture");
-        _texture = Texture::createTexture(path);
+        _texture = gl_Texture::createTexture(path);
         _color = glm::vec4(1,1,1,1);
 
         _vertexCount = 4;

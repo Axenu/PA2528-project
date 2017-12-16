@@ -150,7 +150,7 @@ namespace gui {
 			}
 		}
 		fontFile.close();
-		_fontTexture = Texture::createTexture(path + ".png");
+		_fontTexture = gl_Texture::createTexture(path + ".png");
 	}
 
 	float Font::getFontSize()
