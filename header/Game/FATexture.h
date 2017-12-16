@@ -5,6 +5,9 @@
 
 #include <iostream>
 #include "gl_include.h"
+#include "PA2528-3/SharedPtr.hpp"
+#include "PA2528-3/Texture.hpp"
+
 //#include <GLFW/glfw3.h>
 // #include <IL/il.h>
 
@@ -15,10 +18,14 @@ private:
 public:
 	FATexture();
 	FATexture(const GLchar *path);
+	FATexture(SharedPtr<Texture> texture);
 	~FATexture();
 
 	static GLuint createTexture(const GLchar *path);
     static GLuint getDefaultTexture();
+
+private:
+	SharedPtr<Texture> _texture;
 };
 
 #endif

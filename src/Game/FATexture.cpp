@@ -8,6 +8,10 @@ FATexture::FATexture(const GLchar *path) {
 
 }
 
+FATexture::FATexture(SharedPtr<Texture> texture) : _texture(texture) {
+	// TODO: Actually use the texture.
+}
+
 FATexture::~FATexture() {
 
 }
