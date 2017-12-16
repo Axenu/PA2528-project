@@ -83,12 +83,12 @@ void ProjectScene::update(float dT) {
 	if (_isADown) {
 		_xPos -= distance;
 		_cam->moveX(distance);
-		updateMeshesLeft();
+		updateMeshes(true);
 	}
 	else if (_isDDown) {
 		_xPos += distance;
 		_cam->moveX(-distance);
-		updateMeshesRight();
+		updateMeshes(false);
 	}
 	handlePendingMeshLoads();
 	Scene::update(dT);
@@ -138,37 +138,35 @@ void ProjectScene::loadMesh(float x, bool isLeft) {
 	_pendingMeshLoads.push_back(load);
 }
 
-void ProjectScene::updateMeshesLeft() {
-	if (_models.front()->getX() - _xPos > 0.5f) {
-		// loadMesh(_xPos, true);
+void ProjectScene::updateMeshes(bool isMovingLeft) {
+	if (isMovingLeft) {
+		if (_models.front()->getX() - _xPos > 0.5f) {
+			// loadMesh(_xPos, true);
 
-
-		FAMesh *mesh = new FAMesh("Chalice.obj");
-		FAMaterial *material = new FAMaterial();
-		FAModel *model = new FAModel(mesh, material);
-		model->setPositionX(_xPos);
-		this->removeNode(_models.back());
-		_models.pop_back();
-		this->addNode(model);
-		_models.push_front(model);
+			FAMesh *mesh = new FAMesh("Chalice.obj");
+			FAMaterial *material = new FAMaterial();
+			FAModel *model = new FAModel(mesh, material);
+			model->setPositionX(_xPos);
+			this->removeNode(_models.back());
+			_models.pop_back();
+			this->addNode(model);
+			_models.push_front(model);
+		}
 	}
+	else {
+		if (_xPos - _models.back()->getX() > 0.5f) {
+			// loadMesh(_xPos, false);
 
-}
-
-void ProjectScene::updateMeshesRight() {
-	if (_xPos - _models.back()->getX() > 0.5f) {
-		// loadMesh(_xPos, false);
-
-		FAMesh *mesh = new FAMesh("Chalice.obj");
-		FAMaterial *material = new FAMaterial();
-		FAModel *model = new FAModel(mesh, material);
-		model->setPositionX(_xPos);
-		this->removeNode(_models.front());
-		_models.pop_front();
-		this->addNode(model);
-		_models.push_back(model);
+			FAMesh *mesh = new FAMesh("Chalice.obj");
+			FAMaterial *material = new FAMaterial();
+			FAModel *model = new FAModel(mesh, material);
+			model->setPositionX(_xPos);
+			this->removeNode(_models.front());
+			_models.pop_front();
+			this->addNode(model);
+			_models.push_back(model);
+		}
 	}
-
 }
 
 ProjectScene::~ProjectScene(){

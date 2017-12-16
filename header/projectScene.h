@@ -29,8 +29,7 @@ private:
 
 private:
 	void keyCallback(const KeyboardEvent& event);
-	void updateMeshesLeft();
-	void updateMeshesRight();
+	void updateMeshes(bool isMovingLeft);
 
 	EventManager *_eventManager;
 	bool _isADown = false;
