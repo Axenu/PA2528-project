@@ -19,6 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PA2528-3\AssimpLoader.cpp" />
+    <ClCompile Include="PA2528-3\Atomic.cpp" />
+    <ClCompile Include="PA2528-3\ImageLoader.cpp" />
+    <ClCompile Include="PA2528-3\ImporterManager.cpp" />
+    <ClCompile Include="PA2528-3\PackageReader.cpp" />
+    <ClCompile Include="PA2528-3\ResourceManager.cpp" />
+    <ClCompile Include="PA2528-3\Semaphore.cpp" />
+    <ClCompile Include="PA2528-3\SpinLock.cpp" />
+    <ClCompile Include="PA2528-3\Thread.cpp" />
+    <ClCompile Include="PA2528-3\ThreadPool.cpp" />
+    <ClCompile Include="PA2528-3\utility.cpp" />
+    <ClCompile Include="src\Game\FATexture.cpp" />
     <ClCompile Include="src\Render\FrameData.cpp" />
     <ClCompile Include="src\Render\FrameObject.cpp" />
     <ClCompile Include="src\Event\EventManager.cpp" />
@@ -61,6 +73,7 @@
     <ClCompile Include="src\StaticVars.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header\Game\FATexture.h" />
     <ClInclude Include="header\Render\FrameData.h" />
     <ClInclude Include="header\Render\FrameObject.h" />
     <ClInclude Include="header\Event\EventManager.h" />
@@ -110,6 +123,38 @@
     <ClInclude Include="header\Render\Shader.h" />
     <ClInclude Include="header\StaticVars.h" />
     <ClInclude Include="header\type_info.h" />
+    <ClInclude Include="PA2528-3\Array.hpp" />
+    <ClInclude Include="PA2528-3\AssimpLoader.h" />
+    <ClInclude Include="PA2528-3\Atomic.hpp" />
+    <ClInclude Include="PA2528-3\Function.hpp" />
+    <ClInclude Include="PA2528-3\gui_t.hpp" />
+    <ClInclude Include="PA2528-3\HashMap.hpp" />
+    <ClInclude Include="PA2528-3\ImageLoader.h" />
+    <ClInclude Include="PA2528-3\ImporterManager.h" />
+    <ClInclude Include="PA2528-3\ImporterTester.h" />
+    <ClInclude Include="PA2528-3\Lambda.hpp" />
+    <ClInclude Include="PA2528-3\Mesh.hpp" />
+    <ClInclude Include="PA2528-3\OffsetPointer.hpp" />
+    <ClInclude Include="PA2528-3\PackageReader.hpp" />
+    <ClInclude Include="PA2528-3\Promise.hpp" />
+    <ClInclude Include="PA2528-3\ResourceManager.hpp" />
+    <ClInclude Include="PA2528-3\Semaphore.hpp" />
+    <ClInclude Include="PA2528-3\SharedPtr.hpp" />
+    <ClInclude Include="PA2528-3\SpinLock.hpp" />
+    <ClInclude Include="PA2528-3\stb_image.h" />
+    <ClInclude Include="PA2528-3\Texture.hpp" />
+    <ClInclude Include="PA2528-3\Thread.hpp" />
+    <ClInclude Include="PA2528-3\ThreadPool.hpp" />
+    <ClInclude Include="PA2528-3\utility.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PA2528-3\Function.inl" />
+    <None Include="PA2528-3\HashMap.inl" />
+    <None Include="PA2528-3\Lambda.inl" />
+    <None Include="PA2528-3\Promise.inl" />
+    <None Include="PA2528-3\SharedPtr.inl" />
+    <None Include="PA2528-3\ThreadPool.inl" />
+    <None Include="PA2528-3\utility.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -163,12 +208,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)include;header;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;header;$(IncludePath);$(ProjectDir)</IncludePath>
     <SourcePath>$(ProjectDir)src;$(SourcePath)</SourcePath>
     <LibraryPath>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;$(ProjectDir)lib\Windows;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)include;header;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;header;$(IncludePath);$(ProjectDir)</IncludePath>
     <SourcePath>$(ProjectDir)src;$(SourcePath)</SourcePath>
     <LibraryPath>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;$(ProjectDir)lib\Windows;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -189,7 +234,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;devil.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;devil.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -216,7 +261,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;devil.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;devil.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
