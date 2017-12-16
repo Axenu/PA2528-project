@@ -1,8 +1,21 @@
 #include "projectScene.h"
 #include "Game/FAModel.h"
 
+#include "PA2528-3/ThreadPool.hpp"
+#include "PA2528-3/PackageReader.hpp"
+#include "PA2528-3/ResourceManager.hpp"
+
 
 ProjectScene::ProjectScene(EventManager* manager) : Scene() {
+	PackageReader::setPackage("C:/Users/Vendrii/Documents/skolarbeten/BTH/spelmotorarkitekturer/ass3/PA2528-3/package tool/res");
+	ThreadPool::initialize();
+	ResourceManager::initialize();
+
+	//Promise<SharedPtr<Mesh>> mp5 = ResourceManager::aloadMesh(6722305721597800034);
+	//Mesh* m = mp5.get().get();
+	 
+
+
     _cam->moveZ(-2);
 
     FAMesh *mesh = new FAMesh();
