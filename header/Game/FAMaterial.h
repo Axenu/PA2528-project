@@ -29,6 +29,7 @@ private:
 
 public:
 	FAMaterial();
+	FAMaterial(GLint texture);
 	~FAMaterial();
 
 	virtual void bind(FrameData &fData);

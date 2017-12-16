@@ -1,7 +1,9 @@
 #include <Game/FAMesh.h>
+#include "gl/GLFunctions.h"
 
 FAMesh::FAMesh() {
     //generate a default simple mesh with texture
+	gl::CheckGLErrors("before FAMesh()");
 
 	unsigned int indices[] = {
 		0,2,1,
@@ -39,7 +41,7 @@ FAMesh::FAMesh() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-
+	gl::CheckGLErrors("after FAMesh()");
 }
 
 FAMesh::FAMesh(std::string path) : FAMesh() {

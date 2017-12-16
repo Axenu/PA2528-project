@@ -14,7 +14,7 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
     this->addNode(model);
 	_models.push_back(model);
 
-	mesh = new FAMesh("Chalice.obj");
+	mesh = new FAMesh();
 	material = new FAMaterial();
 	model = new FAModel(mesh, material);
 	model->moveX(0.5f);
@@ -36,7 +36,6 @@ void ProjectScene::keyCallback(const KeyboardEvent& event)
 		switch (event.getKey()) {
 			case A_KEY: _isADown = true; break;
 			case D_KEY: _isDDown = true; break;
-
 			default:
 				break;
 		}
