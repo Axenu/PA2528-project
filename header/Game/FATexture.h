@@ -1,10 +1,11 @@
 #ifndef __FireArrow__FATexture__
 #define __FireArrow__FATexture__
 
-#define GLFW_INCLUDE_GLCOREARB
+//#define GLFW_INCLUDE_GLCOREARB
 
 #include <iostream>
-#include <GLFW/glfw3.h>
+#include "gl_include.h"
+//#include <GLFW/glfw3.h>
 // #include <IL/il.h>
 
 class FATexture {
