@@ -25,7 +25,7 @@ private:
 
 	// bool _hasNormal;
 	// bool _hasColor;
-	// bool _hasUV;
+	bool _hasUV = true;
 	// bool _hasWeights;
 	// bool _hasArmature;
 
@@ -68,7 +68,7 @@ public:
 	// bool hasVertexPosition();
 	// bool hasVertexNormal();
 	// bool hasVertexColor();
-	// bool hasVertexUV();
+	bool hasVertexUV();
 
 	// std::vector<FAMaterialComponent *>* getAvaliableComponents();
 	// FAArmature *getArmature();

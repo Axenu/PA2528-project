@@ -79,15 +79,17 @@ void FAMesh::load(aiMesh &mesh) {
 
 	if (!mesh.HasTextureCoords(0)) {
 		std::cout << "mesh you are trying to load does not have any texture coordinates!!!" << std::endl;
-		return;
+		_hasUV = false;
 	}
 
 	for (unsigned int i = 0; i < mesh.mNumVertices; i++) {
 		vertices.push_back(mesh.mVertices[i].x);
 		vertices.push_back(mesh.mVertices[i].y);
 		vertices.push_back(mesh.mVertices[i].z);
-		vertices.push_back(mesh.mTextureCoords[0][i].x);
-		vertices.push_back(mesh.mTextureCoords[0][i].y);
+		if (_hasUV) {
+			vertices.push_back(mesh.mTextureCoords[0][i].x);
+			vertices.push_back(mesh.mTextureCoords[0][i].y);
+		}
 	}
 	this->numberOfVertices = mesh.mNumVertices;
 
@@ -105,10 +107,16 @@ void FAMesh::load(aiMesh &mesh) {
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
+	int attributes = 3;
+	if (_hasUV)
+		attributes += 2;
+
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)(0 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *)(0 * sizeof(GLfloat)));
+	if (_hasUV) {
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -339,6 +347,11 @@ void FAMesh::update(float dt) {
 // FAArmature *FAMesh::getArmature() {
 // 	return this->armature;
 // }
+
+bool FAMesh::hasVertexUV()
+{
+	return _hasUV;
+}
 
 FAMesh::~FAMesh() {
 	// delete armature;

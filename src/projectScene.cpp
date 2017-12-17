@@ -33,13 +33,13 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 
     _cam->moveZ(-2);
 
-	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[0]);
+	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[1]);
 	FAMesh *mesh = new FAMesh(m);
 	FAMaterial *material = new FAMaterial();
 	//material->setTexture(FATexture::getDefaultTexture());
 	FAModel *model = new FAModel(mesh, material);
-	model->setScale(0.01f);
-	model->moveZ(-3.f);
+	model->setScale(1.f);
+	model->moveZ(-2.f);
 	this->addNode(model);
 	_models.push_back(model);
 
