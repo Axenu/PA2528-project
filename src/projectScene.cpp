@@ -8,7 +8,7 @@
 
 ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	srand(NULL);
-	PackageReader::setPackage("C:/Users/Vendrii/Documents/skolarbeten/BTH/spelmotorarkitekturer/ass3/PA2528-3/package tool/res");
+	PackageReader::setPackage("../PA2528-3/package tool/res");
 	ThreadPool::initialize();
 	ResourceManager::initialize();
 
@@ -30,13 +30,13 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 
     _cam->moveZ(-2);
 
-    FAMesh *mesh = new FAMesh();
-    FAMaterial *material = new FAMaterial();
-    material->setTexture(FATexture::getDefaultTexture());
-    FAModel *model = new FAModel(mesh, material);
-    // model->setScale(0.1f);
-    // model->moveZ(-3.f);
-    this->addNode(model);
+	FAMesh *mesh = new FAMesh();
+	FAMaterial *material = new FAMaterial();
+	material->setTexture(FATexture::getDefaultTexture());
+	FAModel *model = new FAModel(mesh, material);
+	// model->setScale(0.1f);
+	// model->moveZ(-3.f);
+	this->addNode(model);
 	_models.push_back(model);
 
 	mesh = new FAMesh();
@@ -98,8 +98,9 @@ void ProjectScene::handlePendingMeshLoads() {
 		if (it->mesh.isReady() && it->texture.isReady()) {
 			FAMesh *mesh = new FAMesh(it->mesh.get());
 			FATexture *texture = new FATexture(it->texture.get());
-			FAMaterial *material = new FAMaterial();
-			// TODO: material->setTexture(???);
+			float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+			FAMaterialColor *material = new FAMaterialColor(color);
+			material->setTexture(-1);
 			FAModel *model = new FAModel(mesh, material);
 			
 			model->setPositionX(it->xPos);
@@ -143,7 +144,8 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			// loadMesh(_xPos, true);
 
 			FAMesh *mesh = new FAMesh("Chalice.obj");
-			FAMaterial *material = new FAMaterial();
+			float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+			FAMaterialColor *material = new FAMaterialColor(color);
 			FAModel *model = new FAModel(mesh, material);
 			model->setPositionX(_xPos);
 			this->removeNode(_models.back());
@@ -157,7 +159,8 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			// loadMesh(_xPos, false);
 
 			FAMesh *mesh = new FAMesh("Chalice.obj");
-			FAMaterial *material = new FAMaterial();
+			float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+			FAMaterialColor *material = new FAMaterialColor(color);
 			FAModel *model = new FAModel(mesh, material);
 			model->setPositionX(_xPos);
 			this->removeNode(_models.front());

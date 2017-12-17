@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\FAMaterialColor.cpp" />
     <ClCompile Include="PA2528-3\AssimpLoader.cpp" />
     <ClCompile Include="PA2528-3\Atomic.cpp" />
     <ClCompile Include="PA2528-3\ImageLoader.cpp" />
@@ -73,6 +74,7 @@
     <ClCompile Include="src\StaticVars.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header\Game\FAMaterialColor.h" />
     <ClInclude Include="header\Game\FATexture.h" />
     <ClInclude Include="header\Render\FrameData.h" />
     <ClInclude Include="header\Render\FrameObject.h" />
@@ -231,6 +233,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\Users\Axenu\Developer\PA2528-project\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

@@ -171,6 +171,9 @@
     <ClCompile Include="PA2528-3\utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\FAMaterialColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\Event\Input\InputIncrementer.h">
@@ -390,6 +393,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PA2528-3\utility.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Game\FAMaterialColor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
