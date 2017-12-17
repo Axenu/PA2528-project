@@ -20,9 +20,11 @@
 
 
 
-#define TRACK_MEMORY
+#include "PA2528-2\TrackMemory.h"
 #include "PA2528-2\PoolAllocator.h"
 #include "PA2528-2\MemoryTracker.h"
+#include "PackageReader.hpp"
+#include "PA2528-3\ResourceManager.hpp"
 
 void setupWindow()
 {
@@ -145,6 +147,19 @@ int main()
 	pa->dealloc(asdf);
 	delete pa;
 
+	PackageReader::setPackage("res");
+
+	PackageReader::loadMesh(6042386530102251393);
+
+	Promise<SharedPtr<Mesh>> mp = ResourceManager::aloadMesh(6042386530102251393);
+
+	while (true) {
+		if (mp.isReady()) {
+			break;
+		}
+	}
+
+	PackageReader::clearPackage();
 
 	//load settings
 	// Config::loadConfig("resources/settings.conf");
