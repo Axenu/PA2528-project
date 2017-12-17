@@ -77,12 +77,17 @@ void FAMesh::load(aiMesh &mesh) {
 		faceIndex += 3;
 	}
 
+	if (!mesh.HasTextureCoords(0)) {
+		std::cout << "mesh you are trying to load does not have any texture coordinates!!!" << std::endl;
+		return;
+	}
+
 	for (unsigned int i = 0; i < mesh.mNumVertices; i++) {
 		vertices.push_back(mesh.mVertices[i].x);
 		vertices.push_back(mesh.mVertices[i].y);
 		vertices.push_back(mesh.mVertices[i].z);
-		vertices.push_back(mesh.mTextureCoords[i]->x);
-		vertices.push_back(mesh.mTextureCoords[i]->y);
+		vertices.push_back(mesh.mTextureCoords[0][i].x);
+		vertices.push_back(mesh.mTextureCoords[0][i].y);
 	}
 	this->numberOfVertices = mesh.mNumVertices;
 
