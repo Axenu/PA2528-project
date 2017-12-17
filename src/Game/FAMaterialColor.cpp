@@ -14,13 +14,6 @@ FAMaterialColor::FAMaterialColor()
 		std::cout << "loading MemoryColor failed" << std::endl;
 	}
 
-	// default color
-	m_color[0] = 0.0f;
-	m_color[1] = 0.0f;
-	m_color[2] = 0.0f;
-	m_color[3] = 1.0f;
-	//
-
 	_hasTexture = false;
 }
 
