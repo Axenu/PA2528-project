@@ -144,8 +144,10 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			// loadMesh(_xPos, true);
 
 			FAMesh *mesh = new FAMesh("Chalice.obj");
-			float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-			FAMaterialColor *material = new FAMaterialColor(color);
+			/*float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+			FAMaterialColor *material = new FAMaterialColor(color);*/
+			FAMaterialColor *material = new FAMaterialColor();
+			material->setColorMemFrag(100, 50); // 50% memory fragmentation
 			FAModel *model = new FAModel(mesh, material);
 			model->setPositionX(_xPos);
 			this->removeNode(_models.back());
@@ -159,8 +161,10 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			// loadMesh(_xPos, false);
 
 			FAMesh *mesh = new FAMesh("Chalice.obj");
-			float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-			FAMaterialColor *material = new FAMaterialColor(color);
+			/*float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+			FAMaterialColor *material = new FAMaterialColor(color);*/
+			FAMaterialColor *material = new FAMaterialColor();
+			material->setColorMemFrag(100, 0);  // 0% memory fragmentation
 			FAModel *model = new FAModel(mesh, material);
 			model->setPositionX(_xPos);
 			this->removeNode(_models.front());
