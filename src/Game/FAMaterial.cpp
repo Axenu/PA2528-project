@@ -5,16 +5,21 @@ FAMaterial::FAMaterial() {
 
 	this->shader = new Shader("Basic");
 	MVPLocation = glGetUniformLocation(this->shader->_shaderProgram, "mvp");
+	_colorLocation = glGetUniformLocation(this->shader->_shaderProgram, "color");
 	if (MVPLocation == -1) {
 		std::cout << "loading MVPLocation failed" << std::endl;
 	}
-
+	if (_colorLocation == -1) {
+		std::cout << "loading colorLocation failed" << std::endl;
+	}
 	_hasTexture = false;
+	_color = glm::vec4(1, 0, 0, 1);
 }
 FAMaterial::FAMaterial(GLint texture) {
 
 	this->shader = new Shader("BasicTexture");
 	MVPLocation = glGetUniformLocation(this->shader->_shaderProgram, "mvp");
+	_colorLocation = glGetUniformLocation(this->shader->_shaderProgram, "color");
 	_textureLocation = glGetUniformLocation(this->shader->_shaderProgram, "tex");
 	if (MVPLocation == -1) {
 		std::cout << "loading MVPLocation failed" << std::endl;
@@ -22,7 +27,10 @@ FAMaterial::FAMaterial(GLint texture) {
 	if (_textureLocation == -1) {
 		std::cout << "loading _textureLocation failed" << std::endl;
 	}
-
+	if (_colorLocation == -1) {
+		std::cout << "loading colorLocation failed" << std::endl;
+	}
+	_color = glm::vec4(1, 1, 0, 1);
 	_texture = texture;
 	_hasTexture = true;
 }
@@ -32,6 +40,7 @@ void FAMaterial::bind(FrameData &fData) {
 	glm::mat4 MVPMatrix = fData.VPMatrix * modelMatrix;
 	glUseProgram(shader->_shaderProgram);
 	glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, &MVPMatrix[0][0]);
+	glUniform4fv(_colorLocation, 1, &_color[0]);
 	if (_hasTexture) {
 		glUniform1i(_textureLocation, 0);
 		glActiveTexture(GL_TEXTURE0);
@@ -49,20 +58,28 @@ void FAMaterial::setTexture(GLint texture) {
 		delete this->shader;
 		this->shader = new Shader("Basic");
 		MVPLocation = glGetUniformLocation(this->shader->_shaderProgram, "mvp");
+		_colorLocation = glGetUniformLocation(this->shader->_shaderProgram, "color");
 		if (MVPLocation == -1) {
 			std::cout << "loading MVPLocation failed" << std::endl;
+		}
+		if (_colorLocation == -1) {
+			std::cout << "loading colorLocation failed" << std::endl;
 		}
 	}
 	else {
 		delete this->shader;
 		this->shader = new Shader("BasicTexture");
 		MVPLocation = glGetUniformLocation(this->shader->_shaderProgram, "mvp");
+		_colorLocation = glGetUniformLocation(this->shader->_shaderProgram, "color");
 		_textureLocation = glGetUniformLocation(this->shader->_shaderProgram, "tex");
 		if (MVPLocation == -1) {
 			std::cout << "loading MVPLocation failed" << std::endl;
 		}
 		if (_textureLocation == -1) {
 			std::cout << "loading _textureLocation failed" << std::endl;
+		}
+		if (_colorLocation == -1) {
+			std::cout << "loading colorLocation failed" << std::endl;
 		}
 
 		_texture = texture;

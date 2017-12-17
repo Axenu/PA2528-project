@@ -36,19 +36,19 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[0]);
 	FAMesh *mesh = new FAMesh(m);
 	FAMaterial *material = new FAMaterial();
-	material->setTexture(FATexture::getDefaultTexture());
+	//material->setTexture(FATexture::getDefaultTexture());
 	FAModel *model = new FAModel(mesh, material);
-	// model->setScale(0.1f);
-	// model->moveZ(-3.f);
+	model->setScale(0.01f);
+	model->moveZ(-3.f);
 	this->addNode(model);
 	_models.push_back(model);
 
-	mesh = new FAMesh();
+	/*mesh = new FAMesh();
 	material = new FAMaterial();
 	model = new FAModel(mesh, material);
 	model->moveX(0.5f);
 	this->addNode(model);
-	_models.push_back(model);
+	_models.push_back(model);*/
 
 	//events
 	_eventManager = manager;

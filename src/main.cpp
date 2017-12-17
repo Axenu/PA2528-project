@@ -69,7 +69,7 @@ void setupWindow()
 	gl::CheckGLErrors("GLError before setting variables: Main");
 	glEnable(GL_DEPTH_TEST);//Enable depth testinz
 	glDepthFunc(GL_LESS);
-	glEnable(GL_CULL_FACE);//Enable face culling
+	glDisable(GL_CULL_FACE);//Enable face culling
 	glCullFace(GL_BACK);
 	glEnable(GL_BLEND); //Enable alpha on gui elements. Could be done every frame on render?
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
