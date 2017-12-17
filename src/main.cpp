@@ -17,6 +17,13 @@
 // #include "Config.h"
 // #include "Sound/SoundManager.h"
 
+
+
+
+#define TRACK_MEMORY
+#include "PA2528-2\PoolAllocator.h"
+#include "PA2528-2\MemoryTracker.h"
+
 void setupWindow()
 {
 	//Memory leak debug
@@ -128,6 +135,16 @@ void setupWindow()
 int main()
 {
 	// gl::CheckGLErrors("GLError at start");
+
+	// Test allocator and memory tracking. Should print out "401"
+	PoolAllocator* pa = new PoolAllocator(4, 100);
+	int* asdf = pa->alloc<int>(5);
+
+	std::cout << MemoryTracker::getTotalMemoryUsage() << "\n";
+
+	pa->dealloc(asdf);
+	delete pa;
+
 
 	//load settings
 	// Config::loadConfig("resources/settings.conf");
