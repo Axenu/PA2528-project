@@ -98,7 +98,7 @@ void ProjectScene::handlePendingMeshLoads() {
 		if (it->mesh.isReady() && it->texture.isReady()) {
 			FAMesh *mesh = new FAMesh(it->mesh.get());
 			FATexture *texture = new FATexture(it->texture.get());
-			float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+			float color[4] = { 0.0f, 255.0f, 0.0f, 255.0f };
 			FAMaterialColor *material = new FAMaterialColor(color);
 			material->setTexture(-1);
 			FAModel *model = new FAModel(mesh, material);
