@@ -12,6 +12,7 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	ThreadPool::initialize();
 	ResourceManager::initialize();
 
+
 	Array<PackageReader::MetaData> metaDatas = PackageReader::getMetaData();
 	for (size_t i = 0; i < metaDatas.size; i++) {
 		const PackageReader::MetaData& d = metaDatas.data[i];
@@ -23,6 +24,8 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 		}
 	}
 
+	
+
 	//Promise<SharedPtr<Mesh>> mp5 = ResourceManager::aloadMesh(6722305721597800034);
 	//Mesh* m = mp5.get().get();
 	 
@@ -30,7 +33,8 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 
     _cam->moveZ(-2);
 
-	FAMesh *mesh = new FAMesh();
+	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[0]);
+	FAMesh *mesh = new FAMesh(m);
 	FAMaterial *material = new FAMaterial();
 	material->setTexture(FATexture::getDefaultTexture());
 	FAModel *model = new FAModel(mesh, material);
@@ -143,6 +147,7 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 		if (_models.front()->getX() - _xPos > 0.5f) {
 			// loadMesh(_xPos, true);
 
+			
 			FAMesh *mesh = new FAMesh("Chalice.obj");
 			/*float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
 			FAMaterialColor *material = new FAMaterialColor(color);*/
