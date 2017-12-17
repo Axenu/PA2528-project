@@ -18,11 +18,13 @@ protected:
 	bool _hasTexture;
 	Shader *shader;
 	glm::mat4 modelMatrix;
+	glm::vec4 _color;
 
 
 	GLint MVPLocation;
 	GLint MLocation;
 	GLint _textureLocation;
+	GLint _colorLocation;
 
 	GLint _texture;
 

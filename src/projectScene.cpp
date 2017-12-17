@@ -12,6 +12,7 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	ThreadPool::initialize();
 	ResourceManager::initialize();
 
+
 	Array<PackageReader::MetaData> metaDatas = PackageReader::getMetaData();
 	for (size_t i = 0; i < metaDatas.size; i++) {
 		const PackageReader::MetaData& d = metaDatas.data[i];
@@ -23,6 +24,8 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 		}
 	}
 
+	
+
 	//Promise<SharedPtr<Mesh>> mp5 = ResourceManager::aloadMesh(6722305721597800034);
 	//Mesh* m = mp5.get().get();
 	 
@@ -30,12 +33,13 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 
     _cam->moveZ(-2);
 
-	FAMesh *mesh = new FAMesh();
+	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[0]);
+	FAMesh *mesh = new FAMesh(m);
 	FAMaterial *material = new FAMaterial();
-	material->setTexture(FATexture::getDefaultTexture());
+	//material->setTexture(FATexture::getDefaultTexture());
 	FAModel *model = new FAModel(mesh, material);
-	// model->setScale(0.1f);
-	// model->moveZ(-3.f);
+	model->setScale(0.01f);
+	model->moveZ(-2.f);
 	this->addNode(model);
 	_models.push_back(model);
 
@@ -105,6 +109,9 @@ void ProjectScene::handlePendingMeshLoads() {
 			
 			model->setPositionX(it->xPos);
 
+			// TODO: Remove this when meshes are fixed.
+			model->setScale(0.01f);
+
 			if (it->isLeft) {
 				this->removeNode(_models.back());
 				_models.pop_back();
@@ -131,7 +138,12 @@ void ProjectScene::handlePendingMeshLoads() {
 void ProjectScene::loadMesh(float x, bool isLeft) {
 	gui_t meshGui = _meshGuis[rand() % _meshGuis.size()];
 	gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
-	
+
+	// TODO: Remove this when meshes are fixed.
+	meshGui = _meshGuis[0];
+	textureGui = _textureGuis[0];
+	//
+
 	MeshLoad load(ResourceManager::aloadMesh(meshGui), ResourceManager::aloadTexture(textureGui));
 	load.xPos = x;
 	load.isLeft = isLeft;
@@ -141,19 +153,20 @@ void ProjectScene::loadMesh(float x, bool isLeft) {
 void ProjectScene::updateMeshes(bool isMovingLeft) {
 	if (isMovingLeft) {
 		if (_models.front()->getX() - _xPos > 0.5f) {
-			// loadMesh(_xPos, true);
+			 loadMesh(_xPos, true);
 
-			FAMesh *mesh = new FAMesh("Chalice.obj");
-			/*float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-			FAMaterialColor *material = new FAMaterialColor(color);*/
-			FAMaterialColor *material = new FAMaterialColor();
-			material->setColorMemFrag(100, 50); // 50% memory fragmentation
-			FAModel *model = new FAModel(mesh, material);
-			model->setPositionX(_xPos);
-			this->removeNode(_models.back());
-			_models.pop_back();
-			this->addNode(model);
-			_models.push_front(model);
+			//static SharedPtr<Mesh> m = ResourceManager::loadMesh(_meshGuis[2]);
+			//FAMesh *mesh = new FAMesh(m);
+			///*float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+			//FAMaterialColor *material = new FAMaterialColor(color);*/
+			//FAMaterialColor *material = new FAMaterialColor();
+			//material->setColorMemFrag(100, 50); // 50% memory fragmentation
+			//FAModel *model = new FAModel(mesh, material);
+			//model->setPositionX(_xPos);
+			//this->removeNode(_models.back());
+			//_models.pop_back();
+			//this->addNode(model);
+			//_models.push_front(model);
 		}
 	}
 	else {
