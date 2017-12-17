@@ -7,7 +7,7 @@ class FAMaterialColor : public FAMaterial
 {
 private:
 	GLint MemoryColor;
-	float m_color[4] = { 0.0f,0.0f,0.0f,1.0f };
+	float m_color[4] = { 0.0f, 0.0f, 0.0f, 255.0f };
 
 public:
 	FAMaterialColor();
