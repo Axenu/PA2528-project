@@ -4,6 +4,7 @@
 #include <iostream>
 #include "FAMesh.h"
 #include "FAMaterial.h"
+#include "FAMaterialColor.h"
 #include "Camera.h"
 #include "Node.h"
 

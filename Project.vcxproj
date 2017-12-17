@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PA2528-3\AssimpLoader.cpp" />
+    <ClCompile Include="PA2528-3\Atomic.cpp" />
+    <ClCompile Include="PA2528-3\ImageLoader.cpp" />
+    <ClCompile Include="PA2528-3\ImporterManager.cpp" />
+    <ClCompile Include="PA2528-3\PackageReader.cpp" />
+    <ClCompile Include="PA2528-3\ResourceManager.cpp" />
+    <ClCompile Include="PA2528-3\Semaphore.cpp" />
+    <ClCompile Include="PA2528-3\SpinLock.cpp" />
+    <ClCompile Include="PA2528-3\Thread.cpp" />
+    <ClCompile Include="PA2528-3\ThreadPool.cpp" />
+    <ClCompile Include="PA2528-3\utility.cpp" />
+    <ClCompile Include="src\Render\FrameData.cpp" />
+    <ClCompile Include="src\Render\FrameObject.cpp" />
+    <ClCompile Include="src\Event\EventManager.cpp" />
+    <ClCompile Include="src\Event\Events.cpp" />
+    <ClCompile Include="src\Event\Input\InputIncrementer.cpp" />
+    <ClCompile Include="src\Event\Input\InputKeyState.cpp" />
+    <ClCompile Include="src\Event\Input\InputManager.cpp" />
+    <ClCompile Include="src\Factory.cpp" />
+    <ClCompile Include="src\Game\Camera.cpp" />
+    <ClCompile Include="src\Game\FAMaterial.cpp" />
+    <ClCompile Include="src\Game\FAMesh.cpp" />
+    <ClCompile Include="src\Game\FAModel.cpp" />
+    <ClCompile Include="src\Game\Game.cpp" />
+    <ClCompile Include="src\Game\Scene\Scene.cpp" />
+    <ClCompile Include="src\gl\FBOData.cpp" />
+    <ClCompile Include="src\gl\FrameBuffer.cpp" />
+    <ClCompile Include="src\gl\GLFunctions.cpp" />
+    <ClCompile Include="src\gl\RenderQuad.cpp" />
+    <ClCompile Include="src\gl\SamplerObject.cpp" />
+    <ClCompile Include="src\gl\TexData.cpp" />
+    <ClCompile Include="src\gl\Texture.cpp" />
+    <ClCompile Include="src\gl\VAData.cpp" />
+    <ClCompile Include="src\gui\Button.cpp" />
+    <ClCompile Include="src\gui\Checkbox.cpp" />
+    <ClCompile Include="src\gui\ChoiseBar.cpp" />
+    <ClCompile Include="src\gui\Element.cpp" />
+    <ClCompile Include="src\gui\Font.cpp" />
+    <ClCompile Include="src\gui\Label.cpp" />
+    <ClCompile Include="src\gui\Manager.cpp" />
+    <ClCompile Include="src\gui\ProgressBar.cpp" />
+    <ClCompile Include="src\gui\Rectangle.cpp" />
+    <ClCompile Include="src\gui\StringComponents.cpp" />
+    <ClCompile Include="src\gui\TexturedRectangle.cpp" />
+    <ClCompile Include="src\gui\View.cpp" />
+    <ClCompile Include="src\gui\Views\MainMenuView.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\node.cpp" />
+    <ClCompile Include="src\projectScene.cpp" />
+    <ClCompile Include="src\Render\Shader.cpp" />
+    <ClCompile Include="src\StaticVars.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="header\Render\FrameData.h" />
+    <ClInclude Include="header\Render\FrameObject.h" />
+    <ClInclude Include="header\Event\EventManager.h" />
+    <ClInclude Include="header\Event\Events.h" />
+    <ClInclude Include="header\Event\Input\InputIncrementer.h" />
+    <ClInclude Include="header\Event\Input\InputKeyState.h" />
+    <ClInclude Include="header\Event\Input\InputManager.h" />
+    <ClInclude Include="header\Event\SceneEvents\CreateEvents.h" />
+    <ClInclude Include="header\Event\SceneEvents\SceneEvent.h" />
+    <ClInclude Include="header\Factory.h" />
+    <ClInclude Include="header\Game\Camera.h" />
+    <ClInclude Include="header\Game\FAMaterial.h" />
+    <ClInclude Include="header\Game\FAMesh.h" />
+    <ClInclude Include="header\Game\FAModel.h" />
+    <ClInclude Include="header\Game\Game.h" />
+    <ClInclude Include="header\Game\Scene\DrawFrame.h" />
+    <ClInclude Include="header\Game\Scene\QuadTree.h" />
+    <ClInclude Include="header\Game\Scene\Scene.h" />
+    <ClInclude Include="header\Game\Scene\SceneEventManager.h" />
+    <ClInclude Include="header\Game\TestGame.h" />
+    <ClInclude Include="header\gl\FBOData.h" />
+    <ClInclude Include="header\gl\FrameBuffer.h" />
+    <ClInclude Include="header\gl\GLFunctions.h" />
+    <ClInclude Include="header\gl\glInclude.h" />
+    <ClInclude Include="header\gl\RenderQuad.h" />
+    <ClInclude Include="header\gl\SamplerObject.h" />
+    <ClInclude Include="header\gl\TexData.h" />
+    <ClInclude Include="header\gl\Texture.h" />
+    <ClInclude Include="header\gl\VAData.h" />
+    <ClInclude Include="header\gl_include.h" />
+    <ClInclude Include="header\gui\Button.h" />
+    <ClInclude Include="header\gui\Checkbox.h" />
+    <ClInclude Include="header\gui\ChoiseBar.h" />
+    <ClInclude Include="header\gui\Element.h" />
+    <ClInclude Include="header\gui\Font.h" />
+    <ClInclude Include="header\gui\Label.h" />
+    <ClInclude Include="header\gui\Manager.h" />
+    <ClInclude Include="header\gui\ProgressBar.h" />
+    <ClInclude Include="header\gui\Rectangle.h" />
+    <ClInclude Include="header\gui\StringComponents.h" />
+    <ClInclude Include="header\gui\TexturedRectangle.h" />
+    <ClInclude Include="header\gui\View.h" />
+    <ClInclude Include="header\gui\Views\MainMenuView.h" />
+    <ClInclude Include="header\keyBindings.h" />
+    <ClInclude Include="header\node.h" />
+    <ClInclude Include="header\projectScene.h" />
+    <ClInclude Include="header\Render\Shader.h" />
+    <ClInclude Include="header\StaticVars.h" />
+    <ClInclude Include="header\type_info.h" />
+    <ClInclude Include="PA2528-3\Array.hpp" />
+    <ClInclude Include="PA2528-3\AssimpLoader.h" />
+    <ClInclude Include="PA2528-3\Atomic.hpp" />
+    <ClInclude Include="PA2528-3\Function.hpp" />
+    <ClInclude Include="PA2528-3\gui_t.hpp" />
+    <ClInclude Include="PA2528-3\HashMap.hpp" />
+    <ClInclude Include="PA2528-3\ImageLoader.h" />
+    <ClInclude Include="PA2528-3\ImporterManager.h" />
+    <ClInclude Include="PA2528-3\ImporterTester.h" />
+    <ClInclude Include="PA2528-3\Lambda.hpp" />
+    <ClInclude Include="PA2528-3\Mesh.hpp" />
+    <ClInclude Include="PA2528-3\OffsetPointer.hpp" />
+    <ClInclude Include="PA2528-3\PackageReader.hpp" />
+    <ClInclude Include="PA2528-3\Promise.hpp" />
+    <ClInclude Include="PA2528-3\ResourceManager.hpp" />
+    <ClInclude Include="PA2528-3\Semaphore.hpp" />
+    <ClInclude Include="PA2528-3\SharedPtr.hpp" />
+    <ClInclude Include="PA2528-3\SpinLock.hpp" />
+    <ClInclude Include="PA2528-3\stb_image.h" />
+    <ClInclude Include="PA2528-3\Texture.hpp" />
+    <ClInclude Include="PA2528-3\Thread.hpp" />
+    <ClInclude Include="PA2528-3\ThreadPool.hpp" />
+    <ClInclude Include="PA2528-3\utility.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PA2528-3\Function.inl" />
+    <None Include="PA2528-3\HashMap.inl" />
+    <None Include="PA2528-3\Lambda.inl" />
+    <None Include="PA2528-3\Promise.inl" />
+    <None Include="PA2528-3\SharedPtr.inl" />
+    <None Include="PA2528-3\ThreadPool.inl" />
+    <None Include="PA2528-3\utility.inl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{31FCBDAE-533A-40C1-B639-3E5A4D920AE4}</ProjectGuid>
+    <RootNamespace>Project</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)include;header;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)src;$(SourcePath)</SourcePath>
+    <LibraryPath>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;$(ProjectDir)lib\Windows;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)include;header;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)src;$(SourcePath)</SourcePath>
+    <LibraryPath>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;$(ProjectDir)lib\Windows;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\Axenu\Developer\PA2528-project\header;C:\Users\Axenu\Developer\PA2528-project\include;$(IncludePath)</IncludePath>
+    <SourcePath>C:\Users\Axenu\Developer\PA2528-project\src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Users\Axenu\Developer\PA2528-project\header;C:\Users\Axenu\Developer\PA2528-project\include;$(IncludePath)</IncludePath>
+    <SourcePath>C:\Users\Axenu\Developer\PA2528-project\src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)PA2528-3;$(ProjectDir);$(ProjectDir)include\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;devil.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)PA2528-3;$(ProjectDir);$(ProjectDir)include\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)PA2528-3;$(ProjectDir);$(ProjectDir)include\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;devil.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)PA2528-3;$(ProjectDir);$(ProjectDir)include\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Users\Axenu\Developer\PA2528-project\lib\Windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

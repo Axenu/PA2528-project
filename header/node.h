@@ -41,7 +41,7 @@ public:
 	/* Remove the node from the tree. Moving children to it's current parent
 	*/
 	void removeNode();
-    void removeChild(FANode *node);
+    bool removeChild(FANode *node);
 
     virtual void update(float dt);
     virtual void render(FrameData &fData);
@@ -93,6 +93,7 @@ public:
     glm::vec3 getPosition() const;
 	float getDistance(FANode const &other) const;
 	float getDistance(glm::vec4 const &pos) const;
+	int getNumberOfChildren();
 
 #pragma endregion
 

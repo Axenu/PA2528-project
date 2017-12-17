@@ -14,7 +14,7 @@
 
 class FAMaterial {
 
-private:
+protected:
 	bool _hasTexture;
 	Shader *shader;
 	glm::mat4 modelMatrix;
@@ -26,17 +26,16 @@ private:
 
 	GLint _texture;
 
+	Camera *camera;
 
 public:
 	FAMaterial();
+	FAMaterial(GLint texture);
 	~FAMaterial();
 
 	virtual void bind(FrameData &fData);
 	virtual void setModelMatrix(glm::mat4 &modelMatrix);
-	void setTexture(GLint texture);
-
-protected:
-	Camera *camera;
+	virtual void setTexture(GLint texture);
 };
 
 #endif

@@ -72,15 +72,16 @@ void FANode::removeNode() {
 	removeFromParent();
 }
 
-void FANode::removeChild(FANode *node) {
+bool FANode::removeChild(FANode *node) {
     FANode *n = nullptr;
     for (unsigned int i = 0; i < _children.size(); i++) {
         n = _children[i];
         if (n == node) {
             _children.erase(_children.begin()+i);
-            return;
+            return true;
         }
     }
+	return false;
 }
 
 void FANode::update(float dT) {
@@ -279,6 +280,10 @@ float FANode::getDistance(FANode const & other) const
 float FANode::getDistance(glm::vec4 const &pos) const
 {
 	return glm::length(getWorldPos() - pos);
+}
+
+int FANode::getNumberOfChildren() {
+	return _children.size();
 }
 
 #pragma endregion

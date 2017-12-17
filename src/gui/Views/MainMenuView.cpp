@@ -55,6 +55,12 @@ namespace gui
         l->setPosition(0.0f - l->getSize().x * 0.5f, 0.8f-l->getSize().y/2.0f);
         addChild(l);
 
+
+		bar = new ProgressBar();
+		bar->setPrimaryColor(PALLETPRIMARY);
+		bar->setSecondaryColor(PALLETHIGHLIGHT);
+		addChild(bar);
+
         // _startButton = new gui::Button(1.5f, 0.4f);
         // _startButton->addStringComponent(new StringComponentString("Start game"));
     	// _startButton->setPosition(-_startButton->getSize().x*0.25f, 0.3f);
@@ -91,11 +97,6 @@ namespace gui
         _quitButton->setScale(0.5,0.5);
         addChild(_quitButton);
 
-		bar = new ProgressBar();
-		bar->setValue(0.5);
-		bar->setPrimaryColor(PALLETPRIMARY);
-		bar->setSecondaryColor(PALLETHIGHLIGHT);
-		addChild(bar);
 
     }
     MainMenuView::~MainMenuView()

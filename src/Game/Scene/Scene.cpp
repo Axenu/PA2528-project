@@ -20,6 +20,8 @@ void Scene::update(float dT) {
     _cam->update(dT);
     _root->update(dT);
 	//setup frameobject with framedata and render objects
+    // this->fObject->clear();
+    delete this->fObject;
 	this->fObject = this->setUpFrameObject();
 }
 
