@@ -23,6 +23,7 @@ public:
 
 	static GLuint createTexture(const GLchar *path);
     static GLuint getDefaultTexture();
+	static GLuint getTexture(Texture *texture);
 
 private:
 	SharedPtr<Texture> _texture;

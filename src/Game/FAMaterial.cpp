@@ -87,6 +87,10 @@ void FAMaterial::setTexture(GLint texture) {
 	}
 }
 
+void FAMaterial::setColor(glm::vec4 color) {
+	_color = color;
+}
+
 FAMaterial::~FAMaterial() {
 
 }

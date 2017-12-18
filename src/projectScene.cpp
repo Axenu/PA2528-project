@@ -10,7 +10,7 @@
 
 ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	srand(NULL);
-	PackageReader::setPackage("PA2528-3/package tool/res");
+	PackageReader::setPackage("PA2528-3/package tool/res2");
 	ThreadPool::initialize();
 	ResourceManager::initialize();
 
@@ -19,10 +19,10 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	for (size_t i = 0; i < metaDatas.size; i++) {
 		const PackageReader::MetaData& d = metaDatas.data[i];
 		using T = PackageReader::MetaData::Type;
-		switch (d.type) {
-		case T::MESH: _meshGuis.push_back(d.gui); break;
-		case T::TEXTURE: _textureGuis.push_back(d.gui); break;
-		default: break;
+		switch(d.type) {
+		case T::MESH: _meshGuis.push_back(d.gui); std::cout << d.gui << std::endl; break;
+			case T::TEXTURE: _textureGuis.push_back(d.gui); break;
+			default: break;
 		}
 	}
 
@@ -30,7 +30,6 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 
 	//Promise<SharedPtr<Mesh>> mp5 = ResourceManager::aloadMesh(6722305721597800034);
 	//Mesh* m = mp5.get().get();
-
 
 
 	_cam->moveZ(-2);
@@ -43,14 +42,14 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	model->setScale(0.01f);
 	model->moveZ(-2.f);
 	this->addNode(model);
-	_models.push_back(model);
+	//_models.push_back(model);
 
-	mesh = new FAMesh();
-	material = new FAMaterial();
-	model = new FAModel(mesh, material);
-	model->moveX(0.5f);
-	this->addNode(model);
-	_models.push_back(model);
+	//mesh = new FAMesh();
+	//material = new FAMaterial(texture);
+	//model = new FAModel(mesh, material);
+	//model->moveX(0.5f);
+	//this->addNode(model);
+	//_models.push_back(model);
 
 	//events
 	_eventManager = manager;
@@ -59,24 +58,21 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 
 void ProjectScene::keyCallback(const KeyboardEvent& event)
 {
-	static constexpr int A_KEY = 65;
-	static constexpr int D_KEY = 68;
-	static constexpr int DOWN_ACTION = 1;
-	static constexpr int UP_ACTION = 0;
-	if (event.getAction() == DOWN_ACTION) {
+	if (event.getAction() == GLFW_PRESS) {
 		switch (event.getKey()) {
-		case A_KEY: _isADown = true; break;
-		case D_KEY: _isDDown = true; break;
-		default:
-			break;
+			case GLFW_KEY_A: _isADown = true; break;
+			case GLFW_KEY_D: _isDDown = true; break;
+			default:
+				break;
 		}
 	}
-	else if (event.getAction() == UP_ACTION) {
+	else if(event.getAction() == GLFW_RELEASE) {
 		switch (event.getKey()) {
-		case A_KEY: _isADown = false; break;
-		case D_KEY: _isDDown = false; break;
+		case GLFW_KEY_A: _isADown = false; break;
+		case GLFW_KEY_D: _isDDown = false; break;
 
 		default:
+			
 			break;
 		}
 	}
@@ -170,7 +166,7 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 		}
 	}
 	else {
-		if (_xPos - _models.back()->getX() > 0.5f) {
+		if (_models.back()->getX() - _xPos  > 0.5f) {
 			// loadMesh(_xPos, false);
 
 			FAMesh *mesh = new FAMesh("Chalice.obj");
