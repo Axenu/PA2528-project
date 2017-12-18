@@ -25,6 +25,7 @@
 #include "PA2528-2\MemoryTracker.h"
 #include "PackageReader.hpp"
 #include "PA2528-3\ResourceManager.hpp"
+#include "ThreadPool.hpp"
 
 void setupWindow()
 {
@@ -138,28 +139,6 @@ int main()
 {
 	// gl::CheckGLErrors("GLError at start");
 
-	// Test allocator and memory tracking. Should print out "401"
-	PoolAllocator* pa = new PoolAllocator(4, 100);
-	int* asdf = pa->alloc<int>(5);
-
-	std::cout << MemoryTracker::getTotalMemoryUsage() << "\n";
-
-	pa->dealloc(asdf);
-	delete pa;
-
-	PackageReader::setPackage("res");
-
-	PackageReader::loadMesh(6042386530102251393);
-
-	Promise<SharedPtr<Mesh>> mp = ResourceManager::aloadMesh(6042386530102251393);
-
-	while (true) {
-		if (mp.isReady()) {
-			break;
-		}
-	}
-
-	PackageReader::clearPackage();
 
 	//load settings
 	// Config::loadConfig("resources/settings.conf");

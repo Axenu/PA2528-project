@@ -8,7 +8,7 @@
 
 ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	srand(NULL);
-	PackageReader::setPackage("../PA2528-3/package tool/res");
+	PackageReader::setPackage("PA2528-3/package tool/res");
 	ThreadPool::initialize();
 	ResourceManager::initialize();
 
