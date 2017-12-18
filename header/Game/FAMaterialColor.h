@@ -17,7 +17,7 @@ public:
 	void bind(FrameData &fData);
 	void setTexture(GLint texture);
 	void setColor(float color[4]);
-	void setColorMemFrag(double mem_total, double mem_used);
+	void setColorMemFrag(float mem_total, float mem_used);
 };
 
 #endif

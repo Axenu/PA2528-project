@@ -91,12 +91,12 @@ void FAMaterialColor::setColor(float color[4])
 	m_color[3] = color[3];
 }
 
-void FAMaterialColor::setColorMemFrag(double mem_total, double mem_used)
+void FAMaterialColor::setColorMemFrag(float mem_total, float mem_used)
 {
 	// calc red
 	double red = 1.0f;
 	if (mem_used < mem_total)
-		red *= (mem_used / mem_total);
+		red *= ((mem_total - mem_used) / mem_total);
 	m_color[0] = red;
 
 	// green
