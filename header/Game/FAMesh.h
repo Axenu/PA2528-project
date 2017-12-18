@@ -54,7 +54,7 @@ public:
 	FAMesh();
 	FAMesh(std::string path);
 	FAMesh(SharedPtr<Mesh> mesh);
-	FAMesh(aiMesh &aiMesh);
+	//FAMesh(aiMesh &aiMesh);
 	// FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor);
 	// FAMesh(std::vector<GLfloat> vertices, std::vector<GLuint> indices, bool hasNormal, bool hasColor);
 
@@ -81,7 +81,7 @@ public:
 	SharedPtr<Mesh> get_aiMesh() { return _mesh; }; // PA2528-3 MEMORY FRAGMENTATION TEST CODE
 
 private:
-	void load(aiMesh &mesh);
+	void load(SharedPtr<Mesh> mesh);
 
 protected:
 	GLint numberOfVertices;

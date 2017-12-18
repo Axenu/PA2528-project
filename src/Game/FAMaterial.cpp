@@ -91,6 +91,24 @@ void FAMaterial::setColor(glm::vec4 color) {
 	_color = color;
 }
 
+void FAMaterial::setColorMemUsage(float mem_total, float mem_used)
+{
+	// calc red
+	float red = 1.0f;
+	if (mem_used < mem_total)
+		red *= ((mem_total - mem_used) / mem_total);
+	_color[0] = red;
+
+	// green
+	_color[1] = 1.0f - red;
+
+	// blue
+	_color[2] = 0.0f;
+
+	// alpha
+	_color[3] = 1.0f;
+}
+
 FAMaterial::~FAMaterial() {
 
 }

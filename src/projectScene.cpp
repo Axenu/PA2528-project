@@ -39,6 +39,7 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	FAMesh *mesh = new FAMesh(m);
 	FAMaterial *material = new FAMaterial(texture);
 	//material->setTexture(FATexture::getDefaultTexture());
+	material->setColorMemUsage(100, 50);
 	FAModel *model = new FAModel(mesh, material);
 	model->setScale(0.001f);
 	//model->rotateX(0.5f);
@@ -107,14 +108,14 @@ void ProjectScene::handlePendingMeshLoads() {
 		if (it->mesh.isReady() && it->texture.isReady()) {
 			FAMesh *mesh = new FAMesh(it->mesh.get());
 			FATexture *texture = new FATexture(it->texture.get());
-			FAMaterialColor *material = new FAMaterialColor();
-			material->setColorMemFrag(100, rand() % 100 + 1);  // placeholder test
+			FAMaterial *material = new FAMaterial();
+			material->setColorMemUsage(100, rand() % 100 + 1);  // placeholder test
 			material->setTexture(-1);
 			FAModel *model = new FAModel(mesh, material);
 
 			model->setPositionX(it->xPos);
 			// TODO: Remove this when meshes are fixed.
-			model->setScale(0.01f);
+			model->setScale(0.001f);
 
 			if (it->isLeft) {
 				this->removeNode(_models.back());
@@ -143,8 +144,8 @@ void ProjectScene::loadMesh(float x, bool isLeft) {
 	gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
 
 	// TODO: Remove this when meshes are fixed.
-	meshGui = _meshGuis[0];
-	textureGui = _textureGuis[0];
+	//meshGui = _meshGuis[0];
+	//textureGui = _textureGuis[0];
 	//
 
 	MeshLoad load(ResourceManager::aloadMesh(meshGui), ResourceManager::aloadTexture(textureGui));
@@ -177,7 +178,7 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			// loadMesh(_xPos, false);
 
 			FAMesh *mesh = new FAMesh("Chalice.obj");
-			FAMaterialColor *material = new FAMaterialColor();
+			FAMaterial *material = new FAMaterial();
 			FAModel *model = new FAModel(mesh, material);
 			model->setPositionX(_xPos);
 			this->removeNode(_models.front());
@@ -185,7 +186,7 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			this->addNode(model);
 			_models.push_back(model);
 			// change the model's color based on the internal fragmentation of it's memory
-			material->setColorMemFrag(100, rand() % 100 + 1);  // placeholder test
+			material->setColorMemUsage(100, rand() % 100 + 1);  // placeholder test
 
 		}
 	}

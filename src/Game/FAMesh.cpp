@@ -60,38 +60,38 @@ FAMesh::FAMesh(std::string path) : FAMesh() {
 }
 
 FAMesh::FAMesh(SharedPtr<Mesh> mesh) : _mesh(mesh) {
-	load(**mesh->aiMesh);
+	load(mesh);
 }
 
-void FAMesh::load(aiMesh &mesh) {
+void FAMesh::load(SharedPtr<Mesh> mesh) {
 	std::vector<GLfloat> vertices;
 
 	unsigned int *faceArray;
-	faceArray = (unsigned int *)malloc(sizeof(unsigned int) * mesh.mNumFaces * 3);
+	faceArray = (unsigned int *)malloc(sizeof(unsigned int) * mesh->numFaces * 3);
 	unsigned int faceIndex = 0;
 
-	for (unsigned int t = 0; t < mesh.mNumFaces; ++t) {
-		aiFace face = mesh.mFaces[t];
+	for (unsigned int t = 0; t < mesh->numFaces; ++t) {
+		aiFace face = mesh->faces[t];
 
 		memcpy(&faceArray[faceIndex], face.mIndices, 3 * sizeof(unsigned int));
 		faceIndex += 3;
 	}
 
-	if (!mesh.HasTextureCoords(0)) {
+	if (!mesh->hasTextureCoords) {
 		std::cout << "mesh you are trying to load does not have any texture coordinates!!!" << std::endl;
 		_hasUV = false;
 	}
 
-	for (unsigned int i = 0; i < mesh.mNumVertices; i++) {
-		vertices.push_back(mesh.mVertices[i].x);
-		vertices.push_back(mesh.mVertices[i].y);
-		vertices.push_back(mesh.mVertices[i].z);
+	for (unsigned int i = 0; i < mesh->numVertices; i++) {
+		vertices.push_back(mesh->vertices[i].x);
+		vertices.push_back(mesh->vertices[i].y);
+		vertices.push_back(mesh->vertices[i].z);
 		if (_hasUV) {
-			vertices.push_back(mesh.mTextureCoords[0][i].x);
-			vertices.push_back(mesh.mTextureCoords[0][i].y);
+			vertices.push_back(mesh->textureCoords[0][i].x);
+			vertices.push_back(mesh->textureCoords[0][i].y);
 		}
 	}
-	this->numberOfVertices = mesh.mNumVertices;
+	this->numberOfVertices = mesh->numVertices;
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -100,7 +100,7 @@ void FAMesh::load(aiMesh &mesh) {
 
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh.mNumFaces * 3, faceArray, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh->numFaces * 3, faceArray, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	glGenVertexArrays(1, &VAO);
@@ -122,9 +122,9 @@ void FAMesh::load(aiMesh &mesh) {
 	glBindVertexArray(0);
 }
 
-FAMesh::FAMesh(aiMesh &mesh) {
-	load(mesh);
-}
+//FAMesh::FAMesh(aiMesh &mesh) {
+//	load(mesh);
+//}
 
 void FAMesh::loadOBJModel(std::string path) {
 	std::ifstream file (path);
