@@ -4,7 +4,6 @@
 #include <iostream>
 #include "FAMesh.h"
 #include "FAMaterial.h"
-#include "FAMaterialColor.h"
 #include "Camera.h"
 #include "Node.h"
 
@@ -27,7 +26,7 @@ public:
 	glm::mat4 &getModelMatrix();
 
 	virtual void onUpdate(float dt);
-    virtual void onRender(FrameData &fData);
+	virtual void onRender(FrameData &fData);
 
 	~FAModel();
 
