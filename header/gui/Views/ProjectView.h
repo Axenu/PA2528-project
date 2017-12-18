@@ -15,6 +15,7 @@
 // #include "gui/Views/CreditsView.h"
 // #include "staticVars.h"
 #include "gui/ProgressBar.h"
+#include "gui/Label.h"
 // #include <Sound/Irrklang.h>
 // #include "Sound/SoundManager.h"
 
@@ -33,7 +34,8 @@ namespace gui
 		ProgressBar *bar;
 
 		// Progress bars displaying the current memory usage of allocators
-		std::vector<gui::ProgressBar> memoryUsageBars;
+		std::vector<gui::ProgressBar*> memoryUsageBars;
+		std::vector<gui::Label*> memoryUsageLabels;
 
 	public:
 		ProjectView(EventManager* manager, float* fps);

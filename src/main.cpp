@@ -91,7 +91,6 @@ void setupWindow()
 	float FPS;
 
 	gui::ProjectView* guiScene = new gui::ProjectView(&eventManager, &FPS);
-	//gui::MainMenuView* guiScene = new gui::MainMenuView(&eventManager, &FPS);
 	gui::Manager guiManager(&eventManager);
 	guiManager.setWindowSize(1280, 720);
 	guiManager.setView(guiScene);
