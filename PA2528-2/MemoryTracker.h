@@ -1,9 +1,22 @@
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
+#include <vector>
 
 #ifndef MEMORYTRACKER_H
 #define MEMORYTRACKER_H
+
+// Contains info on the current state of an allocator
+struct AllocatorInfo {
+	size_t allocatorID;
+	std::string allocatorName;
+	size_t totalReserved;
+	size_t totalUsed;
+
+	AllocatorInfo(size_t ID, std::string name, size_t reserved, size_t used) : 
+		allocatorID{ ID }, allocatorName{ name }, totalReserved { reserved }, totalUsed{ used }
+	{}
+};
 
 class MemoryTracker {
 public:
@@ -29,6 +42,8 @@ public:
 	static size_t getTotalMemoryUsage();
 	static size_t getTotalWastedMemory();
 	static void writeLogToFile(std::string filename);
+
+	static std::vector<AllocatorInfo> getAllocatorsInfo();
 
 private:
 	// Holds info on an allocation
@@ -63,7 +78,7 @@ private:
 	static std::unordered_map<void*, Allocation> independentAllocations;
 	static size_t totalIndependentSize; // Total size of allocations in independentAllocations
 
-	static std::unordered_map<size_t, ReservedMemoryArea> reservedAreas;
+	static std::unordered_map<size_t, ReservedMemoryArea> reservedAreas; // ID to ReservedMemoryArea
 	static std::unordered_map<void*, Allocation> dependentAllocations;
 
 	// Holds allocation log

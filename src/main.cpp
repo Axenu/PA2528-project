@@ -10,6 +10,7 @@
 // #include "Game/TestGame.h"
 #include "gui/Button.h"
 #include "gui/Manager.h"
+#include "gui/Views/ProjectView.h"
 #include "gui/Views/MainMenuView.h"
 #include "StaticVars.h"
 #include "projectScene.h"
@@ -89,7 +90,8 @@ void setupWindow()
 	float passedTime = 0.0f;
 	float FPS;
 
-	gui::MainMenuView* guiScene = new gui::MainMenuView(&eventManager, &FPS);
+	gui::ProjectView* guiScene = new gui::ProjectView(&eventManager, &FPS);
+	//gui::MainMenuView* guiScene = new gui::MainMenuView(&eventManager, &FPS);
 	gui::Manager guiManager(&eventManager);
 	guiManager.setWindowSize(1280, 720);
 	guiManager.setView(guiScene);

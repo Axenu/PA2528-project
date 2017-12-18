@@ -4,6 +4,8 @@
 #include "Game/Scene/Scene.h"
 #include "Event/Input/InputManager.h"
 #include "Game/FATexture.h"
+#include "gui/ProgressBar.h"
+#include "gui/Manager.h"
 
 #include <list>
 #include <vector>

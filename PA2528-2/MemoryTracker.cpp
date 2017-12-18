@@ -76,3 +76,14 @@ void MemoryTracker::writeLogToFile(std::string filename)
 	f << outstream.str();
 	f.close();
 }
+
+std::vector<AllocatorInfo> MemoryTracker::getAllocatorsInfo()
+{
+	std::vector<AllocatorInfo> infos;
+
+	for (auto& area : reservedAreas) {
+		infos.push_back(AllocatorInfo(area.first, IDtoName[area.first], area.second.size, area.second.amountUsed));
+	}
+
+	return infos;
+}

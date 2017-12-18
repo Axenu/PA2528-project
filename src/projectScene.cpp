@@ -4,6 +4,8 @@
 #include "PA2528-3/ThreadPool.hpp"
 #include "PA2528-3/PackageReader.hpp"
 #include "PA2528-3/ResourceManager.hpp"
+#include "PA2528-2/MemoryTracker.h"
+#include "PA2528-2/PoolAllocator.h"
 
 
 ProjectScene::ProjectScene(EventManager* manager) : Scene() {
@@ -131,7 +133,6 @@ void ProjectScene::handlePendingMeshLoads() {
 
 			it++;
 		}
-
 	}
 }
 
