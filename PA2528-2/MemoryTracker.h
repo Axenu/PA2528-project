@@ -43,13 +43,11 @@ public:
 	static size_t getTotalWastedMemory();
 	static void writeLogToFile(std::string filename);
 
-<<<<<<< HEAD
+
 	static std::vector<AllocatorInfo> getAllocatorsInfo();
-=======
 	// memory of specific allocation (mesh/texture) (test)
 	static size_t getMemoryUsage(size_t ID);
 	static size_t getWasterMemory(size_t ID);
->>>>>>> 8e8e7432d1806b81eb26ad7c5581d13c2fb3dc33
 
 private:
 	// Holds info on an allocation
