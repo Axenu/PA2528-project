@@ -9,7 +9,7 @@ FAMesh::FAMesh() {
 		0,2,1,
 		2,3,1
 	};
-	this->numberOfVertices = 6;
+	this->numberOfVertices = 12;
 
 	GLfloat vertices[] = {
 		-0.5f, -0.5f, 0, 0, 0,

@@ -8,5 +8,5 @@ uniform sampler2D tex;
 uniform vec4 color;
 
 void main() {
-    Frag_Data = color * vec4(texture(tex, pass_UV).xyz, 1);
+    Frag_Data = color * vec4(texture(tex, vec2(pass_UV.x, 1-pass_UV.y)).xyz, 1);
 }

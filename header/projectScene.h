@@ -28,9 +28,12 @@ public:
 private:
 	void loadMesh(float x, bool isLeft);
 	void handlePendingMeshLoads();
+	bool _moveCam = false;
 
 private:
 	void keyCallback(const KeyboardEvent& event);
+	void mouseClickCallback(const MouseClickEvent &event);
+	void mouseMoveCallback(const MouseMoveEvent &event);
 	void updateMeshes(bool isMovingLeft);
 
 	EventManager *_eventManager;

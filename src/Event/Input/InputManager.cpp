@@ -19,7 +19,9 @@ void mouse_key_callback(GLFWwindow* win, int key, int action, int mods)
 void cursorPosition_callback(GLFWwindow* win, double x, double y)
 {
     InputManager* iManager = static_cast<InputManager*>(glfwGetWindowUserPointer(win));
-    MouseMoveEvent event(x, y);
+    MouseMoveEvent event(x, y, iManager->_oldMouseX - x, iManager->_oldMouseY - y);
+	iManager->_oldMouseX = x;
+	iManager->_oldMouseY = y;
     iManager->getManager()->execute(event);
 }
 

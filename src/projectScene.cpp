@@ -34,26 +34,31 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 
 	_cam->moveZ(-2);
 
-	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[0]);
+	GLuint texture = FATexture::getTexture(PackageReader::loadTexture(_textureGuis[0]));
+	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[2]);
 	FAMesh *mesh = new FAMesh(m);
-	FAMaterial *material = new FAMaterial();
+	FAMaterial *material = new FAMaterial(texture);
 	//material->setTexture(FATexture::getDefaultTexture());
 	FAModel *model = new FAModel(mesh, material);
-	model->setScale(0.01f);
+	model->setScale(0.001f);
+	//model->rotateX(0.5f);
 	model->moveZ(-2.f);
 	this->addNode(model);
-	//_models.push_back(model);
+	_models.push_back(model);
 
-	//mesh = new FAMesh();
-	//material = new FAMaterial(texture);
-	//model = new FAModel(mesh, material);
-	//model->moveX(0.5f);
-	//this->addNode(model);
-	//_models.push_back(model);
+	mesh = new FAMesh();
+	//GLuint texture = FATexture::getTexture(PackageReader::loadTexture(_textureGuis[0]));
+	material = new FAMaterial(texture);
+	model = new FAModel(mesh, material);
+	model->moveX(0.5f);
+	this->addNode(model);
+	_models.push_back(model);
 
 	//events
 	_eventManager = manager;
 	_eventManager->listen(this, &ProjectScene::keyCallback);
+	_eventManager->listen(this, &ProjectScene::mouseClickCallback);
+	_eventManager->listen(this, &ProjectScene::mouseMoveCallback);
 }
 
 void ProjectScene::keyCallback(const KeyboardEvent& event)
@@ -62,6 +67,8 @@ void ProjectScene::keyCallback(const KeyboardEvent& event)
 		switch (event.getKey()) {
 			case GLFW_KEY_A: _isADown = true; break;
 			case GLFW_KEY_D: _isDDown = true; break;
+			case GLFW_KEY_W: _cam->moveZ(0.5); break;
+			case GLFW_KEY_S: _cam->moveZ(-0.5);; break;
 			default:
 				break;
 		}
@@ -181,6 +188,23 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			material->setColorMemFrag(100, rand() % 100 + 1);  // placeholder test
 
 		}
+	}
+}
+
+void ProjectScene::mouseClickCallback(const MouseClickEvent &event) {
+	if (event.getKey() == GLFW_MOUSE_BUTTON_1) {
+		if (event.getAction() == GLFW_PRESS) {
+			_moveCam = true;
+		} else {
+			_moveCam = false;
+		}
+	}
+}
+
+void ProjectScene::mouseMoveCallback(const MouseMoveEvent &event) {
+	if (_moveCam) {
+		_cam->rotateX(event.getDiffY() * 0.001f);
+		_cam->rotateZ(event.getDiffX() * 0.001f);
 	}
 }
 
