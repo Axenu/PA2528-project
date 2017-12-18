@@ -23,9 +23,9 @@
 #include "PA2528-2\TrackMemory.h"
 #include "PA2528-2\PoolAllocator.h"
 #include "PA2528-2\MemoryTracker.h"
-#include "PackageReader.hpp"
+#include "PA2528-3\PackageReader.hpp"
 #include "PA2528-3\ResourceManager.hpp"
-#include "ThreadPool.hpp"
+#include "PA2528-3\ThreadPool.hpp"
 
 void setupWindow()
 {
@@ -35,25 +35,25 @@ void setupWindow()
 #endif
 	//Random seed
 	// seed(1000);
-    // Init glfw
+	// Init glfw
 	// gl::CheckGLErrors("GLError before glfwinit");
 	if (!glfwInit())
 	{
 		std::cout << "GLFW init failed!" << std::endl;
 	}
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    // glfwWindowHint(GLFW_SAMPLES, 0);
-    glfwWindowHint(GLFW_DECORATED, true);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	// glfwWindowHint(GLFW_SAMPLES, 0);
+	glfwWindowHint(GLFW_DECORATED, true);
 	GLFWwindow* window = glfwCreateWindow(1280, 720, "OpenGL playground", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        std::cout << "GLFW creation of window failed!" << std::endl;
-    }
-    glfwMakeContextCurrent(window);
+	if (!window)
+	{
+		glfwTerminate();
+		std::cout << "GLFW creation of window failed!" << std::endl;
+	}
+	glfwMakeContextCurrent(window);
 	gl::CheckGLErrors("GLError before glew");
 
 #ifndef __APPLE__
@@ -98,20 +98,20 @@ void setupWindow()
 	ProjectScene ps(&eventManager);
 
 
-/* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
+	/* Loop until the user closes the window */
+	while (!glfwWindowShouldClose(window))
+	{
 		glClearColor(0.20703125f, 0.29296875f, 0.28125f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//Calculate dt
 		currentTime = (float)glfwGetTime();
 		dT = currentTime - lastTime;
-	    lastTime = currentTime;
+		lastTime = currentTime;
 		passedTime += dT;
 		passedFrames += 1;
 		if (passedTime > 0.2f)
 		{
-			FPS = 1.0f / (passedTime/passedFrames);
+			FPS = 1.0f / (passedTime / passedFrames);
 			passedTime = 0.0f;
 			passedFrames = 0.0f;
 		}
@@ -123,16 +123,16 @@ void setupWindow()
 		guiManager.update(dT);
 		guiManager.render(dT);
 
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
+		/* Swap front and back buffers */
+		glfwSwapBuffers(window);
 		// unlock fps
 		glfwSwapInterval(1);
 
-        /* Poll for and process events */
-        glfwPollEvents();
-    }
+		/* Poll for and process events */
+		glfwPollEvents();
+	}
 
-    glfwTerminate();
+	glfwTerminate();
 }
 
 int main()
@@ -145,7 +145,7 @@ int main()
 	//set mastetr volume
 	// SoundManager::getInstance().setGlobalVolume(Config::masterVolume);
 	// if (!Config::hasSound)
-		// SoundManager::getInstance().setGlobalVolume(0.0f);
+	// SoundManager::getInstance().setGlobalVolume(0.0f);
 	//setup window and run game
 	setupWindow();
 
@@ -154,5 +154,5 @@ int main()
 	std::cin >> i;
 #endif
 
-    return 0;
+	return 0;
 }

@@ -17,21 +17,21 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	for (size_t i = 0; i < metaDatas.size; i++) {
 		const PackageReader::MetaData& d = metaDatas.data[i];
 		using T = PackageReader::MetaData::Type;
-		switch(d.type) {
-			case T::MESH: _meshGuis.push_back(d.gui); break;
-			case T::TEXTURE: _textureGuis.push_back(d.gui); break;
-			default: break;
+		switch (d.type) {
+		case T::MESH: _meshGuis.push_back(d.gui); break;
+		case T::TEXTURE: _textureGuis.push_back(d.gui); break;
+		default: break;
 		}
 	}
 
-	
+
 
 	//Promise<SharedPtr<Mesh>> mp5 = ResourceManager::aloadMesh(6722305721597800034);
 	//Mesh* m = mp5.get().get();
-	 
 
 
-    _cam->moveZ(-2);
+
+	_cam->moveZ(-2);
 
 	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[0]);
 	FAMesh *mesh = new FAMesh(m);
@@ -63,13 +63,13 @@ void ProjectScene::keyCallback(const KeyboardEvent& event)
 	static constexpr int UP_ACTION = 0;
 	if (event.getAction() == DOWN_ACTION) {
 		switch (event.getKey()) {
-			case A_KEY: _isADown = true; break;
-			case D_KEY: _isDDown = true; break;
-			default:
-				break;
+		case A_KEY: _isADown = true; break;
+		case D_KEY: _isDDown = true; break;
+		default:
+			break;
 		}
 	}
-	else if(event.getAction() == UP_ACTION) {
+	else if (event.getAction() == UP_ACTION) {
 		switch (event.getKey()) {
 		case A_KEY: _isADown = false; break;
 		case D_KEY: _isDDown = false; break;
@@ -102,13 +102,12 @@ void ProjectScene::handlePendingMeshLoads() {
 		if (it->mesh.isReady() && it->texture.isReady()) {
 			FAMesh *mesh = new FAMesh(it->mesh.get());
 			FATexture *texture = new FATexture(it->texture.get());
-			float color[4] = { 0.0f, 255.0f, 0.0f, 255.0f };
-			FAMaterialColor *material = new FAMaterialColor(color);
+			FAMaterialColor *material = new FAMaterialColor();
+			material->setColorMemFrag(100, rand() % 100 + 1);  // placeholder test
 			material->setTexture(-1);
 			FAModel *model = new FAModel(mesh, material);
-			
-			model->setPositionX(it->xPos);
 
+			model->setPositionX(it->xPos);
 			// TODO: Remove this when meshes are fixed.
 			model->setScale(0.01f);
 
@@ -153,7 +152,7 @@ void ProjectScene::loadMesh(float x, bool isLeft) {
 void ProjectScene::updateMeshes(bool isMovingLeft) {
 	if (isMovingLeft) {
 		if (_models.front()->getX() - _xPos > 0.5f) {
-			 loadMesh(_xPos, true);
+			loadMesh(_xPos, true);
 
 			//static SharedPtr<Mesh> m = ResourceManager::loadMesh(_meshGuis[2]);
 			//FAMesh *mesh = new FAMesh(m);
@@ -174,20 +173,20 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			// loadMesh(_xPos, false);
 
 			FAMesh *mesh = new FAMesh("Chalice.obj");
-			/*float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-			FAMaterialColor *material = new FAMaterialColor(color);*/
 			FAMaterialColor *material = new FAMaterialColor();
-			material->setColorMemFrag(100, 0);  // 0% memory fragmentation
 			FAModel *model = new FAModel(mesh, material);
 			model->setPositionX(_xPos);
 			this->removeNode(_models.front());
 			_models.pop_front();
 			this->addNode(model);
 			_models.push_back(model);
+			// change the model's color based on the internal fragmentation of it's memory
+			material->setColorMemFrag(100, rand() % 100 + 1);  // placeholder test
+
 		}
 	}
 }
 
-ProjectScene::~ProjectScene(){
+ProjectScene::~ProjectScene() {
 
 }

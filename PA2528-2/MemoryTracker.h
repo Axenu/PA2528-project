@@ -30,6 +30,10 @@ public:
 	static size_t getTotalWastedMemory();
 	static void writeLogToFile(std::string filename);
 
+	// memory of specific allocation (mesh/texture) (test)
+	static size_t getMemoryUsage(size_t ID);
+	static size_t getWasterMemory(size_t ID);
+
 private:
 	// Holds info on an allocation
 	struct Allocation {

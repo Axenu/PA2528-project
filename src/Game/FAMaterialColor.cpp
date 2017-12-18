@@ -52,7 +52,7 @@ void FAMaterialColor::bind(FrameData &fData) {
 	}
 }
 
-void FAMaterialColor::setTexture(GLint texture){
+void FAMaterialColor::setTexture(GLint texture) {
 	if (texture < 0) {
 		_hasTexture = false;
 		delete this->shader;
@@ -91,20 +91,20 @@ void FAMaterialColor::setColor(float color[4])
 	m_color[3] = color[3];
 }
 
-void FAMaterialColor::setColorMemFrag(float mem_total, float mem_used)
+void FAMaterialColor::setColorMemFrag(double mem_total, double mem_used)
 {
 	// calc red
-	float red = 255.0f;
+	double red = 1.0f;
 	if (mem_used < mem_total)
 		red *= (mem_used / mem_total);
 	m_color[0] = red;
-	
-	 // green
-	m_color[1] = 255.0f - red;
+
+	// green
+	m_color[1] = 1.0f - red;
 
 	// blue
 	m_color[2] = 0.0f;
 
 	// alpha
-	m_color[3] = 255.0f;
+	m_color[3] = 1.0f;
 }
