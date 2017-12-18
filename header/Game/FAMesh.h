@@ -78,8 +78,6 @@ public:
 	// std::vector<glm::mat4> animatedXForm;
 	// std::vector<FABone *> bones;
 
-	SharedPtr<Mesh> get_aiMesh() { return _mesh; }; // PA2528-3 MEMORY FRAGMENTATION TEST CODE
-
 private:
 	void load(SharedPtr<Mesh> mesh);
 

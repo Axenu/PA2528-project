@@ -64,43 +64,21 @@ FAMesh::FAMesh(SharedPtr<Mesh> mesh) : _mesh(mesh) {
 }
 
 void FAMesh::load(SharedPtr<Mesh> mesh) {
-	std::vector<GLfloat> vertices;
-
-	unsigned int *faceArray;
-	faceArray = (unsigned int *)malloc(sizeof(unsigned int) * mesh->numFaces * 3);
-	unsigned int faceIndex = 0;
-
-	for (unsigned int t = 0; t < mesh->numFaces; ++t) {
-		aiFace face = mesh->faces[t];
-
-		memcpy(&faceArray[faceIndex], face.mIndices, 3 * sizeof(unsigned int));
-		faceIndex += 3;
-	}
+	this->numberOfVertices = mesh->numVertices;
 
 	if (!mesh->hasTextureCoords) {
 		std::cout << "mesh you are trying to load does not have any texture coordinates!!!" << std::endl;
 		_hasUV = false;
 	}
 
-	for (unsigned int i = 0; i < mesh->numVertices; i++) {
-		vertices.push_back(mesh->vertices[i].x);
-		vertices.push_back(mesh->vertices[i].y);
-		vertices.push_back(mesh->vertices[i].z);
-		if (_hasUV) {
-			vertices.push_back(mesh->textureCoords[0][i].x);
-			vertices.push_back(mesh->textureCoords[0][i].y);
-		}
-	}
-	this->numberOfVertices = mesh->numVertices;
-
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), &vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, mesh->vertices.size() * sizeof(GLfloat), &mesh->vertices[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh->numFaces * 3, faceArray, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh->numFaces * 3, mesh->faceArray, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	glGenVertexArrays(1, &VAO);
