@@ -1,0 +1,13 @@
+main
+build
+.vs
+*.obj
+*.log
+*.tlog
+*.exe
+*.sln
+*.pdb
+*.idb
+*.ilk
+*vcxproj*
+res
