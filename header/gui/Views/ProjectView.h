@@ -44,6 +44,9 @@ namespace gui
 		int cacheHits = 0;
 		int cacheMisses = 0;
 
+		gui::Label* VRAMLabel;
+		int currentVRAM = 0;
+
 	public:
 		ProjectView(EventManager* manager, float* fps);
 		virtual ~ProjectView();

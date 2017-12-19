@@ -60,6 +60,13 @@ namespace gui
 		cacheMissesLabel->setScale(0.15f, 0.25f);
 		cacheMissesLabel->setPosition(glm::vec2(-0.965f, 0.82f));
 		addChild(cacheMissesLabel);
+
+		VRAMLabel = new gui::Label(font);
+		VRAMLabel->addStringComponent(new StringComponentString("VRAM: "));
+		VRAMLabel->addStringComponent(new StringComponentInt(&currentVRAM));
+		VRAMLabel->setScale(0.15f, 0.25f);
+		VRAMLabel->setPosition(glm::vec2(-0.965f, 0.77f));
+		addChild(VRAMLabel);
 	}
 	ProjectView::~ProjectView()
 	{
@@ -132,6 +139,9 @@ namespace gui
 		// Update chache miss/hits labels
 		cacheHits = (int)MemoryTracker::getResourceManagerCacheHits();
 		cacheMisses = (int)MemoryTracker::getResourceManagerCacheMisses();
+
+		// Update VRAM label
+		currentVRAM = (int)MemoryTracker::getVRAM();
 	}
 	void ProjectView::initiate()
 	{

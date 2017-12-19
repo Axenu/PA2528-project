@@ -50,6 +50,10 @@ public:
 	static size_t getResourceManagerCacheMisses();
 	static size_t getResourceManagerCacheHits();
 
+	static void addVRAM(size_t VRAM);
+	static void removeVRAM(size_t VRAM);
+	static size_t getVRAM();
+
 private:
 	// Holds info on an allocation
 	struct Allocation {
@@ -91,6 +95,8 @@ private:
 
 	static size_t resourceManagerCacheMisses;
 	static size_t resourceManagerCacheHits;
+
+	static size_t VRAM;
 
 	size_t getMemoryUsage(size_t ID);
 	size_t getWasterMemory(size_t ID);

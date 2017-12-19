@@ -10,6 +10,7 @@ std::unordered_map<void*, MemoryTracker::Allocation> MemoryTracker::dependentAll
 std::ostringstream MemoryTracker::outstream;
 size_t MemoryTracker::resourceManagerCacheMisses = 0;
 size_t MemoryTracker::resourceManagerCacheHits = 0;
+size_t MemoryTracker::VRAM = 0;
 
 void MemoryTracker::setAllocatorName(size_t ID, std::string name)
 {
@@ -108,4 +109,19 @@ size_t MemoryTracker::getResourceManagerCacheMisses()
 size_t MemoryTracker::getResourceManagerCacheHits()
 {
 	return resourceManagerCacheHits;
+}
+
+void MemoryTracker::addVRAM(size_t VRAM)
+{
+	MemoryTracker::VRAM += VRAM;
+}
+
+void MemoryTracker::removeVRAM(size_t VRAM)
+{
+	MemoryTracker::VRAM -= VRAM;
+}
+
+size_t MemoryTracker::getVRAM()
+{
+	return MemoryTracker::VRAM;
 }
