@@ -34,26 +34,32 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 
 	_cam->moveZ(-2);
 
-	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[0]);
+	GLuint texture = FATexture::getTexture(PackageReader::loadTexture(_textureGuis[0]));
+	SharedPtr<Mesh> m = PackageReader::loadMesh(_meshGuis[2]);
 	FAMesh *mesh = new FAMesh(m);
-	FAMaterial *material = new FAMaterial();
+	FAMaterial *material = new FAMaterial(texture);
 	//material->setTexture(FATexture::getDefaultTexture());
+	material->setColorMemUsage(m->memAllocated, m->memUsed);
 	FAModel *model = new FAModel(mesh, material);
-	model->setScale(0.01f);
+	model->setScale(0.001f);
+	//model->rotateX(0.5f);
 	model->moveZ(-2.f);
 	this->addNode(model);
-	//_models.push_back(model);
+	_models.push_back(model);
 
-	//mesh = new FAMesh();
-	//material = new FAMaterial(texture);
-	//model = new FAModel(mesh, material);
-	//model->moveX(0.5f);
-	//this->addNode(model);
-	//_models.push_back(model);
+	mesh = new FAMesh();
+	//GLuint texture = FATexture::getTexture(PackageReader::loadTexture(_textureGuis[0]));
+	material = new FAMaterial(texture);
+	model = new FAModel(mesh, material);
+	model->moveX(0.5f);
+	this->addNode(model);
+	_models.push_back(model);
 
 	//events
 	_eventManager = manager;
 	_eventManager->listen(this, &ProjectScene::keyCallback);
+	_eventManager->listen(this, &ProjectScene::mouseClickCallback);
+	_eventManager->listen(this, &ProjectScene::mouseMoveCallback);
 }
 
 void ProjectScene::keyCallback(const KeyboardEvent& event)
@@ -62,6 +68,8 @@ void ProjectScene::keyCallback(const KeyboardEvent& event)
 		switch (event.getKey()) {
 			case GLFW_KEY_A: _isADown = true; break;
 			case GLFW_KEY_D: _isDDown = true; break;
+			case GLFW_KEY_W: _cam->moveZ(0.5); break;
+			case GLFW_KEY_S: _cam->moveZ(-0.5);; break;
 			default:
 				break;
 		}
@@ -100,14 +108,14 @@ void ProjectScene::handlePendingMeshLoads() {
 		if (it->mesh.isReady() && it->texture.isReady()) {
 			FAMesh *mesh = new FAMesh(it->mesh.get());
 			FATexture *texture = new FATexture(it->texture.get());
-			FAMaterialColor *material = new FAMaterialColor();
-			material->setColorMemFrag(100, rand() % 100 + 1);  // placeholder test
+			FAMaterial *material = new FAMaterial();
+			material->setColorMemUsage(it->mesh.get()->memAllocated, it->mesh.get()->memUsed);  // placeholder test
 			material->setTexture(-1);
 			FAModel *model = new FAModel(mesh, material);
 
 			model->setPositionX(it->xPos);
 			// TODO: Remove this when meshes are fixed.
-			model->setScale(0.01f);
+			model->setScale(0.001f);
 
 			if (it->isLeft) {
 				this->removeNode(_models.back());
@@ -136,9 +144,9 @@ void ProjectScene::loadMesh(float x, bool isLeft) {
 	gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
 
 	// TODO: Remove this when meshes are fixed.
-	meshGui = _meshGuis[0];
-	textureGui = _textureGuis[0];
-	//
+	/*meshGui = _meshGuis[0];
+	textureGui = _textureGuis[0];*/
+	
 
 	MeshLoad load(ResourceManager::aloadMesh(meshGui), ResourceManager::aloadTexture(textureGui));
 	load.xPos = x;
@@ -170,7 +178,7 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			// loadMesh(_xPos, false);
 
 			FAMesh *mesh = new FAMesh("Chalice.obj");
-			FAMaterialColor *material = new FAMaterialColor();
+			FAMaterial *material = new FAMaterial();
 			FAModel *model = new FAModel(mesh, material);
 			model->setPositionX(_xPos);
 			this->removeNode(_models.front());
@@ -178,9 +186,26 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 			this->addNode(model);
 			_models.push_back(model);
 			// change the model's color based on the internal fragmentation of it's memory
-			material->setColorMemFrag(100, rand() % 100 + 1);  // placeholder test
+			material->setColorMemUsage(100, rand() % 100 + 1);  // placeholder test
 
 		}
+	}
+}
+
+void ProjectScene::mouseClickCallback(const MouseClickEvent &event) {
+	if (event.getKey() == GLFW_MOUSE_BUTTON_1) {
+		if (event.getAction() == GLFW_PRESS) {
+			_moveCam = true;
+		} else {
+			_moveCam = false;
+		}
+	}
+}
+
+void ProjectScene::mouseMoveCallback(const MouseMoveEvent &event) {
+	if (_moveCam) {
+		_cam->rotateX(event.getDiffY() * 0.001f);
+		_cam->rotateZ(event.getDiffX() * 0.001f);
 	}
 }
 

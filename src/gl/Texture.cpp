@@ -24,7 +24,7 @@ GLuint gl_Texture::createTexture(std::string path)
     ilBindImage(image);
     ilEnable(IL_ORIGIN_SET);
     ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
-    ILboolean loadSucsess = ilLoad(IL_PNG, (const wchar_t*)path.c_str());
+    ILboolean loadSucsess = ilLoad(IL_PNG, path.c_str());
     if (loadSucsess == false) {
         std::cout << "File not found: '" << path.c_str() << "'" << std::endl;
         ILenum err = ilGetError() ;

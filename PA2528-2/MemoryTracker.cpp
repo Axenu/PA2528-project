@@ -8,6 +8,9 @@ std::unordered_map<void*, MemoryTracker::Allocation> MemoryTracker::independentA
 std::unordered_map<size_t, MemoryTracker::ReservedMemoryArea> MemoryTracker::reservedAreas;
 std::unordered_map<void*, MemoryTracker::Allocation> MemoryTracker::dependentAllocations;
 std::ostringstream MemoryTracker::outstream;
+size_t MemoryTracker::resourceManagerCacheMisses = 0;
+size_t MemoryTracker::resourceManagerCacheHits = 0;
+size_t MemoryTracker::VRAM = 0;
 
 void MemoryTracker::setAllocatorName(size_t ID, std::string name)
 {
@@ -88,21 +91,37 @@ std::vector<AllocatorInfo> MemoryTracker::getAllocatorsInfo()
 	return infos;
 }
 
-// used by the project to get the internal fragmentation of the memory of meshes (wip)
-size_t MemoryTracker::getMemoryUsage(size_t ID)
+void MemoryTracker::incrementResourceManagerCacheMisses()
 {
-	size_t memUsed;
-
-	memUsed = reservedAreas[ID].amountUsed;
-
-	return memUsed;
-
+	resourceManagerCacheMisses++;
 }
-size_t MemoryTracker::getWasterMemory(size_t ID)
+
+void MemoryTracker::incrementResourceManagerCacheHits()
 {
-	size_t memWasted;
+	resourceManagerCacheHits++;
+}
 
-	memWasted = reservedAreas[ID].size - reservedAreas[ID].amountUsed;
+size_t MemoryTracker::getResourceManagerCacheMisses()
+{
+	return resourceManagerCacheMisses;
+}
 
-	return memWasted;
+size_t MemoryTracker::getResourceManagerCacheHits()
+{
+	return resourceManagerCacheHits;
+}
+
+void MemoryTracker::addVRAM(size_t VRAM)
+{
+	MemoryTracker::VRAM += VRAM;
+}
+
+void MemoryTracker::removeVRAM(size_t VRAM)
+{
+	MemoryTracker::VRAM -= VRAM;
+}
+
+size_t MemoryTracker::getVRAM()
+{
+	return MemoryTracker::VRAM;
 }

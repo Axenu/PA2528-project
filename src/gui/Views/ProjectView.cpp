@@ -2,6 +2,8 @@
 // #include "gui/Views/SettingsView.h"
 #include "gui/Manager.h"
 #include "PA2528-2/PoolAllocator.h"
+#include "PA2528-3/ResourceManager.hpp"
+#include "PA2528-2/MemoryTracker.h"
 
 namespace gui
 {
@@ -31,6 +33,40 @@ namespace gui
 		_quitButton->listen(this, &ProjectView::QuitGame);
 		_quitButton->setScale(0.5, 0.5);
 		addChild(_quitButton);
+
+		memoryLimitBar = new gui::ProgressBar(0.1f, 0.029f);
+		memoryLimitBar->setSecondaryColor(glm::vec4(0.9f, 0.9f, 0.9f, 1.0f));
+		memoryLimitBar->setPrimaryColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
+		memoryLimitBar->setPosition(glm::vec2(-0.965f, 0.92f));
+		memoryLimitBar->setValue(ResourceManager::getMemoryFillRatio());
+		addChild(memoryLimitBar);
+
+		memoryLimitLabel = new gui::Label(font);
+		memoryLimitLabel->addStringComponent(new StringComponentString("Memory Limit"));
+		memoryLimitLabel->setScale(0.15f, 0.25f);
+		memoryLimitLabel->setPosition(glm::vec2(-0.845f, 0.92f));
+		addChild(memoryLimitLabel);
+
+		cacheHitsLabel = new gui::Label(font);
+		cacheHitsLabel->addStringComponent(new StringComponentString("Cache Hits: "));
+		cacheHitsLabel->addStringComponent(new StringComponentInt(&cacheHits));
+		cacheHitsLabel->setScale(0.15f, 0.25f);
+		cacheHitsLabel->setPosition(glm::vec2(-0.965f, 0.87f));
+		addChild(cacheHitsLabel);
+
+		cacheMissesLabel = new gui::Label(font);
+		cacheMissesLabel->addStringComponent(new StringComponentString("Cache Misses: "));
+		cacheMissesLabel->addStringComponent(new StringComponentInt(&cacheMisses));
+		cacheMissesLabel->setScale(0.15f, 0.25f);
+		cacheMissesLabel->setPosition(glm::vec2(-0.965f, 0.82f));
+		addChild(cacheMissesLabel);
+
+		VRAMLabel = new gui::Label(font);
+		VRAMLabel->addStringComponent(new StringComponentString("VRAM: "));
+		VRAMLabel->addStringComponent(new StringComponentInt(&currentVRAM));
+		VRAMLabel->setScale(0.15f, 0.25f);
+		VRAMLabel->setPosition(glm::vec2(-0.965f, 0.77f));
+		addChild(VRAMLabel);
 	}
 	ProjectView::~ProjectView()
 	{
@@ -96,6 +132,16 @@ namespace gui
 		}
 		pa.dealloc<int>(asdf);
 		pa2.dealloc<int>(qwer);
+
+		// Update memory limit bar
+		memoryLimitBar->setValue(ResourceManager::getMemoryFillRatio());
+
+		// Update chache miss/hits labels
+		cacheHits = (int)MemoryTracker::getResourceManagerCacheHits();
+		cacheMisses = (int)MemoryTracker::getResourceManagerCacheMisses();
+
+		// Update VRAM label
+		currentVRAM = (int)MemoryTracker::getVRAM();
 	}
 	void ProjectView::initiate()
 	{

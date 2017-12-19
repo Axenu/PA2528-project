@@ -37,6 +37,16 @@ namespace gui
 		std::vector<gui::ProgressBar*> memoryUsageBars;
 		std::vector<gui::Label*> memoryUsageLabels;
 
+		gui::ProgressBar* memoryLimitBar;
+		gui::Label* memoryLimitLabel;
+		gui::Label* cacheHitsLabel;
+		gui::Label* cacheMissesLabel;
+		int cacheHits = 0;
+		int cacheMisses = 0;
+
+		gui::Label* VRAMLabel;
+		int currentVRAM = 0;
+
 	public:
 		ProjectView(EventManager* manager, float* fps);
 		virtual ~ProjectView();
