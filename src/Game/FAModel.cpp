@@ -4,11 +4,11 @@ FAModel::FAModel() {
 
 }
 
-FAModel::FAModel(FAMesh *mesh) {
+FAModel::FAModel(SharedPtr<FAMesh> mesh) {
 	this->mesh = mesh;
 }
 
-FAModel::FAModel(FAMesh *mesh, FAMaterial *material) {
+FAModel::FAModel(SharedPtr<FAMesh> mesh, SharedPtr<FAMaterial> material) {
 	this->mesh = mesh;
 	this->material = material;
 	// this->material->setViewProjectionwMatrix()
@@ -16,13 +16,13 @@ FAModel::FAModel(FAMesh *mesh, FAMaterial *material) {
 	// this->material.create();
 }
 
-void FAModel::setMaterial(FAMaterial *material) {
+void FAModel::setMaterial(SharedPtr<FAMaterial> material) {
 	this->material = material;
 	// this->material.addVertexComponents(this->mesh.getAvaliableComponents());
 	// this->material.create();
 }
 
-void FAModel::setMesh(FAMesh *mesh) {
+void FAModel::setMesh(SharedPtr<FAMesh> mesh) {
 	this->mesh = mesh;
 	// this->material.addVertexComponents(this->mesh.getAvaliableComponents());
 	// this->material.create();
@@ -38,8 +38,8 @@ FAMaterial &FAModel::getMaterial() {
 	return *this->material;
 }
 
-const FAMesh &FAModel::getMesh() const {
-	return *this->mesh;
+SharedPtr<FAMesh> FAModel::getMesh() const {
+	return this->mesh;
 }
 
 glm::mat4 &FAModel::getModelMatrix() {

@@ -8,22 +8,24 @@
 #include "Camera.h"
 #include "Node.h"
 
+#include "PA2528-3/SharedPtr.hpp"
+
 class FAModel : public FANode {
 
 private:
-	FAMesh *mesh;
-	FAMaterial *material;
+	SharedPtr<FAMesh> mesh;
+	SharedPtr<FAMaterial> material;
 public:
 	FAModel();
-	FAModel(FAMesh *mesh);
-	FAModel(FAMesh *mesh, FAMaterial *material);
+	FAModel(SharedPtr<FAMesh> mesh);
+	FAModel(SharedPtr<FAMesh> mesh, SharedPtr<FAMaterial> material);
 
-	void setMaterial(FAMaterial *material);
-	void setMesh(FAMesh *mesh);
+	void setMaterial(SharedPtr<FAMaterial> material);
+	void setMesh(SharedPtr<FAMesh> mesh);
 	void setMesh(std::string path);
 
 	FAMaterial &getMaterial();
-	const FAMesh &getMesh() const;
+	SharedPtr<FAMesh> getMesh() const;
 	glm::mat4 &getModelMatrix();
 
 	virtual void onUpdate(float dt);
