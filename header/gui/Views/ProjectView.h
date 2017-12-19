@@ -39,6 +39,10 @@ namespace gui
 
 		gui::ProgressBar* memoryLimitBar;
 		gui::Label* memoryLimitLabel;
+		gui::Label* cacheHitsLabel;
+		gui::Label* cacheMissesLabel;
+		int cacheHits = 0;
+		int cacheMisses = 0;
 
 	public:
 		ProjectView(EventManager* manager, float* fps);

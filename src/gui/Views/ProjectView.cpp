@@ -3,6 +3,7 @@
 #include "gui/Manager.h"
 #include "PA2528-2/PoolAllocator.h"
 #include "PA2528-3/ResourceManager.hpp"
+#include "PA2528-2/MemoryTracker.h"
 
 namespace gui
 {
@@ -45,6 +46,20 @@ namespace gui
 		memoryLimitLabel->setScale(0.15f, 0.25f);
 		memoryLimitLabel->setPosition(glm::vec2(-0.845f, 0.92f));
 		addChild(memoryLimitLabel);
+
+		cacheHitsLabel = new gui::Label(font);
+		cacheHitsLabel->addStringComponent(new StringComponentString("Cache Hits: "));
+		cacheHitsLabel->addStringComponent(new StringComponentInt(&cacheHits));
+		cacheHitsLabel->setScale(0.15f, 0.25f);
+		cacheHitsLabel->setPosition(glm::vec2(-0.965f, 0.87f));
+		addChild(cacheHitsLabel);
+
+		cacheMissesLabel = new gui::Label(font);
+		cacheMissesLabel->addStringComponent(new StringComponentString("Cache Misses: "));
+		cacheMissesLabel->addStringComponent(new StringComponentInt(&cacheMisses));
+		cacheMissesLabel->setScale(0.15f, 0.25f);
+		cacheMissesLabel->setPosition(glm::vec2(-0.965f, 0.82f));
+		addChild(cacheMissesLabel);
 	}
 	ProjectView::~ProjectView()
 	{
@@ -113,6 +128,10 @@ namespace gui
 
 		// Update memory limit bar
 		memoryLimitBar->setValue(ResourceManager::getMemoryFillRatio());
+
+		// Update chache miss/hits labels
+		cacheHits = (int)MemoryTracker::getResourceManagerCacheHits();
+		cacheMisses = (int)MemoryTracker::getResourceManagerCacheMisses();
 	}
 	void ProjectView::initiate()
 	{

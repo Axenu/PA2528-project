@@ -8,6 +8,8 @@ std::unordered_map<void*, MemoryTracker::Allocation> MemoryTracker::independentA
 std::unordered_map<size_t, MemoryTracker::ReservedMemoryArea> MemoryTracker::reservedAreas;
 std::unordered_map<void*, MemoryTracker::Allocation> MemoryTracker::dependentAllocations;
 std::ostringstream MemoryTracker::outstream;
+size_t MemoryTracker::resourceManagerCacheMisses = 0;
+size_t MemoryTracker::resourceManagerCacheHits = 0;
 
 void MemoryTracker::setAllocatorName(size_t ID, std::string name)
 {
@@ -86,4 +88,24 @@ std::vector<AllocatorInfo> MemoryTracker::getAllocatorsInfo()
 	}
 
 	return infos;
+}
+
+void MemoryTracker::incrementResourceManagerCacheMisses()
+{
+	resourceManagerCacheMisses++;
+}
+
+void MemoryTracker::incrementResourceManagerCacheHits()
+{
+	resourceManagerCacheHits++;
+}
+
+size_t MemoryTracker::getResourceManagerCacheMisses()
+{
+	return resourceManagerCacheMisses;
+}
+
+size_t MemoryTracker::getResourceManagerCacheHits()
+{
+	return resourceManagerCacheHits;
 }
