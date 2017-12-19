@@ -40,7 +40,7 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	FAMesh *mesh = new FAMesh(m);
 	FAMaterial *material = new FAMaterial(texture);
 	//material->setTexture(FATexture::getDefaultTexture());
-	material->setColorMemUsage(m->memAllocated, m->size);
+	material->setColorMemUsage(m->memAllocated, m->memUsed);
 	FAModel *model = new FAModel(mesh, material);
 	model->setScale(0.001f);
 	//model->rotateX(0.5f);
@@ -110,7 +110,7 @@ void ProjectScene::handlePendingMeshLoads() {
 			FAMesh *mesh = new FAMesh(it->mesh.get());
 			FATexture *texture = new FATexture(it->texture.get());
 			FAMaterial *material = new FAMaterial();
-			material->setColorMemUsage(it->mesh.get()->memAllocated, it->mesh.get()->size);  // placeholder test
+			material->setColorMemUsage(it->mesh.get()->memAllocated, it->mesh.get()->memUsed);  // placeholder test
 			material->setTexture(-1);
 			FAModel *model = new FAModel(mesh, material);
 
