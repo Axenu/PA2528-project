@@ -174,7 +174,7 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 		}
 	}
 	else {
-		if (_models.back()->getX() - _xPos  > 0.5f) {
+		if (_xPos - _models.back()->getX() > 0.5f) {
 			// loadMesh(_xPos, false);
 
 			FAMesh *mesh = new FAMesh("Chalice.obj");
