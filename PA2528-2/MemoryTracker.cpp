@@ -87,22 +87,3 @@ std::vector<AllocatorInfo> MemoryTracker::getAllocatorsInfo()
 
 	return infos;
 }
-
-// used by the project to get the internal fragmentation of the memory of meshes (wip)
-size_t MemoryTracker::getMemoryUsage(size_t ID)
-{
-	size_t memUsed;
-
-	memUsed = reservedAreas[ID].amountUsed;
-
-	return memUsed;
-
-}
-size_t MemoryTracker::getWasterMemory(size_t ID)
-{
-	size_t memWasted;
-
-	memWasted = reservedAreas[ID].size - reservedAreas[ID].amountUsed;
-
-	return memWasted;
-}
