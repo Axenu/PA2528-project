@@ -118,8 +118,10 @@ void ProjectScene::handlePendingMeshLoads() {
 			model->setScale(0.001f);
 
 			if (it->isLeft) {
-				this->removeNode(_models.back());
-				_models.pop_back();
+				if (_models.size() > 20) {
+					this->removeNode(_models.back());
+					_models.pop_back();
+				}
 				this->addNode(model);
 				_models.push_front(model);
 			}
