@@ -67,6 +67,13 @@ namespace gui
 		VRAMLabel->setScale(0.15f, 0.25f);
 		VRAMLabel->setPosition(glm::vec2(-0.965f, 0.77f));
 		addChild(VRAMLabel);
+
+		l = new gui::Label(font);
+		l->addStringComponent(new StringComponentString("FPS: "));
+		l->addStringComponent(new StringComponentFloat(_fps));
+		l->setPosition(1.0f - l->getSize().x * 0.1, 0.95f - l->getSize().y *0.25);
+		l->setScale(0.15f, 0.25f);
+		addChild(l);
 	}
 	ProjectView::~ProjectView()
 	{
