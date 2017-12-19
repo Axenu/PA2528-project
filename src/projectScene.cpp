@@ -13,6 +13,7 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	PackageReader::setPackage("PA2528-3/package tool/res2");
 	ThreadPool::initialize();
 	ResourceManager::initialize();
+	ResourceManager::setMemoryLimit(1000000000);
 
 
 	Array<PackageReader::MetaData> metaDatas = PackageReader::getMetaData();
@@ -101,6 +102,8 @@ void ProjectScene::update(float dT) {
 	}
 	handlePendingMeshLoads();
 	Scene::update(dT);
+
+	ResourceManager::garbageCollect();
 }
 
 void ProjectScene::handlePendingMeshLoads() {
