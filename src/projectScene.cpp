@@ -106,7 +106,15 @@ void ProjectScene::update(float dT) {
 void ProjectScene::handlePendingMeshLoads() {
 	for (auto it = _pendingMeshLoads.begin(); it != _pendingMeshLoads.end();) {
 		if (it->mesh.isReady() && it->texture.isReady()) {
-			FAMesh *mesh = new FAMesh(it->mesh.get());
+			SharedPtr<FAMesh> mesh;
+			for (const FAModel* model : _models) {
+				if (model->getMesh()->get_aiMesh() == it->mesh.get()) {
+					mesh = model->getMesh();
+				}
+			}
+			if (mesh == nullptr) {
+				mesh = new FAMesh(it->mesh.get());
+			}
 			FATexture *texture = new FATexture(it->texture.get());
 			FAMaterial *material = new FAMaterial();
 			material->setColorMemUsage(it->mesh.get()->memAllocated, it->mesh.get()->memUsed);  // placeholder test
@@ -120,14 +128,18 @@ void ProjectScene::handlePendingMeshLoads() {
 			if (it->isLeft) {
 				if (_models.size() > 20) {
 					this->removeNode(_models.back());
+					delete _models.back();
 					_models.pop_back();
 				}
 				this->addNode(model);
 				_models.push_front(model);
 			}
 			else {
-				this->removeNode(_models.front());
-				_models.pop_front();
+				if (_models.size() > 20) {
+					this->removeNode(_models.front());
+					delete _models.front();
+					_models.pop_front();
+				}
 				this->addNode(model);
 				_models.push_back(model);
 			}
@@ -145,11 +157,6 @@ void ProjectScene::loadMesh(float x, bool isLeft) {
 	gui_t meshGui = _meshGuis[rand() % _meshGuis.size()];
 	gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
 
-	// TODO: Remove this when meshes are fixed.
-	/*meshGui = _meshGuis[0];
-	textureGui = _textureGuis[0];*/
-	
-
 	MeshLoad load(ResourceManager::aloadMesh(meshGui), ResourceManager::aloadTexture(textureGui));
 	load.xPos = x;
 	load.isLeft = isLeft;
@@ -161,35 +168,11 @@ void ProjectScene::updateMeshes(bool isMovingLeft) {
 		if (_models.front()->getX() - _xPos > 0.5f) {
 			loadMesh(_xPos, true);
 
-			//static SharedPtr<Mesh> m = ResourceManager::loadMesh(_meshGuis[2]);
-			//FAMesh *mesh = new FAMesh(m);
-			///*float color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-			//FAMaterialColor *material = new FAMaterialColor(color);*/
-			//FAMaterialColor *material = new FAMaterialColor();
-			//material->setColorMemFrag(100, 50); // 50% memory fragmentation
-			//FAModel *model = new FAModel(mesh, material);
-			//model->setPositionX(_xPos);
-			//this->removeNode(_models.back());
-			//_models.pop_back();
-			//this->addNode(model);
-			//_models.push_front(model);
 		}
 	}
 	else {
 		if (_xPos - _models.back()->getX() > 0.5f) {
-			// loadMesh(_xPos, false);
-
-			FAMesh *mesh = new FAMesh("Chalice.obj");
-			FAMaterial *material = new FAMaterial();
-			FAModel *model = new FAModel(mesh, material);
-			model->setPositionX(_xPos);
-			this->removeNode(_models.front());
-			_models.pop_front();
-			this->addNode(model);
-			_models.push_back(model);
-			// change the model's color based on the internal fragmentation of it's memory
-			material->setColorMemUsage(100, rand() % 100 + 1);  // placeholder test
-
+			loadMesh(_xPos, false);
 		}
 	}
 }
