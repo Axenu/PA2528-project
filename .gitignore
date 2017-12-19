@@ -13,3 +13,4 @@ build
 res
 *.db
 *.opendb
+Release/*
