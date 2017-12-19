@@ -2,6 +2,7 @@
 // #include "gui/Views/SettingsView.h"
 #include "gui/Manager.h"
 #include "PA2528-2/PoolAllocator.h"
+#include "PA2528-3/ResourceManager.hpp"
 
 namespace gui
 {
@@ -31,6 +32,19 @@ namespace gui
 		_quitButton->listen(this, &ProjectView::QuitGame);
 		_quitButton->setScale(0.5, 0.5);
 		addChild(_quitButton);
+
+		memoryLimitBar = new gui::ProgressBar(0.1f, 0.029f);
+		memoryLimitBar->setSecondaryColor(glm::vec4(0.9f, 0.9f, 0.9f, 1.0f));
+		memoryLimitBar->setPrimaryColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
+		memoryLimitBar->setPosition(glm::vec2(-0.965f, 0.92f));
+		memoryLimitBar->setValue(ResourceManager::getMemoryFillRatio());
+		addChild(memoryLimitBar);
+
+		memoryLimitLabel = new gui::Label(font);
+		memoryLimitLabel->addStringComponent(new StringComponentString("Memory Limit"));
+		memoryLimitLabel->setScale(0.15f, 0.25f);
+		memoryLimitLabel->setPosition(glm::vec2(-0.845f, 0.92f));
+		addChild(memoryLimitLabel);
 	}
 	ProjectView::~ProjectView()
 	{
@@ -96,6 +110,9 @@ namespace gui
 		}
 		pa.dealloc<int>(asdf);
 		pa2.dealloc<int>(qwer);
+
+		// Update memory limit bar
+		memoryLimitBar->setValue(ResourceManager::getMemoryFillRatio());
 	}
 	void ProjectView::initiate()
 	{
