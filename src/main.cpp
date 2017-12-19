@@ -71,7 +71,7 @@ void setupWindow()
 
 	//Set GL vars
 	gl::CheckGLErrors("GLError before setting variables: Main");
-	glEnable(GL_DEPTH_TEST);//Enable depth testinz
+	glEnable(GL_DEPTH_TEST);//Enable depth testing
 	glDepthFunc(GL_LESS);
 	glDisable(GL_CULL_FACE);//Enable face culling
 	glCullFace(GL_BACK);
@@ -94,7 +94,6 @@ void setupWindow()
 	gui::Manager guiManager(&eventManager);
 	guiManager.setWindowSize(1280, 720);
 	guiManager.setView(guiScene);
-
 	//setup our scene:
 	ProjectScene ps(&eventManager);
 

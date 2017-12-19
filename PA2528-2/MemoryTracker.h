@@ -84,6 +84,8 @@ private:
 
 	// Holds allocation log
 	static std::ostringstream outstream;
+	size_t getMemoryUsage(size_t ID);
+	size_t getWasterMemory(size_t ID);
 };
 
 #endif

@@ -38,6 +38,8 @@ public:
 	virtual void bind(FrameData &fData);
 	virtual void setModelMatrix(glm::mat4 &modelMatrix);
 	virtual void setTexture(GLint texture);
+	void setColor(glm::vec4 color);
+	void setColorMemUsage(float mem_total, float mem_used);
 };
 
 #endif
