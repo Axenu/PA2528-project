@@ -44,16 +44,30 @@ class ResourceManager {
 		static float getMemoryFillRatio();
 
     private:
+		template<typename T>
+		struct Entry {
+			Entry(size_t s) : size(s) {}
+			SpinLock lock;
+			SharedPtr<T> data;
+			size_t size;
+			SharedPtr<Promise<SharedPtr<T>>> promise;
+		};
+
         static bool fitLimit(size_t loadSize);
 
+		template<typename T>
+		static SharedPtr<T> load(HashMap<gui_t, Entry<T>*>& map, gui_t gui);
+		template<typename T>
+		static SharedPtr<Promise<SharedPtr<T>>> getExistingPromise(HashMap<gui_t, Entry<T>*>& map, gui_t gui);
+
+		template<typename T>
+		static inline T* packageLoad(gui_t gui);
+
+		template<typename T>
+		static void garbageCollect(HashMap<gui_t, Entry<T>*>& map);
+
     private:
-        template<typename T>
-        struct Entry {
-            Entry(size_t s) : size(s) {}
-            SpinLock lock;
-            SharedPtr<T> data;
-            size_t size;
-        };
+        
         static HashMap<gui_t, Entry<Texture>*> mTextures;
         static HashMap<gui_t, Entry<Mesh>*> mMeshes;
         static Atomic mSize;
@@ -61,6 +75,6 @@ class ResourceManager {
 
 };
 
-
+#include "ResourceManager.inl"
 
 #endif // __RESOURCE_MANAGER__

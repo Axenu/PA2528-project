@@ -13,6 +13,7 @@ bool Promise<T>::wait(size_t milliseconds) const {
         bool ret = mSemaphore.wait(milliseconds);
         if(ret) {
             assert(*mIsReady);
+			mSemaphore.signal();
         }
         return ret;
     }
@@ -24,6 +25,7 @@ template<typename T>
 void Promise<T>::wait() const {
     if(!*mIsReady) {
         mSemaphore.wait();
+		mSemaphore.signal();
         assert(*mIsReady);
     }
 }
