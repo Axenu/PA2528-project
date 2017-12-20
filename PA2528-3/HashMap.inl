@@ -53,6 +53,9 @@ typename HashMap<Key, Value>::Iterator HashMap<Key, Value>::begin() {
     it.mMap = this;
     it.mTableIndex = 0;
     it.mEntry = mTable[it.mTableIndex];
+	if (!it.mEntry) {
+		++it;
+	}
     return it;
 }
 

@@ -17,21 +17,23 @@ class HashMap {
                     return mEntry->value;
                 }
 
-                void operator++() {
+                Iterator& operator++() {
                     if(mTableIndex == mMap->TABLE_SIZE) {
-                        return;
+                        return *this;
                     }
                     if(!mEntry || !mEntry->next) {
                         while(++mTableIndex < mMap->TABLE_SIZE) {
                             mEntry = mMap->mTable[mTableIndex];
                             if(mEntry) {
-                                return;
+                                return *this;
                             }
                         }
                     }
                     else {
                         mEntry = mEntry->next;
                     }
+
+					return *this;
                 }
 
                 bool operator!=(const Iterator& other) {
