@@ -56,8 +56,6 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	this->addNode(model);
 	//_chunks.push_back(model);
 
-	loadChunk(_xPos, true);
-
 	//events
 	_eventManager = manager;
 	_eventManager->listen(this, &ProjectScene::keyCallback);
@@ -135,7 +133,7 @@ void ProjectScene::handlePendingChunkLoads() {
 										break;
 									}
 								}
-								if(model->getMesh()->get_aiMesh() == load->mesh.get()) {
+								if(model && model->getMesh()->get_aiMesh() == load->mesh.get()) {
 									mesh = model->getMesh();
 									break;
 								}
@@ -151,8 +149,8 @@ void ProjectScene::handlePendingChunkLoads() {
 
 							static constexpr float WIDTH = 1.f;
 							static constexpr float HEIGHT = 1.f;
-							static const float X_INCREMENT = WIDTH / it->meshLoads.size();
-							static const float Y_INCREMENT = HEIGHT / it->meshLoads[0].size();
+							static constexpr float X_INCREMENT = WIDTH / float(ChunkLoad::SIZE);
+							static constexpr float Y_INCREMENT = HEIGHT / float(ChunkLoad::SIZE);
 
 							float xPos = it->xPos - WIDTH / 2.f + float(x) * X_INCREMENT;
 							float yPos = -HEIGHT / 2.f + float(y) * Y_INCREMENT;
@@ -160,6 +158,8 @@ void ProjectScene::handlePendingChunkLoads() {
 							model->setPositionY(yPos);
 
 							load->model = model;
+
+							this->addNode(model);
 
 							/*if (it->isLeft) {
 								if (_chunks.size() > 20) {
@@ -184,28 +184,17 @@ void ProjectScene::handlePendingChunkLoads() {
 					}
 				}
 			}
+			it->isDone = areAllLoadsReady;
 		}
 	}
 }
 
-void ProjectScene::loadChunk(float x, bool isLeft) {
+void ProjectScene::loadChunk(bool isLeft) {
 	gui_t meshGui = _meshGuis[rand() % _meshGuis.size()];
 	gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
-	meshGui = _meshGuis[0];
+	//meshGui = _meshGuis[2];
 	
 	ChunkLoad chunk;
-	/*static constexpr float WIDTH = 1.f;
-	static constexpr float HEIGHT = 1.f;
-
-	float xPos = x - WIDTH / 2.f;
-	float yPos = HEIGHT / 2.f;
-	float xIncr = WIDTH / chunk.meshLoads.size();
-	float yIncr = HEIGHT / chunk.meshLoads[0].size();
-	for (size_t x = 0; x < chunk.meshLoads.size()) {
-		for (size_t y = 0; y < chunk.meshLoads[x].size()) {
-
-		}
-	}*/
 
 	for (auto& column : chunk.meshLoads) {
 		for (SharedPtr<MeshLoad>& load : column) {
@@ -213,24 +202,28 @@ void ProjectScene::loadChunk(float x, bool isLeft) {
 		}
 	}
 	
-	chunk.xPos = x;
 	chunk.isLeft = isLeft;
-	_chunks.push_back(chunk);
+	if (isLeft) {
+		chunk.xPos = _leftChunkX - 1.f;
+		_leftChunkX = chunk.xPos;
+		_chunks.push_front(chunk);
+	}
+	else {
+		chunk.xPos = _rightChunkX + 1.f;
+		_rightChunkX = chunk.xPos;
+		_chunks.push_back(chunk);
+	}
 }
 
 void ProjectScene::updateChunks(bool isMovingLeft) {
-	if (_chunks.empty()) {
-		return;
-	}
 	if (isMovingLeft) {
-		if (_chunks.front().xPos - _xPos > 0.5f) {
-			loadChunk(_xPos, true);
-
+		while(_leftChunkX - _xPos > 0.5f) {
+			loadChunk(true);
 		}
 	}
 	else {
-		if (_xPos - _chunks.back().xPos > 0.5f) {
-			loadChunk(_xPos, false);
+		while (_xPos - _rightChunkX > 0.5f) {
+			loadChunk(false);
 		}
 	}
 }

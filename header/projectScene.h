@@ -27,7 +27,7 @@ public:
 
 
 private:
-	void loadChunk(float x, bool isLeft);
+	void loadChunk(bool isLeft);
 	void handlePendingChunkLoads();
 	bool _moveCam = false;
 
@@ -51,15 +51,18 @@ private:
 	};
 
 	struct ChunkLoad {
-		std::array<std::array<SharedPtr<MeshLoad>, 12>, 12> meshLoads;
+		static constexpr unsigned int SIZE = 3;
+		std::array<std::array<SharedPtr<MeshLoad>, SIZE>, SIZE> meshLoads;
 		float xPos;
 		float isLeft;
-		bool isDone;
+		bool isDone = false;
 	};
 
 	std::list<ChunkLoad> _chunks;
 	std::vector<gui_t> _meshGuis;
 	std::vector<gui_t> _textureGuis;
+	float _leftChunkX = _xPos;
+	float _rightChunkX = _xPos;
 };
 
 #endif
