@@ -141,10 +141,10 @@ void ProjectScene::handlePendingChunkLoads() {
 							if (mesh == nullptr) {
 								mesh = new FAMesh(load->mesh.get());
 							}
-							FATexture *texture = new FATexture(load->texture.get());
+							GLuint texture = FATexture::getTexture(load->texture.get().get());
 							FAMaterial *material = new FAMaterial();
 							material->setColorMemUsage(load->mesh.get()->memAllocated, load->mesh.get()->memUsed);  // placeholder test
-							material->setTexture(-1);
+							material->setTexture(texture);
 							FAModel *model = new FAModel(mesh, material);
 
 							static constexpr float X_INCREMENT = ChunkLoad::WIDTH / float(ChunkLoad::SIZE);
@@ -169,8 +169,24 @@ void ProjectScene::handlePendingChunkLoads() {
 }
 
 void ProjectScene::loadChunk(bool isLeft) {
-	gui_t meshGui = _meshGuis[rand() % _meshGuis.size()];
-	gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
+	int randMesh = rand() % _meshGuis.size();
+	gui_t meshGui = _meshGuis[2];
+	gui_t textureGui = _textureGuis[0];
+	switch (randMesh)
+	{
+	case 2:
+		meshGui = _meshGuis[2];
+		textureGui = _textureGuis[0];
+		break;
+	case 3:
+		meshGui = _meshGuis[3];
+		textureGui = _textureGuis[1];
+		break;
+	default:
+		meshGui = _meshGuis[randMesh];
+	}
+	//gui_t meshGui = _meshGuis[rand() % _meshGuis.size()];
+	//gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
 	
 	ChunkLoad chunk;
 
