@@ -12,7 +12,6 @@
 #include "assimp\LogStream.hpp"
 
 #include "Mesh.hpp"
-#include "Texture.hpp"
 
 enum FileType;
 
@@ -26,14 +25,6 @@ public:
 	bool importFromFile(const std::string& file);
 	bool importFromMemory(const void* buffer, size_t length);
 
-	/*Mesh* loadMeshFromFile(const std::string& objFile);
-
-	Mesh* loadMeshFromMemory(const void* buffer, size_t length, FileType fileType);*/
-
-	/*Mesh* loadMeshFromFile(const std::string& objFile);
-
-	Mesh* loadMeshFromMemory(const void* buffer, size_t length, FileType fileType);
-	*/
 	Mesh* loadMeshFromFile(const std::string& objFile);
 
 	Mesh* loadMeshFromMemory(const void* buffer, size_t length, FileType fileType);
