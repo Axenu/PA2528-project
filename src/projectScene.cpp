@@ -42,7 +42,7 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	//material->setTexture(FATexture::getDefaultTexture());
 	material->setColorMemUsage(m->memAllocated, m->memUsed);
 	FAModel *model = new FAModel(mesh, material);
-	model->setScale(0.001f);
+	//model->setScale(0.001f);
 	//model->rotateX(0.5f);
 	model->moveZ(-2.f);
 	this->addNode(model);
@@ -125,8 +125,6 @@ void ProjectScene::handlePendingMeshLoads() {
 			FAModel *model = new FAModel(mesh, material);
 
 			model->setPositionX(it->xPos);
-			// TODO: Remove this when meshes are fixed.
-			model->setScale(0.001f);
 
 			if (it->isLeft) {
 				if (_models.size() > 20) {

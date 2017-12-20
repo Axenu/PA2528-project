@@ -64,7 +64,7 @@ FAMesh::FAMesh(SharedPtr<Mesh> mesh) : _mesh(mesh) {
 }
 
 void FAMesh::load(SharedPtr<Mesh> mesh) {
-	this->numberOfVertices = mesh->numVertices;
+	this->numberOfVertices = mesh->numFaces * 3;
 
 	if (!mesh->hasTextureCoords) {
 		std::cout << "mesh you are trying to load does not have any texture coordinates!!!" << std::endl;
