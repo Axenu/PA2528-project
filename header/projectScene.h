@@ -9,6 +9,7 @@
 
 #include <list>
 #include <vector>
+#include <array>
 class FAModel;
 
 
@@ -26,15 +27,15 @@ public:
 
 
 private:
-	void loadMesh(float x, bool isLeft);
-	void handlePendingMeshLoads();
+	void loadChunk(float x, bool isLeft);
+	void handlePendingChunkLoads();
 	bool _moveCam = false;
 
 private:
 	void keyCallback(const KeyboardEvent& event);
 	void mouseClickCallback(const MouseClickEvent &event);
 	void mouseMoveCallback(const MouseMoveEvent &event);
-	void updateMeshes(bool isMovingLeft);
+	void updateChunks(bool isMovingLeft);
 
 	EventManager *_eventManager;
 	bool _isADown = false;
@@ -46,12 +47,17 @@ private:
 		}
 		Promise<SharedPtr<Mesh>> mesh;
 		Promise<SharedPtr<Texture>> texture;
-		float xPos;
-		bool isLeft;
+		FAModel* model = nullptr;
 	};
 
-	std::list<MeshLoad> _pendingMeshLoads;
-	std::list<FAModel*> _models;
+	struct ChunkLoad {
+		std::array<std::array<SharedPtr<MeshLoad>, 12>, 12> meshLoads;
+		float xPos;
+		float isLeft;
+		bool isDone;
+	};
+
+	std::list<ChunkLoad> _chunks;
 	std::vector<gui_t> _meshGuis;
 	std::vector<gui_t> _textureGuis;
 };

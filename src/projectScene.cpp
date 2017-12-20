@@ -46,7 +46,7 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	//model->rotateX(0.5f);
 	model->moveZ(-2.f);
 	this->addNode(model);
-	_models.push_back(model);
+	//_chunks.push_back(model);
 
 	mesh = new FAMesh();
 	//GLuint texture = FATexture::getTexture(PackageReader::loadTexture(_textureGuis[0]));
@@ -54,7 +54,9 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	model = new FAModel(mesh, material);
 	model->moveX(0.5f);
 	this->addNode(model);
-	_models.push_back(model);
+	//_chunks.push_back(model);
+
+	loadChunk(_xPos, true);
 
 	//events
 	_eventManager = manager;
@@ -93,87 +95,142 @@ void ProjectScene::update(float dT) {
 	if (_isADown) {
 		_xPos -= distance;
 		_cam->moveX(distance);
-		updateMeshes(true);
+		updateChunks(true);
 	}
 	else if (_isDDown) {
 		_xPos += distance;
 		_cam->moveX(-distance);
-		updateMeshes(false);
+		updateChunks(false);
 	}
-	handlePendingMeshLoads();
+	handlePendingChunkLoads();
 	Scene::update(dT);
 
 	ResourceManager::garbageCollect();
 }
 
-void ProjectScene::handlePendingMeshLoads() {
-	for (auto it = _pendingMeshLoads.begin(); it != _pendingMeshLoads.end();) {
-		if (it->mesh.isReady() && it->texture.isReady()) {
-			SharedPtr<FAMesh> mesh;
-			for (const FAModel* model : _models) {
-				if (model->getMesh()->get_aiMesh() == it->mesh.get()) {
-					mesh = model->getMesh();
+void ProjectScene::handlePendingChunkLoads() {
+	for (auto it = _chunks.begin(); it != _chunks.end();) {
+		if (!it->isDone) {
+			bool areAllLoadsReady = true;
+			for (size_t x = 0; x < it->meshLoads.size(); x++) {
+				for (size_t y = 0; y < it->meshLoads[x].size(); y++) {
+					SharedPtr<MeshLoad>& load = it->meshLoads[x][y];
+					if (load->model == nullptr) {
+						if (!load->mesh.isReady() || !load->texture.isReady()) {
+							areAllLoadsReady = false;
+						}
+						else {
+							SharedPtr<FAMesh> mesh;
+							for (const ChunkLoad& chunk : _chunks) {
+						
+								FAModel* model = nullptr;
+								for (const auto& column : chunk.meshLoads) {
+									for (const SharedPtr<MeshLoad>& m : column) {
+										if (m->model) {
+											model = m->model;
+											break;
+										}
+									}
+									if (model) {
+										break;
+									}
+								}
+								if(model->getMesh()->get_aiMesh() == load->mesh.get()) {
+									mesh = model->getMesh();
+									break;
+								}
+							}
+							if (mesh == nullptr) {
+								mesh = new FAMesh(load->mesh.get());
+							}
+							FATexture *texture = new FATexture(load->texture.get());
+							FAMaterial *material = new FAMaterial();
+							material->setColorMemUsage(load->mesh.get()->memAllocated, load->mesh.get()->memUsed);  // placeholder test
+							material->setTexture(-1);
+							FAModel *model = new FAModel(mesh, material);
+
+							static constexpr float WIDTH = 1.f;
+							static constexpr float HEIGHT = 1.f;
+							static const float X_INCREMENT = WIDTH / it->meshLoads.size();
+							static const float Y_INCREMENT = HEIGHT / it->meshLoads[0].size();
+
+							float xPos = it->xPos - WIDTH / 2.f + float(x) * X_INCREMENT;
+							float yPos = -HEIGHT / 2.f + float(y) * Y_INCREMENT;
+							model->setPositionX(xPos);
+							model->setPositionY(yPos);
+
+							load->model = model;
+
+							/*if (it->isLeft) {
+								if (_chunks.size() > 20) {
+									this->removeNode(_chunks.back());
+									delete _chunks.back();
+									_chunks.pop_back();
+								}
+								this->addNode(model);
+								_chunks.push_front(model);
+							}
+							else {
+								if (_chunks.size() > 20) {
+									this->removeNode(_chunks.front());
+									delete _chunks.front();
+									_chunks.pop_front();
+								}
+								this->addNode(model);
+								_chunks.push_back(model);
+							}*/
+						}
+
+					}
 				}
 			}
-			if (mesh == nullptr) {
-				mesh = new FAMesh(it->mesh.get());
-			}
-			FATexture *texture = new FATexture(it->texture.get());
-			FAMaterial *material = new FAMaterial();
-			material->setColorMemUsage(it->mesh.get()->memAllocated, it->mesh.get()->memUsed);  // placeholder test
-			material->setTexture(-1);
-			FAModel *model = new FAModel(mesh, material);
-
-			model->setPositionX(it->xPos);
-
-			if (it->isLeft) {
-				if (_models.size() > 20) {
-					this->removeNode(_models.back());
-					delete _models.back();
-					_models.pop_back();
-				}
-				this->addNode(model);
-				_models.push_front(model);
-			}
-			else {
-				if (_models.size() > 20) {
-					this->removeNode(_models.front());
-					delete _models.front();
-					_models.pop_front();
-				}
-				this->addNode(model);
-				_models.push_back(model);
-			}
-
-			_pendingMeshLoads.erase(it++);
-		}
-		else {
-
-			it++;
 		}
 	}
 }
 
-void ProjectScene::loadMesh(float x, bool isLeft) {
+void ProjectScene::loadChunk(float x, bool isLeft) {
 	gui_t meshGui = _meshGuis[rand() % _meshGuis.size()];
 	gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
+	meshGui = _meshGuis[0];
+	
+	ChunkLoad chunk;
+	/*static constexpr float WIDTH = 1.f;
+	static constexpr float HEIGHT = 1.f;
 
-	MeshLoad load(ResourceManager::aloadMesh(meshGui), ResourceManager::aloadTexture(textureGui));
-	load.xPos = x;
-	load.isLeft = isLeft;
-	_pendingMeshLoads.push_back(load);
+	float xPos = x - WIDTH / 2.f;
+	float yPos = HEIGHT / 2.f;
+	float xIncr = WIDTH / chunk.meshLoads.size();
+	float yIncr = HEIGHT / chunk.meshLoads[0].size();
+	for (size_t x = 0; x < chunk.meshLoads.size()) {
+		for (size_t y = 0; y < chunk.meshLoads[x].size()) {
+
+		}
+	}*/
+
+	for (auto& column : chunk.meshLoads) {
+		for (SharedPtr<MeshLoad>& load : column) {
+			load = new MeshLoad(ResourceManager::aloadMesh(meshGui), ResourceManager::aloadTexture(textureGui));
+		}
+	}
+	
+	chunk.xPos = x;
+	chunk.isLeft = isLeft;
+	_chunks.push_back(chunk);
 }
 
-void ProjectScene::updateMeshes(bool isMovingLeft) {
+void ProjectScene::updateChunks(bool isMovingLeft) {
+	if (_chunks.empty()) {
+		return;
+	}
 	if (isMovingLeft) {
-		if (_models.front()->getX() - _xPos > 0.5f) {
-			loadMesh(_xPos, true);
+		if (_chunks.front().xPos - _xPos > 0.5f) {
+			loadChunk(_xPos, true);
 
 		}
 	}
 	else {
-		if (_xPos - _models.back()->getX() > 0.5f) {
-			loadMesh(_xPos, false);
+		if (_xPos - _chunks.back().xPos > 0.5f) {
+			loadChunk(_xPos, false);
 		}
 	}
 }
