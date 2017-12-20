@@ -147,38 +147,17 @@ void ProjectScene::handlePendingChunkLoads() {
 							material->setTexture(-1);
 							FAModel *model = new FAModel(mesh, material);
 
-							static constexpr float WIDTH = 1.f;
-							static constexpr float HEIGHT = 1.f;
-							static constexpr float X_INCREMENT = WIDTH / float(ChunkLoad::SIZE);
-							static constexpr float Y_INCREMENT = HEIGHT / float(ChunkLoad::SIZE);
+							static constexpr float X_INCREMENT = ChunkLoad::WIDTH / float(ChunkLoad::SIZE);
+							static constexpr float Y_INCREMENT = ChunkLoad::HEIGHT / float(ChunkLoad::SIZE);
 
-							float xPos = it->xPos - WIDTH / 2.f + float(x) * X_INCREMENT;
-							float yPos = -HEIGHT / 2.f + float(y) * Y_INCREMENT;
+							float xPos = it->xPos - ChunkLoad::WIDTH / 2.f + float(x) * X_INCREMENT;
+							float yPos = -ChunkLoad::HEIGHT / 2.f + float(y) * Y_INCREMENT;
 							model->setPositionX(xPos);
 							model->setPositionY(yPos);
 
 							load->model = model;
 
 							this->addNode(model);
-
-							/*if (it->isLeft) {
-								if (_chunks.size() > 20) {
-									this->removeNode(_chunks.back());
-									delete _chunks.back();
-									_chunks.pop_back();
-								}
-								this->addNode(model);
-								_chunks.push_front(model);
-							}
-							else {
-								if (_chunks.size() > 20) {
-									this->removeNode(_chunks.front());
-									delete _chunks.front();
-									_chunks.pop_front();
-								}
-								this->addNode(model);
-								_chunks.push_back(model);
-							}*/
 						}
 
 					}
@@ -192,7 +171,6 @@ void ProjectScene::handlePendingChunkLoads() {
 void ProjectScene::loadChunk(bool isLeft) {
 	gui_t meshGui = _meshGuis[rand() % _meshGuis.size()];
 	gui_t textureGui = _textureGuis[rand() % _textureGuis.size()];
-	//meshGui = _meshGuis[2];
 	
 	ChunkLoad chunk;
 
@@ -204,26 +182,49 @@ void ProjectScene::loadChunk(bool isLeft) {
 	
 	chunk.isLeft = isLeft;
 	if (isLeft) {
-		chunk.xPos = _leftChunkX - 1.f;
+		chunk.xPos = _leftChunkX - ChunkLoad::WIDTH;
 		_leftChunkX = chunk.xPos;
 		_chunks.push_front(chunk);
 	}
 	else {
-		chunk.xPos = _rightChunkX + 1.f;
+		chunk.xPos = _rightChunkX + ChunkLoad::WIDTH;
 		_rightChunkX = chunk.xPos;
 		_chunks.push_back(chunk);
 	}
 }
 
+void ProjectScene::removeChunk(ChunkLoad& chunk) {
+	for (auto& column : chunk.meshLoads) {
+		for (SharedPtr<MeshLoad>& load : column) {
+			if (load->model) {
+				this->removeNode(load->model);
+				delete load->model;
+			}
+		}
+	}
+}
+
 void ProjectScene::updateChunks(bool isMovingLeft) {
 	if (isMovingLeft) {
-		while(_leftChunkX - _xPos > 0.5f) {
+		while(_leftChunkX - _xPos > ChunkLoad::WIDTH) {
 			loadChunk(true);
+		}
+
+		while (!_chunks.empty() && std::fabs(_chunks.back().xPos - _xPos) > ChunkLoad::WIDTH * 2.f) {
+			removeChunk(_chunks.back());
+			_chunks.pop_back();
+			_rightChunkX -= ChunkLoad::WIDTH;
 		}
 	}
 	else {
-		while (_xPos - _rightChunkX > 0.5f) {
+		while (_xPos - _rightChunkX > ChunkLoad::WIDTH) {
 			loadChunk(false);
+		}
+
+		while (!_chunks.empty() && std::fabs(_chunks.front().xPos - _xPos) > ChunkLoad::WIDTH * 2.f) {
+			removeChunk(_chunks.front());
+			_chunks.pop_front();
+			_leftChunkX += ChunkLoad::WIDTH;
 		}
 	}
 }

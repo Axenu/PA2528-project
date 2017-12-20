@@ -28,6 +28,8 @@ public:
 
 private:
 	void loadChunk(bool isLeft);
+	struct ChunkLoad;
+	void removeChunk(ChunkLoad& chunk);
 	void handlePendingChunkLoads();
 	bool _moveCam = false;
 
@@ -52,6 +54,8 @@ private:
 
 	struct ChunkLoad {
 		static constexpr unsigned int SIZE = 3;
+		static constexpr float WIDTH = 2.f;
+		static constexpr float HEIGHT = 2.f;
 		std::array<std::array<SharedPtr<MeshLoad>, SIZE>, SIZE> meshLoads;
 		float xPos;
 		float isLeft;
