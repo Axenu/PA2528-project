@@ -53,8 +53,12 @@ public:
 		#ifdef TRACK_MEMORY
 		MemoryTracker::allocDependent(memory, sizeof(T), ID);
 		#endif
-
-        return new(memory) T(args...);
+		if (memory != nullptr) {
+			return new(memory) T(args...); 
+		}
+		else {
+			return nullptr;
+		}
     }
     template <typename T, typename... Args>
     T* alloc_arr(size_t size, Args... args) {

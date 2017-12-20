@@ -46,6 +46,10 @@ std::vector<FANode *> FANode::getAllChildren() {
 	return v;
 }
 
+FANode *FANode::getChild(int i) {
+	return _children[i];
+}
+
 void FANode::setParent(FANode *parent) {
 	//Remove any old parent and set the new one
 	this->removeFromParent();

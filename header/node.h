@@ -32,6 +32,7 @@ public:
 	void addChild(FANode *child);
 	/* Get a list over all child nodes of this, including this. */
 	std::vector<FANode *> getAllChildren();
+	FANode *getChild(int i);
     void setParent(FANode *parent);
 	/* Get the reference to the parent */
 	FANode* getParent();

@@ -14,6 +14,8 @@ StackAllocator::StackAllocator(size_t sizeStack, size_t alignment)
 	// store size
 	m_sizeStack = sizeStack;
 
+
+
 	// allocate memory from the OS to the stack
 	if (m_alignment > 0)
 #if defined(__WIN32) || defined(WIN32)  || defined(_WIN32)
@@ -27,6 +29,10 @@ StackAllocator::StackAllocator(size_t sizeStack, size_t alignment)
 
 	// store a pointer to the end of the memory block
 	m_end = static_cast<char*>(m_start) + sizeStack * sizeof(size_t);
+
+#ifdef TRACK_MEMORY
+	MemoryTracker::addReserved(reinterpret_cast<void*>(m_start), sizeStack * sizeof(size_t), ID);
+#endif
 
 	//std::cout << "Stack start: " << m_start << " | Stack end:" << m_end << std::endl;
 

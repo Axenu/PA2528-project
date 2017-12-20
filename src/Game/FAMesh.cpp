@@ -75,6 +75,7 @@ void FAMesh::load(SharedPtr<Mesh> mesh) {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, mesh->vertices.size() * sizeof(GLfloat), &mesh->vertices[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//memorytracker add vram
 
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
