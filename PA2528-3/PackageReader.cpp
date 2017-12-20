@@ -166,12 +166,7 @@ Mesh* PackageReader::loadMesh(gui_t gui) {
 	Mesh* mesh = pool->alloc<Mesh>();
 	mesh = importer->loadMeshFromMemory(mem.getPointer(), metaData.data[index].size, metaData.data[index].fileType);
 	
-	//Get memory allocated for the mesh
-	//std::vector<AllocatorInfo> infos = MemoryTracker::getAllocatorsInfo();
-	//mesh->memAllocated = poolBlockSize;
-	// mesh->memAllocated = vertices * faces ... 
-
-	mesh->memAllocated = poolBlockSize; // placeholder workaround
+	mesh->memAllocated = poolBlockSize;
 
 	// debug text
 	std::cerr << "Size of mesh:       " << mesh->memUsed << std::endl;

@@ -10,7 +10,7 @@
 
 ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	srand(NULL);
-	PackageReader::setPackage("PA2528-3/package tool/res2");
+	PackageReader::setPackage("Resources/res2");
 	ThreadPool::initialize();
 	ResourceManager::initialize();
 	ResourceManager::setMemoryLimit(100000000);
