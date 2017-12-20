@@ -109,7 +109,7 @@ void ProjectScene::update(float dT) {
 }
 
 void ProjectScene::handlePendingChunkLoads() {
-	for (auto it = _chunks.begin(); it != _chunks.end();) {
+	for (auto it = _chunks.begin(); it != _chunks.end(); it++) {
 		if (!it->isDone) {
 			bool areAllLoadsReady = true;
 			for (size_t x = 0; x < it->meshLoads.size(); x++) {
