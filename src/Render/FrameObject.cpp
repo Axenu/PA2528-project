@@ -7,7 +7,7 @@ FrameObject::FrameObject()
 	_head = nullptr;
 	_tail = nullptr;
 	_current = nullptr;
-	_stack = new StackAllocator((1 << 15));
+	_stack = new StackAllocator((1 << 10));
 	_stack->setTrackingName("StackAllocator FrameObject");
 }
 
@@ -33,6 +33,7 @@ void FrameObject::addObject(FANode *node) {
 	if (_tail != nullptr)
 		_tail->next = n;
 	_tail = n;
+	_count += 1;
 }
 
 void FrameObject::setFrameData(FrameData &fd) {
@@ -48,19 +49,21 @@ FANode * FrameObject::getNext()
 }
 
 void FrameObject::clear() {
+	//std::cout << "count: " << _count << std::endl;
 	//this->objects.clear();
+	_count = 0;
 	if (_head != nullptr) {
-		_stack->dealloc(_head);
+		//_stack->dealloc(_head);
 
 		//if default:
-		/*Node *n = _head;
-		Node *next = n->next;
-		while (next != nullptr)
+		Node *n = _tail;
+		Node *prev;
+		while (n != nullptr)
 		{
-			delete n;
-			n = next;
-			next = n->next;
-		}*/
+			prev = n->prev;
+			_stack->dealloc(n);
+			n = prev;
+		}
 		_head = nullptr;
 		_tail = nullptr;
 		_current = nullptr;

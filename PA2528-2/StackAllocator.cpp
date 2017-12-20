@@ -53,7 +53,7 @@ size_t StackAllocator::getSizeOfMemory()
 
 void* StackAllocator::alloc_internal(size_t size)
 {
-	std::cerr << "Stack allocating at address: " << m_ptr_current <<" | Size: "<< size << std::endl;
+	//std::cerr << "Stack allocating at address: " << m_ptr_current <<" | Size: "<< size << std::endl;
 	void* current_pointer; // points at the start of the block
 
 	current_pointer = m_ptr_current;
@@ -63,9 +63,9 @@ void* StackAllocator::alloc_internal(size_t size)
 	m_offset += size;
 	m_ptr_current = static_cast<char*>(m_ptr_current) + size;
 	size_t memRemaining = static_cast<char*>(m_end) - static_cast<char*>(m_ptr_current);
-	std::cerr << "Stack remaining memory: " << memRemaining << std::endl;
+	//std::cerr << "Stack remaining memory: " << memRemaining << std::endl;
 	//std::cerr << "Stack offset: " << m_offset << std::endl;
-	std::cerr << "Elements in stack: " << m_elements << std::endl;
+	//std::cerr << "Elements in stack: " << m_elements << std::endl;
 
 	// check if out of memory
 	if (m_ptr_current > m_end)
@@ -91,22 +91,24 @@ void StackAllocator::dealloc_internal(void* p) // no in pointer needed?
 		//m_ptr_current = m_start;
 		
 		//m_ptr_current = p;
-		size_t blockSize = 12;
-		m_offset -= blockSize;
-		m_ptr_current = static_cast<char*>(m_ptr_current) - blockSize;
+		//size_t blockSize = 12;
+		//m_offset -= blockSize;
+		//m_ptr_current = static_cast<char*>(m_ptr_current) - blockSize;
 		m_elements--;
-		std::cerr << "Stack deallocating at address: " << m_ptr_current << std::endl;
+		m_ptr_current = p;
+		m_offset = static_cast<char*>(m_ptr_current) - m_start;
+		//std::cerr << "Stack deallocating at address: " << m_ptr_current << std::endl;
 		//std::cerr << "Stack offset: " << m_offset << " | blockSize: " << blockSize << std::endl;
 
 		if (m_ptr_current < m_start) // check for underflow
 		{
-			std::cerr << "No block available to remove from stack, underflow prevented." << std::endl;
+			//std::cerr << "No block available to remove from stack, underflow prevented." << std::endl;
 			m_ptr_current = m_start;
 		}
 	}
 
 	//reset(); // placeholder work around
-	std::cerr << "Elements in stack: " << m_elements << std::endl;
+	//std::cerr << "Elements in stack: " << m_elements << std::endl;
 }
 
 void StackAllocator::reset()
