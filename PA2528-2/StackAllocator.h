@@ -25,6 +25,8 @@ private:
 
 	size_t m_sizeStack; // size of the memory allocated for the stack
 
+	size_t m_elements;
+
 	size_t m_offset; // memory offset used when making new allocations
 
 	// stack pointers

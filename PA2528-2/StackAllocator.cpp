@@ -14,7 +14,7 @@ StackAllocator::StackAllocator(size_t sizeStack, size_t alignment)
 	// store size
 	m_sizeStack = sizeStack;
 
-
+	m_elements = 0;
 
 	// allocate memory from the OS to the stack
 	if (m_alignment > 0)
@@ -26,15 +26,16 @@ StackAllocator::StackAllocator(size_t sizeStack, size_t alignment)
 #endif
 	else
 		m_start = malloc(sizeStack * sizeof(size_t));
-
+		
 	// store a pointer to the end of the memory block
-	m_end = static_cast<char*>(m_start) + sizeStack * sizeof(size_t);
+	m_end = static_cast<char*>(m_start) + sizeStack;
 
 #ifdef TRACK_MEMORY
 	MemoryTracker::addReserved(reinterpret_cast<void*>(m_start), sizeStack * sizeof(size_t), ID);
 #endif
 
-	//std::cout << "Stack start: " << m_start << " | Stack end:" << m_end << std::endl;
+	std::cerr << "Stack start: " << m_start << " | Stack end:" << m_end << std::endl;
+	std::cerr << "Size of stack: " << _msize(m_start) << std::endl;
 
 	// set the current "end" of the used memory as the start pointer
 	m_ptr_current = m_start;
@@ -52,20 +53,30 @@ size_t StackAllocator::getSizeOfMemory()
 
 void* StackAllocator::alloc_internal(size_t size)
 {
-	//std::cout << "Stack allocating at address: " << m_ptr_current <<" | Size: "<< size << std::endl;
+	std::cerr << "Stack allocating at address: " << m_ptr_current <<" | Size: "<< size << std::endl;
 	void* current_pointer; // points at the start of the block
 
 	current_pointer = m_ptr_current;
 
 	// move the head to the start of the next block
-	m_offset += size * sizeof(size_t);
-	m_ptr_current = static_cast<char*>(m_ptr_current) + m_offset;
+	//m_offset += size * sizeof(size_t);
+	m_offset += size;
+	m_ptr_current = static_cast<char*>(m_ptr_current) + size;
+	size_t memRemaining = static_cast<char*>(m_end) - static_cast<char*>(m_ptr_current);
+	std::cerr << "Stack remaining memory: " << memRemaining << std::endl;
+	//std::cerr << "Stack offset: " << m_offset << std::endl;
+	std::cerr << "Elements in stack: " << m_elements << std::endl;
 
 	// check if out of memory
 	if (m_ptr_current > m_end)
 	{
+		std::cerr << "Out of memory: " << m_ptr_current << " | " << m_end << std::endl;
+		m_ptr_current = static_cast<char*>(m_ptr_current) - m_offset;
+		m_offset -= size;
 		return nullptr;
 	}
+
+	m_elements++;
 
 	//m_offset+=4;
 	return current_pointer;
@@ -76,19 +87,31 @@ void StackAllocator::dealloc_internal(void* p) // no in pointer needed?
 	if (m_ptr_current > m_start) // make sure the stack pointer is pointing ahead of the start of the stack to prevent underflow errors
 	{
 		// move the stack pointer back to the previous block
-		m_ptr_current = static_cast<char*>(m_ptr_current) - m_offset * sizeof(size_t);
-		//std::cout << "Stack deallocating at address: " << m_ptr_current << std::endl;
+		//m_ptr_current = static_cast<char*>(m_ptr_current) - m_offset * sizeof(size_t);
+		//m_ptr_current = m_start;
+		
+		//m_ptr_current = p;
+		size_t blockSize = 12;
+		m_offset -= blockSize;
+		m_ptr_current = static_cast<char*>(m_ptr_current) - blockSize;
+		m_elements--;
+		std::cerr << "Stack deallocating at address: " << m_ptr_current << std::endl;
+		//std::cerr << "Stack offset: " << m_offset << " | blockSize: " << blockSize << std::endl;
 
 		if (m_ptr_current < m_start) // check for underflow
 		{
-			//std::cout << "No block available to remove from stack, underflow prevented." << std::endl;
+			std::cerr << "No block available to remove from stack, underflow prevented." << std::endl;
 			m_ptr_current = m_start;
 		}
 	}
+
+	//reset(); // placeholder work around
+	std::cerr << "Elements in stack: " << m_elements << std::endl;
 }
 
 void StackAllocator::reset()
 {
 	// reset the stack pointer back to the start of the stack
 	m_ptr_current = m_start;
+	m_elements = 0;
 }
