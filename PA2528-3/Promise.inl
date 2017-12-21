@@ -1,10 +1,31 @@
 #include <cassert>
 
+//template<typename T>
+//Promise<T>::Promise(SharedPtr<SharedPtr<T>> promise, SharedPtr<bool> isReady, Semaphore semaphore)
+//: mPromise(promise)
+//, mIsReady(isReady)
+//, mSemaphore(semaphore) {
+//}
+
 template<typename T>
-Promise<T>::Promise(SharedPtr<SharedPtr<T>> promise, SharedPtr<bool> isReady, Semaphore semaphore)
-: mPromise(promise)
-, mIsReady(isReady)
-, mSemaphore(semaphore) {
+Promise<T>::Promise() {
+	clear();
+}
+
+template<typename T>
+void Promise<T>::clear() {
+	mPromise = new SharedPtr<T>();
+	mIsReady = new bool();
+	mSemaphore = Semaphore();
+
+	*mIsReady = false;
+}
+
+template<typename T>
+void Promise<T>::fulfill(const T& t) {
+	*mPromise = new T(t);
+	*mIsReady = true;
+	mSemaphore.signal();
 }
 
 template<typename T>

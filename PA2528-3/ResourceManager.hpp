@@ -50,13 +50,18 @@ class ResourceManager {
 			SpinLock lock;
 			SharedPtr<T> data;
 			size_t size;
-			SharedPtr<Promise<SharedPtr<T>>> promise;
+			bool isLoading = false;
+			Promise<SharedPtr<T>> promise;
 		};
 
         static bool fitLimit(size_t loadSize);
 
 		template<typename T>
 		static SharedPtr<T> load(HashMap<gui_t, Entry<T>*>& map, gui_t gui);
+
+		template<typename T>
+		static Promise<SharedPtr<T>> aload(HashMap<gui_t, Entry<T>*>& map, gui_t gui);
+
 		template<typename T>
 		static SharedPtr<Promise<SharedPtr<T>>> getExistingPromise(HashMap<gui_t, Entry<T>*>& map, gui_t gui);
 

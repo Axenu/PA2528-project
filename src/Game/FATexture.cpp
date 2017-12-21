@@ -67,9 +67,9 @@ GLuint FATexture::getTexture(Texture *texture) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	std::cout << texture->width << std::endl;
-	std::cout << texture->height << std::endl;
-	std::cout << texture->composition << std::endl;
+	//std::cout << texture->width << std::endl;
+	//std::cout << texture->height << std::endl;
+	//std::cout << texture->composition << std::endl;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture->image);
 	return tex;
 }

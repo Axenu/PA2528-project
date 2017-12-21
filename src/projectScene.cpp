@@ -141,7 +141,7 @@ void ProjectScene::handlePendingChunkLoads() {
 							if (mesh == nullptr) {
 								mesh = new FAMesh(load->mesh.get());
 							}
-							GLuint texture = FATexture::getTexture(load->texture.get().get());
+							GLuint texture = FATexture::getTexture(load->texture.get().get()); // <<-- this line is now causing stutters
 							FAMaterial *material = new FAMaterial();
 							material->setColorMemUsage(load->mesh.get()->memAllocated, load->mesh.get()->memUsed);  // placeholder test
 							material->setTexture(texture);

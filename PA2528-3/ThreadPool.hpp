@@ -32,7 +32,7 @@ class ThreadPool {
         static void pop();
 
     private:
-        static constexpr size_t NUM_THREADS = 16;
+        static constexpr size_t NUM_THREADS = 6;
         static Thread** mThreads;
         static volatile bool mIsRunning;
 

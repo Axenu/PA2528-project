@@ -36,19 +36,11 @@ SharedPtr<Mesh> ResourceManager::loadMesh(gui_t gui) {
 }
 
 Promise<SharedPtr<Texture>> ResourceManager::aloadTexture(gui_t gui) {
-	SharedPtr<Promise<SharedPtr<Texture>>> promise = getExistingPromise(mTextures, gui);
-	if (promise != nullptr) {
-		return *promise;
-	}
-	return ThreadPool::promise<SharedPtr<Texture>>([gui](){return loadTexture(gui);});
+	return aload(mTextures, gui);
 }
 
 Promise<SharedPtr<Mesh>> ResourceManager::aloadMesh(gui_t gui) {
-	SharedPtr<Promise<SharedPtr<Mesh>>> promise = getExistingPromise(mMeshes, gui);
-	if (promise != nullptr) {
-		return *promise;
-	}
-	return ThreadPool::promise<SharedPtr<Mesh>>([gui]() {return loadMesh(gui);});
+	return aload(mMeshes, gui);
 }
 
 
