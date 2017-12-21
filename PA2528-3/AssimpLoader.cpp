@@ -127,6 +127,9 @@ Mesh* AssimpLoader::loadMeshFromFile(const std::string& objFile)
 	mesh->textureCoords = m_scene->mMeshes[0]->mTextureCoords;
 	mesh->hasTextureCoords = m_scene->mMeshes[0]->HasTextureCoords(0);
 
+	mesh->normals = m_scene->mMeshes[0]->mNormals;
+	mesh->hasNormals = m_scene->mMeshes[0]->HasNormals();
+
 	//FAMESH CODE
 	mesh->faceArray = (unsigned int *)malloc(sizeof(unsigned int) * mesh->numFaces * 3);
 	unsigned int faceIndex = 0;
@@ -145,6 +148,11 @@ Mesh* AssimpLoader::loadMeshFromFile(const std::string& objFile)
 		if (mesh->hasTextureCoords) {
 			mesh->vertices.push_back(mesh->textureCoords[0][i].x);
 			mesh->vertices.push_back(mesh->textureCoords[0][i].y);
+		}
+		if (mesh->hasNormals) {
+			mesh->vertices.push_back(mesh->normals[i].x);
+			mesh->vertices.push_back(mesh->normals[i].y);
+			mesh->vertices.push_back(mesh->normals[i].z);
 		}
 	}
 	//
@@ -218,6 +226,9 @@ Mesh* AssimpLoader::loadMeshFromMemory(const void* buffer, size_t length, FileTy
 	mesh->textureCoords = m_scene->mMeshes[0]->mTextureCoords;
 	mesh->hasTextureCoords = m_scene->mMeshes[0]->HasTextureCoords(0);
 
+	mesh->normals = m_scene->mMeshes[0]->mNormals;
+	mesh->hasNormals = m_scene->mMeshes[0]->HasNormals();
+
 	// FAMesh code
 	mesh->faceArray = (unsigned int *)malloc(sizeof(unsigned int) * mesh->numFaces * 3);
 	unsigned int faceIndex = 0;
@@ -236,6 +247,11 @@ Mesh* AssimpLoader::loadMeshFromMemory(const void* buffer, size_t length, FileTy
 		if (mesh->hasTextureCoords) {
 			mesh->vertices.push_back(mesh->textureCoords[0][i].x);
 			mesh->vertices.push_back(mesh->textureCoords[0][i].y);
+		}
+		if (mesh->hasNormals) {
+			mesh->vertices.push_back(mesh->normals[i].x);
+			mesh->vertices.push_back(mesh->normals[i].y);
+			mesh->vertices.push_back(mesh->normals[i].z);
 		}
 	}
 	// FAMesh code end

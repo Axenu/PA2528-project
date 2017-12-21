@@ -15,6 +15,7 @@
 #include <assimp/mesh.h>
 #include "PA2528-3/SharedPtr.hpp"
 #include "PA2528-3/Mesh.hpp"
+#include "PA2528-2\MemoryTracker.h"
 // #include "FAArmature.h"
 // #include "FAMAterialComponent.h"
 // #include "FAAABB.h"
@@ -23,7 +24,7 @@ class FAMesh {
 
 private:
 
-	// bool _hasNormal;
+	bool _hasNormal;
 	// bool _hasColor;
 	bool _hasUV = true;
 	// bool _hasWeights;
@@ -31,6 +32,8 @@ private:
 
 	std::string objMaterailLib;
 	std::string objMaterial;
+
+	long _allocatedMemory;
 
 	// std::vector<FAMaterialComponent *> avaliableVertexComponents;
 

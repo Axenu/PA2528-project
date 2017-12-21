@@ -70,12 +70,18 @@ void FAMesh::load(SharedPtr<Mesh> mesh) {
 		std::cout << "mesh you are trying to load does not have any texture coordinates!!!" << std::endl;
 		_hasUV = false;
 	}
+	_hasNormal = mesh->hasNormals;
+	if (!_hasNormal) {
+		std::cout << "mesh you are trying to load does not have any normals!!!" << std::endl;
+	}
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, mesh->vertices.size() * sizeof(GLfloat), &mesh->vertices[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//memorytracker add vram
+	_allocatedMemory = mesh->vertices.size() * sizeof(GLfloat) + sizeof(unsigned int) * mesh->numFaces * 3;
+	MemoryTracker::addVRAM(_allocatedMemory);
 
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -87,14 +93,23 @@ void FAMesh::load(SharedPtr<Mesh> mesh) {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
 	int attributes = 3;
+	int offset = 0;
 	if (_hasUV)
 		attributes += 2;
+	if (_hasNormal)
+		attributes += 3;
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *)(0 * sizeof(GLfloat)));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *)(offset * sizeof(GLfloat)));
+	offset += 3;
 	if (_hasUV) {
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *)(offset * sizeof(GLfloat)));
+		offset += 2;
+	}
+	if (_hasNormal) {
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, attributes * sizeof(GLfloat), (GLvoid *)(offset * sizeof(GLfloat)));
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -335,6 +350,7 @@ bool FAMesh::hasVertexUV()
 FAMesh::~FAMesh() {
 	// delete armature;
 	//delete gl resourcs
+	MemoryTracker::removeVRAM(_allocatedMemory);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteVertexArrays(1, &VAO);

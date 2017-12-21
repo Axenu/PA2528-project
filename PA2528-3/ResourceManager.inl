@@ -127,7 +127,7 @@ static void ResourceManager::garbageCollect(HashMap<gui_t, Entry<T>*>& map) {
 		entry->lock.lock();
 		if (entry->data != nullptr && entry->data.getReferenceCount() <= 2) {
 			assert(entry->data.getReferenceCount() == 2);
-			assert(entry->promise != nullptr);
+			//assert(entry->promise != nullptr);
 			entry->data = nullptr;
 			entry->promise.clear();
 			mSize -= entry->size;

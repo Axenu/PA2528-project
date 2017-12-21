@@ -7,7 +7,7 @@ FrameObject::FrameObject()
 	_head = nullptr;
 	_tail = nullptr;
 	_current = nullptr;
-	_stack = new StackAllocator((1 << 10));
+	_stack = new StackAllocator((1 << 8));
 	_stack->setTrackingName("StackAllocator FrameObject");
 }
 

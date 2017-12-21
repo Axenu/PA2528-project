@@ -13,7 +13,7 @@ ProjectScene::ProjectScene(EventManager* manager) : Scene() {
 	PackageReader::setPackage("Resources/res2");
 	ThreadPool::initialize();
 	ResourceManager::initialize();
-	ResourceManager::setMemoryLimit(100000000);
+	ResourceManager::setMemoryLimit(5000000);
 
 
 	Array<PackageReader::MetaData> metaDatas = PackageReader::getMetaData();

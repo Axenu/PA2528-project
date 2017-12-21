@@ -13,8 +13,10 @@ public:
 	unsigned int numVertices;
 
 	aiVector3D** textureCoords;
+	aiVector3D* normals;
 	unsigned int numTextureCoords;
 	bool hasTextureCoords;
+	bool hasNormals;
 
 	size_t memUsed, memAllocated;
 };
